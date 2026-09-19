@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Nilwala Agencies - Foreign Employment Agency Website",
   "scripts": {
-    "build": "echo 'Static site ready'",
     "start": "npx serve ."
   },
   "keywords": [
