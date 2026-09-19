@@ -576,10 +576,14 @@ function deleteCountry(id) {
 // ── Contact Settings ──
 function loadContact() {
   const s = DB.getSettings();
-  setFormValue('s-phone', s.phone);
-  setFormValue('s-whatsapp', s.whatsapp);
-  setFormValue('s-email', s.email);
-  setFormValue('s-address', s.address);
+  setFormValue('s-hotline1', s.hotline1 || '037 223 2000');
+  setFormValue('s-hotline2', s.hotline2 || '037 205 6000');
+  setFormValue('s-hotline3', s.hotline3 || '072 780 0800');
+  setFormValue('s-md-name', s.mdName || 'W.A.N.S. Wijesinghe');
+  setFormValue('s-md-phone', s.mdPhone || '0777-209 189');
+  setFormValue('s-whatsapp', s.whatsapp || '+94 77 720 9189');
+  setFormValue('s-email', s.email || 'info@nilwalaagencies.com');
+  setFormValue('s-address', s.address || 'No. 135, 2nd Floor, Sarasavi Building, Colombo Road, Kurunegala, Sri Lanka');
   setFormValue('s-facebook', s.facebook);
   setFormValue('s-instagram', s.instagram);
   setFormValue('s-youtube', s.youtube);
@@ -590,10 +594,16 @@ function saveContact() {
   const s = DB.getSettings();
   const updated = {
     ...s,
-    phone: getFormValue('s-phone'),
-    whatsapp: getFormValue('s-whatsapp'),
-    email: getFormValue('s-email'),
-    address: getFormValue('s-address'),
+    phone: getFormValue('s-hotline1') || '037 223 2000',
+    hotline1: getFormValue('s-hotline1') || '037 223 2000',
+    hotline2: getFormValue('s-hotline2') || '037 205 6000',
+    hotline3: getFormValue('s-hotline3') || '072 780 0800',
+    hotlines: `${getFormValue('s-hotline1') || '037 223 2000'}, ${getFormValue('s-hotline2') || '037 205 6000'}, ${getFormValue('s-hotline3') || '072 780 0800'}`,
+    mdName: getFormValue('s-md-name') || 'W.A.N.S. Wijesinghe',
+    mdPhone: getFormValue('s-md-phone') || '0777-209 189',
+    whatsapp: getFormValue('s-whatsapp') || '+94 77 720 9189',
+    email: getFormValue('s-email') || 'info@nilwalaagencies.com',
+    address: getFormValue('s-address') || 'No. 135, 2nd Floor, Sarasavi Building, Colombo Road, Kurunegala, Sri Lanka',
     facebook: getFormValue('s-facebook'),
     instagram: getFormValue('s-instagram'),
     youtube: getFormValue('s-youtube'),
