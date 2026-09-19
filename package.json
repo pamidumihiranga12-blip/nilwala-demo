@@ -1,0 +1,17 @@
+{
+  "name": "nilwala-agency-web",
+  "version": "1.0.0",
+  "description": "Nilwala Agencies - Foreign Employment Agency Website",
+  "scripts": {
+    "build": "echo 'Static site ready'",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "nilwala",
+    "agency",
+    "foreign-employment",
+    "sri-lanka"
+  ],
+  "author": "Nilwala Agencies",
+  "license": "ISC"
+}

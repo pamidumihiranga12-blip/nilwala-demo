@@ -1,0 +1,1119 @@
+/**
+ * NILWALA AGENCIES – MULTILINGUAL TRANSLATION SYSTEM
+ * Supports: English (en - default), Sinhala (si), Tamil (ta)
+ */
+
+const TRANSLATIONS = {
+  // ─────────────────────────────────────────────────────────────
+  // ENGLISH (DEFAULT)
+  // ─────────────────────────────────────────────────────────────
+  en: {
+    // Navigation
+    nav_about: "About",
+    nav_jobs: "Jobs",
+    nav_countries: "Countries",
+    nav_process: "Process",
+    nav_success: "Success",
+    nav_contact: "Contact",
+    nav_live_jobs: "Live Jobs",
+    nav_apply_now: "Apply Now",
+
+    // Hero Section
+    hero_badge: "Licensed Foreign Employment Agency – Sri Lanka",
+    hero_title_1: "Your Trusted Gateway to",
+    hero_title_2: "Global Career Opportunities",
+    hero_desc: "Connecting Sri Lankan talent with trusted international employers through reliable, ethical, and professional foreign employment solutions since 1996.",
+    hero_btn_jobs: "Find Overseas Jobs",
+    hero_btn_apply: "Apply Now",
+    hero_btn_contact: "Contact Us",
+    hero_stat_years: "Years Active",
+    hero_stat_workers: "Workers Placed",
+    hero_stat_countries: "Countries",
+    hero_stat_licenses: "Licenses",
+
+    // Hero Card
+    hero_card_title: "Licensed & Verified Agency",
+    hero_mini_placed: "Candidates Placed",
+    hero_mini_countries: "Countries",
+    hero_mini_experience: "Years Experience",
+    hero_mini_ethical: "Ethical Recruitment",
+    scroll_down: "Scroll Down",
+
+    // Ticker
+    ticker_licensed: "Licensed Foreign Employment Agency",
+    ticker_since: "Since 1996 – Kurunegala, Sri Lanka",
+    ticker_licenses: "L.L. No: 1268 | 1964 | 2618",
+    ticker_countries: "7 Countries – Middle East & Israel",
+    ticker_workers: "1,000+ Workers Placed Worldwide",
+    ticker_partner: "Trusted Overseas Recruitment Partner",
+    ticker_assistance: "End-to-End Migration Assistance",
+    ticker_safety: "Candidate Safety First",
+
+    // Featured Categories
+    cat_subtitle: "Opportunities Await",
+    cat_title: "Featured Job Categories",
+    cat_desc: "Browse hundreds of verified overseas job opportunities across multiple industries",
+
+    // About Section
+    about_subtitle: "Who We Are",
+    about_title: "Nilwala Agencies Kurunegala",
+    about_desc: "A professional foreign employment recruitment agency dedicated to helping Sri Lankan candidates find safe, reliable, and rewarding overseas career opportunities. We connect qualified candidates with international employers while providing complete support throughout the entire recruitment process.",
+    about_badge_years: "Years of Excellence",
+    about_badge_workers: "Workers Placed",
+    tab_about: "About",
+    tab_mission: "Mission & Vision",
+    tab_services: "Services",
+    about_tab_p: "Founded in 1996, we have placed over 1,000 Sri Lankan workers in verified positions across the Middle East and Israel. We are fully licensed by the Sri Lanka Bureau of Foreign Employment with three active licenses, ensuring all our placements meet the highest ethical standards.",
+    about_feat_slbfe: "Licensed by SLBFE",
+    about_feat_trusted: "Trusted Since 1996",
+    about_feat_ethical: "Ethical Recruitment",
+    about_feat_support: "Full Support Team",
+    vision_title: "Our Vision",
+    vision_desc: "To become one of Sri Lanka's most trusted foreign employment agencies by creating successful international career pathways for Sri Lankan workers.",
+    mission_title: "Our Mission",
+    mission_desc: "To provide transparent, ethical, and professional recruitment services while connecting skilled Sri Lankan employees with global employment opportunities.",
+    service_placement: "Foreign Job Placement",
+    service_screening: "Candidate Screening",
+    service_coordination: "Employer Coordination",
+    service_visa: "Visa Processing",
+    service_docs: "Documentation Support",
+    service_guidance: "Pre-Departure Guidance",
+    service_consultation: "Overseas Consultation",
+    service_ongoing: "Ongoing Support",
+
+    // Why Choose Us
+    why_subtitle: "Why Choose Nilwala",
+    why_title: "Why Work With Us",
+    why_desc: "Trusted by thousands of Sri Lankan workers since 1996 — here's why we stand apart",
+    why_1_title: "Genuine Job Opportunities",
+    why_1_desc: "We provide only verified overseas employment from trusted international employers. No fake jobs, no scams.",
+    why_2_title: "Professional Guidance",
+    why_2_desc: "Our experienced team assists candidates throughout the entire recruitment journey from start to arrival.",
+    why_3_title: "Transparent Process",
+    why_3_desc: "Clear information about job requirements, contracts, fees, and procedures — no hidden charges.",
+    why_4_title: "Complete Support",
+    why_4_desc: "From application submission to departure preparation and beyond — we're with you every step.",
+    why_5_title: "Career Growth Opportunities",
+    why_5_desc: "We help candidates build better futures through international employment and career development.",
+    why_6_title: "Candidate Safety First",
+    why_6_desc: "Following strict ethical recruitment practices and actively supporting worker welfare abroad.",
+
+    // Countries
+    countries_subtitle: "Global Reach",
+    countries_title: "Countries We Offer Opportunities",
+    countries_desc: "We have approved vacancies in these destinations across the Middle East and beyond",
+    vacancies_avail: "Vacancies Available",
+
+    // Vacancies / Jobs
+    jobs_subtitle: "Latest Openings",
+    jobs_title: "Latest Job Vacancies",
+    jobs_desc: "Browse and filter current overseas opportunities in Sri Lankan Rupees (LKR). Contact us for more details.",
+    filter_country: "Country",
+    filter_category: "Job Category",
+    filter_exp: "Experience",
+    filter_salary: "Salary Range",
+    filter_all_countries: "All Countries",
+    filter_all_categories: "All Categories",
+    filter_any_exp: "Any Level",
+    filter_no_exp: "No Experience Required",
+    filter_exp_1_3: "Experienced (1-3 yrs)",
+    filter_exp_senior: "Senior (3+ yrs)",
+    filter_all_salaries: "All Salaries (LKR)",
+    filter_sal_1: "Up to LKR 100,000",
+    filter_sal_2: "LKR 100,000 – 250,000",
+    filter_sal_3: "LKR 250,000+",
+    filter_btn_search: "Search",
+    filter_not_found: "No vacancies found",
+    filter_not_found_desc: "Try adjusting your filters or contact us for more opportunities.",
+    btn_apply_now: "Apply Now",
+    btn_details: "Details",
+    per_month: "/ month",
+    contract: "Contract",
+    requirements: "Requirements",
+    benefits: "Benefits",
+    jobs_more_prompt: "Don't see your desired position? Contact us directly — we have more opportunities!",
+    jobs_more_btn: "Contact for More Jobs",
+
+    // Job Categories Detail
+    cat_det_subtitle: "Job Types",
+    cat_det_title: "Browse by Category",
+    cat_skilled: "Skilled Jobs",
+    cat_construction: "Construction",
+    cat_driving: "Driving Jobs",
+    cat_healthcare: "Healthcare",
+    cat_domestic: "Domestic",
+    ready_to_apply: "Ready to apply?",
+    ready_to_apply_desc: "Don't wait — great opportunities are filled fast!",
+
+    // Recruitment Process
+    process_subtitle: "How It Works",
+    process_title: "Recruitment Process",
+    process_desc: "A clear, transparent step-by-step journey from application to departure",
+
+    // Candidate Registration
+    reg_subtitle: "Start Your Journey",
+    reg_title: "Apply for Overseas Jobs",
+    reg_desc: "Fill in the form below to register your interest. Our team will contact you within 24 hours.",
+    reg_card_title: "Candidate Registration",
+    reg_card_sub: "Complete all 4 steps to submit your application",
+    step1_title: "Personal Details",
+    step1_sub: "Please provide your personal information accurately",
+    lbl_fullname: "Full Name *",
+    lbl_gender: "Gender *",
+    select_gender: "Select Gender",
+    gender_male: "Male",
+    gender_female: "Female",
+    lbl_nic: "NIC Number *",
+    lbl_dob: "Date of Birth *",
+    lbl_passport: "Passport Number",
+    lbl_phone: "Contact Number *",
+    lbl_email: "Email Address",
+    lbl_address: "Full Address",
+    btn_next_step: "Next Step",
+    btn_back: "Back",
+
+    step2_title: "Professional Details",
+    step2_sub: "Tell us about your qualifications and experience",
+    lbl_education: "Education Level *",
+    select_level: "Select Level",
+    edu_ol: "O/L Passed",
+    edu_al: "A/L Passed",
+    edu_diploma: "Certificate / Diploma",
+    edu_degree: "Degree",
+    edu_postgraduate: "Postgraduate",
+    edu_other: "Other",
+    lbl_qualification: "Professional Qualification",
+    lbl_experience: "Work Experience",
+    lbl_skills: "Skills & Languages",
+    lbl_pref_job: "Preferred Job Type",
+    lbl_pref_country: "Preferred Country",
+    any_country: "Any Country",
+
+    step3_title: "Upload Documents",
+    step3_sub: "Upload your CV and supporting documents (PDF only for CV – Max 4MB)",
+    lbl_cv: "CV / Resume (PDF Only) *",
+    cv_drop_text: "Click or drag & drop your CV here",
+    cv_pdf_only_hint: "Only PDF files are accepted (.pdf, Max 4MB)",
+    err_pdf_only: "Only PDF files (.pdf) are allowed for CV upload. Please choose a valid PDF file.",
+    err_file_size: "File is too large. Maximum allowed size is 4MB.",
+    lbl_passport_copy: "Passport Copy (Optional)",
+    lbl_certs: "Qualification Certificates & Experience Letters (Optional)",
+    upload_drag: "Drag & drop or browse files",
+    upload_multi: "Drag & drop or browse files (Multiple files allowed)",
+    btn_review_submit: "Review & Submit",
+
+    step4_title: "Review & Submit",
+    step4_sub: "Please review your information before submitting",
+    review_ready_title: "✓ Your application is ready to submit",
+    review_ready_desc: "By submitting this application you confirm that all information provided is accurate. Our team will review your application and contact you within 24 hours.",
+    review_notice: "For urgent inquiries or to submit documents in person, please visit our office or call us during working hours (Mon–Sat, 8:00 AM – 6:00 PM).",
+    terms_agree: "I agree to the terms and conditions and confirm that all information provided is accurate.",
+    btn_submit_app: "Submit Application",
+    app_submitted_title: "Application Submitted!",
+    app_submitted_desc: "Thank you for applying! Our team will review your application and contact you within 24 hours.",
+    btn_browse_more: "Browse More Jobs",
+
+    // Employer Services
+    emp_subtitle: "For Employers",
+    emp_title: "Employer Services",
+    emp_desc: "International employers trust Nilwala Agencies for reliable skilled workforce solutions",
+    emp_feat_1_title: "Candidate Sourcing",
+    emp_feat_1_desc: "Access a large database of pre-screened, skilled Sri Lankan candidates ready for overseas placement.",
+    emp_feat_2_title: "Skilled Manpower Recruitment",
+    emp_feat_2_desc: "From construction workers to healthcare professionals — we supply the right talent for your needs.",
+    emp_feat_3_title: "Document Verification",
+    emp_feat_3_desc: "All candidates undergo thorough document verification including educational and professional certificates.",
+    emp_feat_4_title: "Interview Coordination",
+    emp_feat_4_desc: "We organize and coordinate interviews between employers and shortlisted candidates efficiently.",
+    emp_feat_5_title: "Workforce Solutions",
+    emp_feat_5_desc: "Flexible recruitment packages for large-scale manpower requirements with competitive rates.",
+    emp_partner_title: "Partner With Us",
+    emp_partner_desc: "Join hundreds of international employers who trust Nilwala Agencies for their recruitment needs.",
+    emp_contact_btn: "Contact Our Team",
+    emp_wa_btn: "WhatsApp Us",
+
+    // Testimonials
+    test_subtitle: "Real Stories",
+    test_title: "Our Candidates Around The World",
+    test_desc: "Hear from Sri Lankan workers who built better futures through Nilwala Agencies",
+
+    // Training
+    training_subtitle: "Prepare for Success",
+    training_title: "Training & Preparation",
+    training_desc: "We prepare candidates for overseas life before they depart. Hover each card to learn more.",
+
+    // News
+    news_subtitle: "Stay Informed",
+    news_title: "News & Updates",
+    news_desc: "Latest job openings, visa information, and important recruitment announcements",
+    news_read_more: "Read More",
+
+    // FAQ
+    faq_subtitle: "Common Questions",
+    faq_title: "Frequently Asked Questions",
+    faq_desc: "Have a question? We've answered the most common ones below.",
+    faq_more: "Still have questions? We're happy to help!",
+    faq_ask_btn: "Ask Us Directly",
+
+    // Contact
+    contact_subtitle: "Get in Touch",
+    contact_title: "Contact Us",
+    contact_desc: "Ready to start your overseas journey? Reach out to our team today.",
+    contact_tagline: "Your trusted foreign employment partner since 1996",
+    lbl_address_label: "Address",
+    lbl_address_val: "Kurunegala, Sri Lanka",
+    lbl_phone_label: "Phone",
+    lbl_wa_label: "WhatsApp",
+    lbl_email_label: "Email",
+    hours_title: "Working Hours",
+    hours_mon_fri: "Monday – Friday",
+    hours_mon_fri_val: "8:00 AM – 6:00 PM",
+    hours_sat: "Saturday",
+    hours_sat_val: "8:00 AM – 2:00 PM",
+    hours_sun: "Sunday",
+    hours_sun_val: "Closed",
+    send_msg_title: "Send Us a Message",
+    send_msg_desc: "Fill in the form and we'll get back to you within 24 hours",
+    form_your_name: "Your Name",
+    form_phone: "Phone Number",
+    form_email: "Email Address",
+    form_subject: "Subject",
+    subject_job: "Job Inquiry",
+    subject_doc: "Document Support",
+    subject_visa: "Visa Information",
+    subject_employer: "Employer Partnership",
+    subject_general: "General Query",
+    form_message: "Message",
+    form_message_ph: "How can we help you?",
+    btn_send_msg: "Send Message",
+    map_location: "Kurunegala, Sri Lanka",
+    map_btn: "Open in Google Maps",
+
+    // Footer
+    footer_desc: "Sri Lanka's trusted foreign employment agency connecting skilled workers with global career opportunities since 1996. Licensed by SLBFE.",
+    newsletter_ph: "Get Job Alerts by Email",
+    footer_quick_links: "Quick Links",
+    footer_categories: "Job Categories",
+    footer_contact: "Contact Info",
+    footer_follow: "Follow Us",
+    footer_copyright: "© 2026 Nilwala Agencies Kurunegala. All Rights Reserved. | L.L. No: 1268 | 1964 | 2618",
+    footer_privacy: "Privacy Policy",
+    footer_terms: "Terms of Service",
+    footer_admin: "Admin",
+
+    // Modals
+    modal_apply_title: "Apply for Position",
+    modal_apply_desc: "Leave your details and we'll contact you shortly about this position.",
+    quick_name_ph: "Your full name",
+    quick_phone_ph: "+94 77 XXX XXXX",
+    quick_nic_ph: "National ID (Optional)",
+    quick_apply_submit: "Submit Application",
+    quick_apply_alt: "Or fill the full form for a more detailed application",
+    job_detail_salary_lbl: "SALARY (LKR)",
+    job_detail_contract_lbl: "CONTRACT",
+    job_detail_exp_lbl: "EXPERIENCE",
+    job_detail_apply: "Apply for This Position",
+
+    // Alerts / Toasts
+    toast_app_submitted: "Application submitted! We will contact you shortly. 📞",
+    toast_quick_fill: "Please fill in Name and Phone.",
+    toast_subscribed: "✓ Subscribed to job alerts!",
+    msg_sent: "Message Sent!"
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // SINHALA (සිංහල)
+  // ─────────────────────────────────────────────────────────────
+  si: {
+    // Navigation
+    nav_about: "අප ගැන",
+    nav_jobs: "රැකියා",
+    nav_countries: "රටවල්",
+    nav_process: "ක්‍රියාවලිය",
+    nav_success: "සාර්ථකත්වයන්",
+    nav_contact: "අමතන්න",
+    nav_live_jobs: "පුරප්පාඩු",
+    nav_apply_now: "අයදුම් කරන්න",
+
+    // Hero Section
+    hero_badge: "ශ්‍රී ලංකා විදේශ සේවා නියුක්ති කාර්යාංශයේ ලියාපදිංචි ආයතනයකි",
+    hero_title_1: "ඔබගේ විශ්වාසනීය මඟ",
+    hero_title_2: "ජාත්‍යන්තර රැකියා අවස්ථා වෙත",
+    hero_desc: "1996 වසරේ සිට විශ්වාසනීය, නීත්‍යානුකූල සහ වෘත්තීයමය විදේශ රැකියා විසඳුම් ඔස්සේ ශ්‍රී ලාංකික තරුණ තරුණියන් ගෝලීය රැකියා අවස්ථා සමඟ සම්බන්ධ කරමු.",
+    hero_btn_jobs: "විදේශ රැකියා සොයන්න",
+    hero_btn_apply: "දැන්ම අයදුම් කරන්න",
+    hero_btn_contact: "අප අමතන්න",
+    hero_stat_years: "වසරක සේවය",
+    hero_stat_workers: "විදේශගත කළ පිරිස",
+    hero_stat_countries: "රටවල්",
+    hero_stat_licenses: "රජයේ බලපත්‍ර",
+
+    // Hero Card
+    hero_card_title: "රජයේ ලියාපදිංචි සහතිකලත් ආයතනය",
+    hero_mini_placed: "සේවා නියුක්තිකයන්",
+    hero_mini_countries: "රටවල්",
+    hero_mini_experience: "වසරක අත්දැකීම්",
+    hero_mini_ethical: "විශ්වාසනීය බඳවා ගැනීම්",
+    scroll_down: "පහළට යන්න",
+
+    // Ticker
+    ticker_licensed: "ශ්‍රී ලංකා විදේශ සේවා නියුක්ති කාර්යාංශයේ ලියාපදිංචි",
+    ticker_since: "1996 සිට – කුරුණෑගල, ශ්‍රී ලංකාව",
+    ticker_licenses: "බලපත්‍ර අංක: 1268 | 1964 | 2618",
+    ticker_countries: "රටවල් 7ක් – මැදපෙරදිග සහ ඊශ්‍රායලය",
+    ticker_workers: "1,000+ කට අධික සාර්ථක සේවා නියුක්තීන්",
+    ticker_partner: "විශ්වාසනීය ජාත්‍යන්තර බඳවා ගැනීමේ සහකරු",
+    ticker_assistance: "සම්පූර්ණ වීසා සහ සංක්‍රමණ සහාය",
+    ticker_safety: "සේවක ආරක්ෂාව හා සුබසාධනය ප්‍රමුඛයි",
+
+    // Featured Categories
+    cat_subtitle: "ඔබ වෙනුවෙන්ම වෙන්වූ",
+    cat_title: "ප්‍රධාන රැකියා ක්ෂේත්‍ර",
+    cat_desc: "විවිධ ක්ෂේත්‍රයන් යටතේ පවතින නීත්‍යානුකූල විදේශ රැකියා අවස්ථා සිය ගණනක් පරීක්ෂා කරන්න",
+
+    // About Section
+    about_subtitle: "අප කවුද",
+    about_title: "නිල්වලා ඒජන්සීස් කුරුණෑගල",
+    about_desc: "ශ්‍රී ලාංකික රැකියා අපේක්ෂකයින්ට ආරක්ෂිත, විශ්වාසනීය සහ ඉහළ වැටුප් සහිත විදේශ රැකියා අවස්ථා ලබාදීම සඳහා කැපවූ වෘත්තීයමය විදේශ සේවා ආයතනයකි. බඳවා ගැනීමේ සිට විදේශගත වන තෙක් සම්පූර්ණ මඟපෙන්වීම සහ සහාය අප සපයන්නෙමු.",
+    about_badge_years: "වසරක විශිෂ්ට සේවය",
+    about_badge_workers: "විදේශගත කළ සේවකයින්",
+    tab_about: "අප පිළිබඳව",
+    tab_mission: "දැක්ම සහ මෙහෙවර",
+    tab_services: "සේවාවන්",
+    about_tab_p: "1996 වසරේ ආරම්භ කරන ලද අප ආයතනය මඟින් මේ දක්වා ශ්‍රී ලාංකිකයින් 1,000 කට අධික පිරිසකට මැදපෙරදිග සහ ඊශ්‍රායලය තුළ ස්ථීර රැකියා ලබාදී ඇත. ශ්‍රී ලංකා විදේශ සේවා නියුක්ති කාර්යාංශයේ රජයේ බලපත්‍ර 3ක් යටතේ සම්පූර්ණ නීත්‍යානුකූලව කටයුතු කරමු.",
+    about_feat_slbfe: "කාර්යාංශයේ (SLBFE) ලියාපදිංචි",
+    about_feat_trusted: "1996 සිට විශ්වාසය දිනූ",
+    about_feat_ethical: "නීත්‍යානුකූල බඳවාගැනීම්",
+    about_feat_support: "පූර්ණ සහායක කණ්ඩායම",
+    vision_title: "අපගේ දැක්ම",
+    vision_desc: "ශ්‍රී ලාංකික ශ්‍රමිකයන් සඳහා සාර්ථක ජාත්‍යන්තර වෘත්තීය මාවත් නිර්මාණය කරමින් ශ්‍රී ලංකාවේ වඩාත්ම විශ්වාසනීය විදේශ රැකියා ඒජන්සිය බවට පත්වීම.",
+    mission_title: "අපගේ මෙහෙවර",
+    mission_desc: "දක්ෂ ශ්‍රී ලාංකික ශ්‍රමිකයන් ගෝලීය රැකියා අවස්ථා සමඟ සම්බන්ධ කරමින් විනිවිදභාවයෙන් යුතු, සදාචාරාත්මක සහ වෘත්තීයමය බඳවා ගැනීමේ සේවාවක් සැපයීම.",
+    service_placement: "විදේශ රැකියා සැපයීම",
+    service_screening: "අයදුම්කරුවන් තෝරාගැනීම",
+    service_coordination: "සේවායෝජක සම්බන්ධීකරණය",
+    service_visa: "වීසා සැකසීම",
+    service_docs: "ලේඛන සහතික කිරීමේ සහාය",
+    service_guidance: "විදේශගතවීමේ පෙර පුහුණුව",
+    service_consultation: "විදේශ රැකියා උපදෙස්",
+    service_ongoing: "නිරන්තර සේවා සහාය",
+
+    // Why Choose Us
+    why_subtitle: "නිල්වලා තෝරාගත යුත්තේ ඇයි?",
+    why_title: "අප සමඟ සම්බන්ධ විය යුත්තේ ඇයි?",
+    why_desc: "1996 සිට දහස් ගණනක් ශ්‍රී ලාංකිකයන්ගේ විශ්වාසය දිනූ අපගේ සුවිශේෂීතා",
+    why_1_title: "නියම සහ විශ්වාසනීය රැකියා",
+    why_1_desc: "විශ්වාසනීය ජාත්‍යන්තර ආයතන වෙතින් පමණක් නීත්‍යානුකූල රැකියා අවස්ථා. වංචා හෝ අසත්‍ය පොරොන්දු නොමැත.",
+    why_2_title: "වෘත්තීය මඟපෙන්වීම",
+    why_2_desc: "ආරම්භයේ සිට විදේශගත වන තෙක් අපගේ පළපුරුදු කණ්ඩායම ඔබට සම්පූර්ණ මඟපෙන්වීම ලබාදෙයි.",
+    why_3_title: "විනිවිදභාවයෙන් යුතු ක්‍රියාවලිය",
+    why_3_desc: "වැටුප්, කොන්ත්‍රාත් කොන්දේසි සහ ගාස්තු පිළිබඳ පැහැදිලි තොරතුරු — කිසිදු සැඟවුණු අයකිරීමක් නැත.",
+    why_4_title: "පූර්ණ සහයෝගය",
+    why_4_desc: "අයදුම්පත යොමු කිරීමේ සිට විදේශගත වීම සහ ඉන් පසුවත් සෑම පියවරකදීම අප ඔබ ළඟින්ම සිටිමු.",
+    why_5_title: "වෘත්තීය දියුණුවට මාවත",
+    why_5_desc: "ජාත්‍යන්තර රැකියා ඔස්සේ ඉහළ වැටුප් උපයා ඔබේ සහ පවුලේ අනාගතය යහපත් කරගැනීමට උදව් කරමු.",
+    why_6_title: "සේවක ආරක්ෂාව ප්‍රමුඛයි",
+    why_6_desc: "නීත්‍යානුකූල බඳවා ගැනීමේ ක්‍රමවේද අනුගමනය කරමින් විදේශයන්හි සිටින ශ්‍රමිකයන්ගේ සුබසාධනය සුරකිමු.",
+
+    // Countries
+    countries_subtitle: "ගෝලීය සබඳතා",
+    countries_title: "අප රැකියා සපයන රටවල්",
+    countries_desc: "මැදපෙරදිග සහ ඊශ්‍රායලය ඇතුළු රටවල් සඳහා කාර්යාංශයේ අනුමත පුරප්පාඩු රැසක්",
+    vacancies_avail: "පුරප්පාඩු ඇත",
+
+    // Vacancies / Jobs
+    jobs_subtitle: "නව පුරප්පාඩු",
+    jobs_title: "දැනට පවතින විදේශ රැකියා",
+    jobs_desc: "ශ්‍රී ලංකා රුපියල් (LKR) වලින් ඉහළ වැටුප් සහිත රැකියා අවස්ථා පරීක්ෂා කර අයදුම් කරන්න.",
+    filter_country: "රට",
+    filter_category: "රැකියා ක්ෂේත්‍රය",
+    filter_exp: "පළපුරුද්ද",
+    filter_salary: "වැටුප් පරාසය (LKR)",
+    filter_all_countries: "සියලු රටවල්",
+    filter_all_categories: "සියලු ක්ෂේත්‍ර",
+    filter_any_exp: "ඕනෑම මට්ටමක්",
+    filter_no_exp: "පළපුරුද්දක් අවශ්‍ය නැත",
+    filter_exp_1_3: "පළපුරුදු (වසර 1-3)",
+    filter_exp_senior: "ඉහළ පළපුරුදු (වසර 3+)",
+    filter_all_salaries: "සියලු වැටුප් (LKR)",
+    filter_sal_1: "රු. 100,000 දක්වා",
+    filter_sal_2: "රු. 100,000 – 250,000",
+    filter_sal_3: "රු. 250,000 ට වැඩි",
+    filter_btn_search: "සොයන්න",
+    filter_not_found: "පුරප්පාඩු හමු නොවීය",
+    filter_not_found_desc: "වෙනත් පෙරහනක් තෝරන්න හෝ වැඩිදුර විස්තර සඳහා අප අමතන්න.",
+    btn_apply_now: "අයදුම් කරන්න",
+    btn_details: "විස්තර",
+    per_month: "/ මසකට",
+    contract: "කොන්ත්‍රාත්තුව",
+    requirements: "අවශ්‍යතා",
+    benefits: "වරප්‍රසාද",
+    jobs_more_prompt: "ඔබ සොයන රැකියාව මෙහි නැද්ද? තවත් රැකියා අවස්ථා සඳහා කෙලින්ම අප අමතන්න!",
+    jobs_more_btn: "වැඩිදුර රැකියා සඳහා අමතන්න",
+
+    // Job Categories Detail
+    cat_det_subtitle: "රැකියා වර්ග",
+    cat_det_title: "ක්ෂේත්‍ර අනුව සොයන්න",
+    cat_skilled: "කාර්මික රැකියා",
+    cat_construction: "ඉදිකිරීම් ක්ෂේත්‍රය",
+    cat_driving: "රියදුරු රැකියා",
+    cat_healthcare: "සෞඛ්‍ය හා සාත්තු සේවා",
+    cat_domestic: "ගෘහ සේවිකා රැකියා",
+    ready_to_apply: "අයදුම් කිරීමට සූදානම්ද?",
+    ready_to_apply_desc: "ප්‍රමාද නොවන්න — හොඳම අවස්ථා ඉක්මනින් සම්පූර්ණ වේ!",
+
+    // Recruitment Process
+    process_subtitle: "ක්‍රියාපටිපාටිය",
+    process_title: "බඳවා ගැනීමේ ක්‍රියාවලිය",
+    process_desc: "අයදුම්පත් භාරදීමේ සිට විදේශගත වීම දක්වා විනිවිදභාවයෙන් යුතු පියවරෙන් පියවර මඟපෙන්වීම",
+
+    // Candidate Registration
+    reg_subtitle: "ඔබේ ගමන අරඹන්න",
+    reg_title: "විදේශ රැකියා සඳහා අයදුම් කරන්න",
+    reg_desc: "පහත පෝරමය සම්පූර්ණ කර ලියාපදිංචි වන්න. අපගේ කණ්ඩායම පැය 24ක් ඇතුළත ඔබව අමතනු ඇත.",
+    reg_card_title: "අයදුම්කරු ලියාපදිංචිය",
+    reg_card_sub: "අයදුම්පත ඉදිරිපත් කිරීමට පියවර 4 සම්පූර්ණ කරන්න",
+    step1_title: "පුද්ගලික තොරතුරු",
+    step1_sub: "කරුණාකර ඔබගේ තොරතුරු නිවැරදිව ඇතුළත් කරන්න",
+    lbl_fullname: "සම්පූර්ණ නම *",
+    lbl_gender: "ස්ත්‍රී / පුරුෂ භාවය *",
+    select_gender: "තෝරන්න",
+    gender_male: "පුරුෂ",
+    gender_female: "ස්ත්‍රී",
+    lbl_nic: "ජාතික හැඳුනුම්පත් අංකය *",
+    lbl_dob: "උපන් දිනය *",
+    lbl_passport: "විදේශ ගමන් බලපත්‍ර අංකය",
+    lbl_phone: "දුරකථන අංකය *",
+    lbl_email: "විද්‍යුත් තැපෑල",
+    lbl_address: "ලිපිනය",
+    btn_next_step: "මීළඟ පියවර",
+    btn_back: "ආපසු",
+
+    step2_title: "වෘත්තීය තොරතුරු",
+    step2_sub: "ඔබගේ අධ්‍යාපන හා සේවා පළපුරුද්ද ඇතුළත් කරන්න",
+    lbl_education: "අධ්‍යාපන මට්ටම *",
+    select_level: "තෝරන්න",
+    edu_ol: "සාමාන්‍ය පෙළ (O/L)",
+    edu_al: "උසස් පෙළ (A/L)",
+    edu_diploma: "සහතිකපත්‍ර / ඩිප්ලෝමා",
+    edu_degree: "උපාධිය",
+    edu_postgraduate: "පශ්චාත් උපාධි",
+    edu_other: "වෙනත්",
+    lbl_qualification: "වෘත්තීය සුදුසුකම්",
+    lbl_experience: "සේවා පළපුරුද්ද",
+    lbl_skills: "හැකියාවන් සහ භාෂා ඥානය",
+    lbl_pref_job: "කැමති රැකියා ක්ෂේත්‍රය",
+    lbl_pref_country: "කැමති රට",
+    any_country: "ඕනෑම රටක්",
+
+    step3_title: "ලේඛන උඩුගත කිරීම",
+    step3_sub: "ඔබගේ CV සහ ලේඛන උඩුගත කරන්න (CV සඳහා PDF පමණි – උපරිම 4MB)",
+    lbl_cv: "ජීව දත්ත පත්‍රිකාව (CV - PDF පමණි) *",
+    cv_drop_text: "ඔබගේ CV (PDF) පත්‍රිකාව මෙහි Upload කරන්න",
+    cv_pdf_only_hint: "PDF ගොනු පමණක් ඇතුළත් කළ හැක (.pdf, උපරිම 4MB)",
+    err_pdf_only: "CV සඳහා PDF (.pdf) ගොනු පමණක් ඇතුළත් කළ හැක. කරුණාකර PDF ගොනුවක් තෝරන්න.",
+    err_file_size: "ගොනුව විශාල වැඩිය. උපරිම ප්‍රමාණය 4MB වේ.",
+    lbl_passport_copy: "පාස්පෝට් පිටපත (අවශ්‍ය නම්)",
+    lbl_certs: "වෘත්තීය සහතික සහ පළපුරුදු ලිපි (අවශ්‍ය නම්)",
+    upload_drag: "ගොනු මෙතැනට ඇද දමන්න හෝ තෝරන්න",
+    upload_multi: "ගොනු මෙතැනට ඇද දමන්න හෝ තෝරන්න (ගොනු කිහිපයක් හැකිය)",
+    btn_review_submit: "පරීක්ෂා කර ඉදිරිපත් කරන්න",
+
+    step4_title: "පරීක්ෂා කර ඉදිරිපත් කරන්න",
+    step4_sub: "ඉදිරිපත් කිරීමට පෙර කරුණාකර තොරතුරු නැවත පරීක්ෂා කරන්න",
+    review_ready_title: "✓ ඔබගේ අයදුම්පත ඉදිරිපත් කිරීමට සූදානම්",
+    review_ready_desc: "මෙම අයදුම්පත ඉදිරිපත් කිරීමෙන් සියලු තොරතුරු සත්‍ය බව තහවුරු කරයි. අපගේ කණ්ඩායම පැය 24ක් තුළ ඔබව අමතනු ඇත.",
+    review_notice: "හදිසි අවශ්‍යතා සඳහා හෝ ලිපි ලේඛන භාරදීමට අපගේ කුරුණෑගල කාර්යාලයට පැමිණෙන්න (සඳුදා–සෙනසුරාදා, පෙ.ව. 8:00 – ප.ව. 6:00).",
+    terms_agree: "කොන්දේසි වලට එකඟ වන අතර ලබාදුන් සියලු තොරතුරු නිවැරදි බව සහතික කරමි.",
+    btn_submit_app: "අයදුම්පත ඉදිරිපත් කරන්න",
+    app_submitted_title: "අයදුම්පත සාර්ථකව භාරගන්නා ලදී!",
+    app_submitted_desc: "ස්තූතියි! අපගේ කණ්ඩායම ඔබගේ අයදුම්පත පරීක්ෂා කර පැය 24ක් ඇතුළත ඔබව අමතනු ඇත.",
+    btn_browse_more: "තවත් රැකියා බලන්න",
+
+    // Employer Services
+    emp_subtitle: "සේවායෝජකයින් සඳහා",
+    emp_title: "සේවායෝජක සේවාවන්",
+    emp_desc: "විශ්වාසනීය ශ්‍රමික අවශ්‍යතා සඳහා ජාත්‍යන්තර ආයතන නිල්වලා ඒජන්සීස් තෝරාගනී",
+    emp_feat_1_title: "සුදුසුකම්ලත් ශ්‍රමිකයන් සැපයීම",
+    emp_feat_1_desc: "විදේශගත වීමට සූදානම් පෙර-තහවුරු කළ දක්ෂ ශ්‍රී ලාංකික සේවක සංචිතයකින් තෝරාගැනීමේ හැකියාව.",
+    emp_feat_2_title: "කාර්මික හා පුහුණු ශ්‍රමිකයින්",
+    emp_feat_2_desc: "ඉදිකිරීම් සිට සෞඛ්‍ය ක්ෂේත්‍රය දක්වා ඔබගේ ආයතනයට අවශ්‍ය ඕනෑම ක්ෂේත්‍රයකින් ශ්‍රමිකයින් බඳවාගැනීම.",
+    emp_feat_3_title: "ලේඛන සත්‍යාපනය",
+    emp_feat_3_desc: "සියලු අයදුම්කරුවන්ගේ අධ්‍යාපනික හා වෘත්තීය සුදුසුකම් සහතික දැඩි ලෙස පරීක්ෂා කිරීම.",
+    emp_feat_4_title: "සම්මුඛ පරීක්ෂණ සම්බන්ධීකරණය",
+    emp_feat_4_desc: "සේවායෝජකයන් සහ අයදුම්කරුවන් අතර සම්මුඛ පරීක්ෂණ කාර්යක්ෂමව සංවිධානය කිරීම.",
+    emp_feat_5_title: "පුළුල් ශ්‍රමික විසඳුම්",
+    emp_feat_5_desc: "විශාල පරිමාණයේ ශ්‍රමික අවශ්‍යතා සඳහා නම්‍යශීලී සහ සහනදායී බඳවා ගැනීමේ පැකේජ.",
+    emp_partner_title: "අප හා අත්වැල් බැඳගන්න",
+    emp_partner_desc: "නිල්වලා ඒජන්සීස් සමඟ එක්වී ඔබගේ ආයතනයට අවශ්‍ය දක්ෂ ශ්‍රමිකයන් විශ්වාසනීයව ලබාගන්න.",
+    emp_contact_btn: "අපගේ කණ්ඩායම අමතන්න",
+    emp_wa_btn: "WhatsApp ඔස්සේ විමසන්න",
+
+    // Testimonials
+    test_subtitle: "සාර්ථකත්වයේ කතා",
+    test_title: "ලොව පුරා අපගේ සේවා නියුක්තිකයන්",
+    test_desc: "නිල්වලා ඒජන්සීස් හරහා ජීවිතය දිනූ ශ්‍රී ලාංකිකයන්ගේ සැබෑ අත්දැකීම්",
+
+    // Training
+    training_subtitle: "සාර්ථකත්වයට මඟ",
+    training_title: "පුහුණුව සහ සූදානම් කිරීම",
+    training_desc: "විදේශගත වීමට පෙර අප සේවකයින්ට ලබාදෙන පූර්ණ පුහුණුව",
+
+    // News
+    news_subtitle: "නවතම තොරතුරු",
+    news_title: "පුවත් සහ නිවේදන",
+    news_desc: "නවතම රැකියා ඇබෑර්තු, වීසා නීති සහ විශේෂ නිවේදන",
+    news_read_more: "වැඩිදුර කියවන්න",
+
+    // FAQ
+    faq_subtitle: "නිතර අසන ප්‍රශ්න",
+    faq_title: "නිතර අසන ප්‍රශ්න සහ පිළිතුරු",
+    faq_desc: "විදේශ රැකියා සම්බන්ධයෙන් ඔබට ඇති ප්‍රශ්න සඳහා පිළිතුරු පහතින් කියවන්න.",
+    faq_more: "තවමත් ගැටලු තිබේද? උදව් කිරීමට අප සූදානම්!",
+    faq_ask_btn: "කෙලින්ම විමසන්න",
+
+    // Contact
+    contact_subtitle: "අප හා එක්වන්න",
+    contact_title: "අප අමතන්න",
+    contact_desc: "ඔබේ විදේශ රැකියා සිහිනය සැබෑ කරගැනීමට අදම අප අමතන්න.",
+    contact_tagline: "1996 සිට ඔබගේ විශ්වාසනීය විදේශ රැකියා සහකරු",
+    lbl_address_label: "ලිපිනය",
+    lbl_address_val: "කුරුණෑගල, ශ්‍රී ලංකාව",
+    lbl_phone_label: "දුරකථන",
+    lbl_wa_label: "WhatsApp",
+    lbl_email_label: "විද්‍යුත් තැපෑල",
+    hours_title: "සේවා කාලය",
+    hours_mon_fri: "සඳුදා – සිකුරාදා",
+    hours_mon_fri_val: "පෙ.ව. 8:00 – ප.ව. 6:00",
+    hours_sat: "සෙනසුරාදා",
+    hours_sat_val: "පෙ.ව. 8:00 – ප.ව. 2:00",
+    hours_sun: "ඉරිදා",
+    hours_sun_val: "වසා ඇත",
+    send_msg_title: "පණිවිඩයක් එවන්න",
+    send_msg_desc: "පහත පෝරමය පුරවන්න, අප පැය 24ක් තුළ ඔබව අමතන්නෙමු",
+    form_your_name: "ඔබගේ නම",
+    form_phone: "දුරකථන අංකය",
+    form_email: "විද්‍යුත් ලිපිනය",
+    form_subject: "විෂය",
+    subject_job: "රැකියා තොරතුරු",
+    subject_doc: "ලේඛන සහාය",
+    subject_visa: "වීසා තොරතුරු",
+    subject_employer: "සේවායෝජක හවුල්කාරිත්වය",
+    subject_general: "සාමාන්‍ය විමසීම්",
+    form_message: "පණිවිඩය",
+    form_message_ph: "අපෙන් ඔබට විය යුතු සේවය සඳහන් කරන්න...",
+    btn_send_msg: "පණිවිඩය යවන්න",
+    map_location: "කුරුණෑගල, ශ්‍රී ලංකාව",
+    map_btn: "Google Maps හි බලන්න",
+
+    // Footer
+    footer_desc: "1996 සිට දක්ෂ ශ්‍රී ලාංකිකයින්ට ගෝලීය රැකියා අවස්ථා උදාකරදෙන ශ්‍රී ලංකා විදේශ සේවා නියුක්ති කාර්යාංශයේ අනුමත විශ්වාසනීය ආයතනයකි.",
+    newsletter_ph: "නව රැකියා තොරතුරු විද්‍යුත් තැපෑලෙන් ලබාගන්න",
+    footer_quick_links: "ප්‍රධාන සබැඳි",
+    footer_categories: "රැකියා ක්ෂේත්‍ර",
+    footer_contact: "සම්බන්ධතා තොරතුරු",
+    footer_follow: "අප අනුගමනය කරන්න",
+    footer_copyright: "© 2026 නිල්වලා ඒජන්සීස් කුරුණෑගල. සියලුම හිමිකම් ඇවිරිණි. | බලපත්‍ර: 1268 | 1964 | 2618",
+    footer_privacy: "පෞද්ගලිකත්ව ප්‍රතිපත්තිය",
+    footer_terms: "සේවා කොන්දේසි",
+    footer_admin: "පරිපාලක පුවරුව",
+
+    // Modals
+    modal_apply_title: "රැකියාව සඳහා අයදුම් කරන්න",
+    modal_apply_desc: "ඔබගේ තොරතුරු ලබාදෙන්න, මෙම පුරප්පාඩුව පිළිබඳව අප ඔබව ඉක්මනින් අමතන්නෙමු.",
+    quick_name_ph: "ඔබගේ සම්පූර්ණ නම",
+    quick_phone_ph: "+94 77 XXX XXXX",
+    quick_nic_ph: "හැඳුනුම්පත් අංකය (අවශ්‍ය නම්)",
+    quick_apply_submit: "අයදුම්පත ඉදිරිපත් කරන්න",
+    quick_apply_alt: "හෝ සම්පූර්ණ විස්තර සහිත පෝරමය පුරවන්න",
+    job_detail_salary_lbl: "මාසික වැටුප (LKR)",
+    job_detail_contract_lbl: "කොන්ත්‍රාත්තුව",
+    job_detail_exp_lbl: "පළපුරුද්ද",
+    job_detail_apply: "මෙම රැකියාවට අයදුම් කරන්න",
+
+    // Alerts / Toasts
+    toast_app_submitted: "අයදුම්පත සාර්ථකව භාරගන්නා ලදී! අප ඔබව ඉක්මනින් අමතන්නෙමු. 📞",
+    toast_quick_fill: "කරුණාකර නම සහ දුරකථන අංකය ඇතුළත් කරන්න.",
+    toast_subscribed: "✓ රැකියා පුවත් සඳහා සාර්ථකව ලියාපදිංචි විය!",
+    msg_sent: "පණිවිඩය යවන ලදී!"
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // TAMIL (தமிழ்)
+  // ─────────────────────────────────────────────────────────────
+  ta: {
+    // Navigation
+    nav_about: "எங்களை பற்றி",
+    nav_jobs: "வேலைகள்",
+    nav_countries: "நாடுகள்",
+    nav_process: "செயல்முறை",
+    nav_success: "வெற்றிக் கதைகள்",
+    nav_contact: "தொடர்புக்கு",
+    nav_live_jobs: "காலியிடங்கள்",
+    nav_apply_now: "விண்ணப்பிக்க",
+
+    // Hero Section
+    hero_badge: "இலங்கை வெளிநாட்டு வேலைவாய்ப்பு பணியகத்தால் அங்கீகரிக்கப்பட்டது",
+    hero_title_1: "உங்கள் நம்பிக்கைக்குரிய பாதை",
+    hero_title_2: "உலகளாவிய தொழில் வாய்ப்புகளுக்கு",
+    hero_desc: "1996 முதல் நம்பகமான, நேர்மையான மற்றும் தொழில்முறை வெளிநாட்டு வேலைவாய்ப்பு சேவைகள் மூலம் இலங்கை திறமைகளை உலகளாவிய நிறுவனங்களுடன் இணைக்கிறோம்.",
+    hero_btn_jobs: "வேலைகளை தேடுங்கள்",
+    hero_btn_apply: "இப்போது விண்ணப்பிக்கவும்",
+    hero_btn_contact: "தொடர்பு கொள்ளவும்",
+    hero_stat_years: "ஆண்டுகள் சேவை",
+    hero_stat_workers: "பணியமர்த்தப்பட்டோர்",
+    hero_stat_countries: "நாடுகள்",
+    hero_stat_licenses: "அரசாங்க உரிமங்கள்",
+
+    // Hero Card
+    hero_card_title: "அங்கீகரிக்கப்பட்ட நிறுவனம்",
+    hero_mini_placed: "பணியமர்த்தப்பட்டோர்",
+    hero_mini_countries: "நாடுகள்",
+    hero_mini_experience: "ஆண்டுகள் அனுபவம்",
+    hero_mini_ethical: "நேர்மையான தேர்வு",
+    scroll_down: "கீழே உருட்டவும்",
+
+    // Ticker
+    ticker_licensed: "அங்கீகரிக்கப்பட்ட வெளிநாட்டு வேலைவாய்ப்பு நிறுவனம்",
+    ticker_since: "1996 முதல் – குருநாகல், இலங்கை",
+    ticker_licenses: "உரிம எண்கள்: 1268 | 1964 | 2618",
+    ticker_countries: "7 நாடுகள் – மத்திய கிழக்கு மற்றும் இஸ்ரேல்",
+    ticker_workers: "1,000+ மேற்பட்டோர் வெளிநாடுகளில் பணிபுரிகின்றனர்",
+    ticker_partner: "நம்பகமான வெளிநாட்டு ஆட்சேர்ப்பு பங்குதாரர்",
+    ticker_assistance: "முழுமையான விசா மற்றும் குடிவரவு உதவி",
+    ticker_safety: "தொழிலாளர் பாதுகாப்பே முதன்மை",
+
+    // Featured Categories
+    cat_subtitle: "வாய்ப்புகள் காத்திருக்கின்றன",
+    cat_title: "முக்கிய வேலைப் பிரிவுகள்",
+    cat_desc: "பல்வேறு துறைகளில் உள்ள நூற்றுக்கணக்கான அங்கீகரிக்கப்பட்ட வெளிநாட்டு வேலைகளை பார்வையிடுங்கள்",
+
+    // About Section
+    about_subtitle: "நாங்கள் யார்",
+    about_title: "நில்வலா ஏஜென்சீஸ் குருநாகல்",
+    about_desc: "இலங்கை தொழிலாளர்களுக்கு பாதுகாப்பான, நம்பகமான மற்றும் அதிக வருமானம் ஈட்டும் வெளிநாட்டு வேலைவாய்ப்புகளை வழங்குவதில் அர்ப்பணிப்புடன் செயல்படும் முன்னணி தொழில்முறை நிறுவனம். ஆரம்பம் முதல் புறப்பாடு வரை முழுமையான ஆதரவை வழங்குகிறோம்.",
+    about_badge_years: "ஆண்டுகள் சிறந்த சேவை",
+    about_badge_workers: "பணியமர்த்தப்பட்ட தொழிலாளர்கள்",
+    tab_about: "எங்களை பற்றி",
+    tab_mission: "நோக்கம் & தொலைநோக்கு",
+    tab_services: "சேவைகள்",
+    about_tab_p: "1996 இல் நிறுவப்பட்ட எமது நிறுவனம், இதுவரை 1,000 க்கும் மேற்பட்ட இலங்கை தொழிலாளர்களை மத்திய கிழக்கு மற்றும் இஸ்ரேலில் பணியமர்த்தியுள்ளது. மூன்று அரசாங்க உரிமங்களுடன் முழு சட்டபூர்வமாக இயங்குகிறோம்.",
+    about_feat_slbfe: "பணியகத்தின் அங்கீகாரம் (SLBFE)",
+    about_feat_trusted: "1996 முதல் நம்பிக்கை",
+    about_feat_ethical: "நேர்மையான ஆட்சேர்ப்பு",
+    about_feat_support: "முழு ஆதரவுக் குழு",
+    vision_title: "எமது தொலைநோக்கு",
+    vision_desc: "இலங்கை தொழிலாளர்களுக்கு வெற்றிகரமான சர்வதேச தொழில் பாதைகளை உருவாக்கி, இலங்கையின் மிகவும் நம்பகமான வெளிநாட்டு வேலைவாய்ப்பு நிறுவனமாக மாறுவது.",
+    mission_title: "எமது நோக்கம்",
+    mission_desc: "திறமையான இலங்கை தொழிலாளர்களை உலகளாவிய வேலைவாய்ப்புகளுடன் இணைத்து, வெளிப்படையான, நேர்மையான மற்றும் தொழில்முறை சேவைகளை வழங்குதல்.",
+    service_placement: "வெளிநாட்டு வேலைவாய்ப்பு",
+    service_screening: "விண்ணப்பதாரர் தேர்வு",
+    service_coordination: "முதலாளி ஒருங்கிணைப்பு",
+    service_visa: "விசா நடைமுறைகள்",
+    service_docs: "ஆவண ஆதரவு",
+    service_guidance: "புறப்பாட்டிற்கு முந்தைய பயிற்சி",
+    service_consultation: "வெளிநாட்டு ஆலோசனை",
+    service_ongoing: "தொடர்ச்சியான ஆதரவு",
+
+    // Why Choose Us
+    why_subtitle: "ஏன் நில்வலாவை தேர்ந்தெடுக்க வேண்டும்?",
+    why_title: "எங்களுடன் ஏன் இணைய வேண்டும்?",
+    why_desc: "1996 முதல் ஆயிரக்கணக்கான இலங்கை தொழிலாளர்களின் நம்பிக்கையைப் பெற்ற எமது சிறப்பம்சங்கள்",
+    why_1_title: "உண்மையான வேலை வாய்ப்புகள்",
+    why_1_desc: "நம்பகமான சர்வதேச முதலாளிகளிடமிருந்து சரிபார்க்கப்பட்ட வேலைகள் மட்டுமே. போலி வாக்குறுதிகள் இல்லை.",
+    why_2_title: "தொழில்முறை வழிகாட்டுதல்",
+    why_2_desc: "ஆரம்பம் முதல் வெளிநாடு செல்லும் வரை எங்கள் அனுபவமிக்க குழு உங்களுக்கு முழு வழிகாட்டலை வழங்கும்.",
+    why_3_title: "வெளிப்படையான செயல்முறை",
+    why_3_desc: "வேலைத் தேவைகள், ஒப்பந்தங்கள் மற்றும் கட்டணங்கள் பற்றிய தெளிவான தகவல் — மறைமுகக் கட்டணங்கள் இல்லை.",
+    why_4_title: "முழுமையான ஆதரவு",
+    why_4_desc: "விண்ணப்பம் முதல் வெளிநாடு செல்வது வரை மற்றும் அதற்கு அப்பாலும் நாங்கள் உங்களுடன் இருக்கிறோம்.",
+    why_5_title: "தொழில் வளர்ச்சி வாய்ப்புகள்",
+    why_5_desc: "சர்வதேச வேலைவாய்ப்பு மூலம் உங்கள் குடும்பத்தின் எதிர்காலத்தை வளப்படுத்த உதவுகிறோம்.",
+    why_6_title: "தொழிலாளர் பாதுகாப்பு முதன்மை",
+    why_6_desc: "சட்டபூர்வமான நடைமுறைகளைப் பின்பற்றி தொழிலாளர்களின் நலனை முன்னிறுத்துகிறோம்.",
+
+    // Countries
+    countries_subtitle: "உலகளாவிய அணுகல்",
+    countries_title: "நாம் வாய்ப்புகளை வழங்கும் நாடுகள்",
+    countries_desc: "மத்திய கிழக்கு மற்றும் பிற நாடுகளில் அங்கீகரிக்கப்பட்ட வேலைவாய்ப்புகள்",
+    vacancies_avail: "காலியிடங்கள் உள்ளன",
+
+    // Vacancies / Jobs
+    jobs_subtitle: "சமீபத்திய காலியிடங்கள்",
+    jobs_title: "தற்போதைய வெளிநாட்டு வேலைகள்",
+    jobs_desc: "இலங்கை ரூபாய் (LKR) மதிப்பிலான அதிக சம்பள வேலைகளை பார்வையிட்டு விண்ணப்பிக்கவும்.",
+    filter_country: "நாடு",
+    filter_category: "வேலை வகை",
+    filter_exp: "அனுபவம்",
+    filter_salary: "சம்பள வரம்பு (LKR)",
+    filter_all_countries: "அனைத்து நாடுகள்",
+    filter_all_categories: "அனைத்து வகைகள்",
+    filter_any_exp: "எந்த நிலை",
+    filter_no_exp: "அனுபவம் தேவையில்லை",
+    filter_exp_1_3: "அனுபவம் (1-3 ஆண்டுகள்)",
+    filter_exp_senior: "முதுநிலை (3+ ஆண்டுகள்)",
+    filter_all_salaries: "அனைத்து சம்பளங்கள் (LKR)",
+    filter_sal_1: "ரூ. 100,000 வரை",
+    filter_sal_2: "ரூ. 100,000 – 250,000",
+    filter_sal_3: "ரூ. 250,000+",
+    filter_btn_search: "தேடுங்கள்",
+    filter_not_found: "காலியிடங்கள் எதுவும் கிடைக்கவில்லை",
+    filter_not_found_desc: "வேறு வடிகட்டிகளைத் தேர்ந்தெடுக்கவும் அல்லது எங்களைத் தொடர்பு கொள்ளவும்.",
+    btn_apply_now: "விண்ணப்பிக்க",
+    btn_details: "விவரங்கள்",
+    per_month: "/ மாதம்",
+    contract: "ஒப்பந்தம்",
+    requirements: "தேவைகள்",
+    benefits: "நன்மைகள்",
+    jobs_more_prompt: "நீங்கள் விரும்பிய வேலை இங்கு இல்லையா? கூடுதல் வாய்ப்புகளுக்கு எங்களை நேரடியாக தொடர்பு கொள்ளுங்கள்!",
+    jobs_more_btn: "கூடுதல் வேலைகளுக்கு தொடர்பு கொள்ள",
+
+    // Job Categories Detail
+    cat_det_subtitle: "வேலை வகைகள்",
+    cat_det_title: "பிரிவுகள் வாரியாக",
+    cat_skilled: "தொழில்நுட்ப வேலைகள்",
+    cat_construction: "கட்டுமானத் துறை",
+    cat_driving: "ஓட்டுநர் வேலைகள்",
+    cat_healthcare: "சுகாதார பராமரிப்பு",
+    cat_domestic: "வீட்டுப் பணி",
+    ready_to_apply: "விண்ணப்பிக்க தயாரா?",
+    ready_to_apply_desc: "தாமதிக்காதீர்கள் — சிறந்த வாய்ப்புகள் விரைவாக நிரப்பப்படும்!",
+
+    // Recruitment Process
+    process_subtitle: "இது எவ்வாறு செயல்படுகிறது",
+    process_title: "பணியமர்த்தல் செயல்முறை",
+    process_desc: "விண்ணப்பம் முதல் புறப்பாடு வரை தெளிவான படிநிலை வழிகாட்டல்",
+
+    // Candidate Registration
+    reg_subtitle: "உங்கள் பயணத்தைத் தொடங்குங்கள்",
+    reg_title: "வெளிநாட்டு வேலைக்கு விண்ணப்பிக்கவும்",
+    reg_desc: "பதிவு செய்ய படிவத்தை நிரப்பவும். எங்கள் குழு 24 மணி நேரத்திற்குள் உங்களைத் தொடர்பு கொள்ளும்.",
+    reg_card_title: "விண்ணப்பதாரர் பதிவு",
+    reg_card_sub: "விண்ணப்பத்தை சமர்ப்பிக்க 4 படிகளையும் முடிக்கவும்",
+    step1_title: "தனிப்பட்ட விவரங்கள்",
+    step1_sub: "தயவுசெய்து உங்கள் தகவல்களை துல்லியமாக வழங்கவும்",
+    lbl_fullname: "முழு பெயர் *",
+    lbl_gender: "பாலினம் *",
+    select_gender: "தேர்ந்தெடுக்கவும்",
+    gender_male: "ஆண்",
+    gender_female: "பெண்",
+    lbl_nic: "தேசிய அடையாள அட்டை எண் *",
+    lbl_dob: "பிறந்த தேதி *",
+    lbl_passport: "கடவுச்சீட்டு எண்",
+    lbl_phone: "தொலைபேசி எண் *",
+    lbl_email: "மின்னஞ்சல் முகவரி",
+    lbl_address: "முழு முகவரி",
+    btn_next_step: "அடுத்த படி",
+    btn_back: "பின்னே",
+
+    step2_title: "தொழில்முறை விவரங்கள்",
+    step2_sub: "உங்கள் தகுதிகள் மற்றும் அனுபவம் பற்றி குறிப்பிடவும்",
+    lbl_education: "கல்வித் தகுதி *",
+    select_level: "தேர்ந்தெடுக்கவும்",
+    edu_ol: "சா/த (O/L)",
+    edu_al: "உ/த (A/L)",
+    edu_diploma: "சான்றிதழ் / டிப்ளமோ",
+    edu_degree: "பட்டம்",
+    edu_postgraduate: "முதுகலை",
+    edu_other: "மற்றவை",
+    lbl_qualification: "தொழில்முறை தகுதி",
+    lbl_experience: "பணி அனுபவம்",
+    lbl_skills: "திறன்கள் & மொழிகள்",
+    lbl_pref_job: "விரும்பிய வேலை வகை",
+    lbl_pref_country: "விரும்பிய நாடு",
+    any_country: "எந்த நாடும்",
+
+    step3_title: "ஆவணங்களை பதிவேற்றவும்",
+    step3_sub: "உங்கள் CV மற்றும் ஆவணங்களை பதிவேற்றவும் (CV க்கு PDF மட்டும் – அதிகபட்சம் 4MB)",
+    lbl_cv: "சுயவிவரம் (CV - PDF மட்டும்) *",
+    cv_drop_text: "உங்கள் CV (PDF) கோப்பை இங்கே பதிவேற்றவும்",
+    cv_pdf_only_hint: "PDF கோப்புகள் மட்டுமே ஏற்கப்படும் (.pdf, அதிகபட்சம் 4MB)",
+    err_pdf_only: "CV க்கு PDF (.pdf) கோப்புகள் மட்டுமே அனுமதிக்கப்படுகின்றன. தயவுசெய்து PDF கோப்பைத் தேர்ந்தெடுக்கவும்.",
+    err_file_size: "கோப்பு மிகப் பெரியது. அதிகபட்ச அளவு 4MB.",
+    lbl_passport_copy: "கடவுச்சீட்டு நகல்",
+    lbl_certs: "தகுதிச் சான்றிதழ்கள் & அனுபவக் கடிதங்கள் (விருப்பப்பட்டால்)",
+    upload_drag: "கோப்புகளை இழுத்து விடவும் அல்லது தேர்ந்தெடுக்கவும்",
+    upload_multi: "கோப்புகளை இழுத்து விடவும் (பல கோப்புகள் அனுமதிக்கப்படுகின்றன)",
+    btn_review_submit: "சரிபார்த்து சமர்ப்பிக்கவும்",
+
+    step4_title: "சரிபார்த்து சமர்ப்பிக்கவும்",
+    step4_sub: "சமர்ப்பிக்கும் முன் உங்கள் தகவல்களை சரிபார்க்கவும்",
+    review_ready_title: "✓ உங்கள் விண்ணப்பம் சமர்ப்பிக்க தயாராக உள்ளது",
+    review_ready_desc: "இந்த விண்ணப்பத்தை சமர்ப்பிப்பதன் மூலம் அனைத்து தகவல்களும் துல்லியமானவை என்பதை உறுதிப்படுத்துகிறீர்கள். எங்கள் குழு 24 மணி நேரத்திற்குள் உங்களைத் தொடர்பு கொள்ளும்.",
+    review_notice: "அவசர தேவைகளுக்கு எமது குருநாகல் அலுவலகத்திற்கு நேரில் வருகை தரவும் (திங்கள்–சனி, காலை 8:00 – மாலை 6:00).",
+    terms_agree: "விதிமுறைகளை ஏற்றுக்கொள்கிறேன் மற்றும் வழங்கப்பட்ட தகவல்கள் துல்லியமானவை என்பதை உறுதிப்படுத்துகிறேன்.",
+    btn_submit_app: "விண்ணப்பத்தை சமர்ப்பிக்கவும்",
+    app_submitted_title: "விண்ணப்பம் வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது!",
+    app_submitted_desc: "நன்றி! எங்கள் குழு உங்கள் விண்ணப்பத்தை பரிசீலித்து 24 மணி நேரத்திற்குள் உங்களைத் தொடர்பு கொள்ளும்.",
+    btn_browse_more: "கூடுதல் வேலைகளைப் பார்க்கவும்",
+
+    // Employer Services
+    emp_subtitle: "முதலாளிகளுக்கு",
+    emp_title: "முதலாளி சேவைகள்",
+    emp_desc: "நம்பகமான திறமையான தொழிலாளர் தீர்வுகளுக்கு சர்வதேச முதலாளிகள் நில்வலா ஏஜென்சீஸை நம்புகிறார்கள்",
+    emp_feat_1_title: "விண்ணப்பதாரர் தேர்வு",
+    emp_feat_1_desc: "முன் சரிபார்க்கப்பட்ட திறமையான இலங்கை தொழிலாளர்களின் பெரிய தரவுத்தளத்தை அணுகலாம்.",
+    emp_feat_2_title: "திறமையான பணியாளர் ஆட்சேர்ப்பு",
+    emp_feat_2_desc: "கட்டுமானத் தொழிலாளர்கள் முதல் சுகாதாரப் பணியாளர்கள் வரை — உங்கள் தேவைகளுக்கான சரியான திறமை.",
+    emp_feat_3_title: "ஆவண சரிபார்ப்பு",
+    emp_feat_3_desc: "அனைத்து வேட்பாளர்களும் கல்வி மற்றும் தொழில்முறை சான்றிதழ்கள் உட்பட முழுமையான சரிபார்ப்புக்கு உட்படுத்தப்படுகிறார்கள்.",
+    emp_feat_4_title: "நேர்காணல் ஒருங்கிணைப்பு",
+    emp_feat_4_desc: "முதலாளிகள் மற்றும் விண்ணப்பதாரர்களுக்கு இடையே நேர்காணல்களை திறம்பட ஒருங்கிணைக்கிறோம்.",
+    emp_feat_5_title: "பணியாளர் தீர்வுகள்",
+    emp_feat_5_desc: "பெரிய அளவிலான பணியாளர் தேவைகளுக்கு நெகிழ்வான மற்றும் போட்டித்தன்மை வாய்ந்த திட்டங்கள்.",
+    emp_partner_title: "எங்களுடன் இணையுங்கள்",
+    emp_partner_desc: "உங்கள் ஆட்சேர்ப்பு தேவைகளுக்கு நில்வலா ஏஜென்சீஸை நம்பும் நூற்றுக்கணக்கான முதலாளிகளுடன் இணையுங்கள்.",
+    emp_contact_btn: "எங்கள் குழுவை தொடர்பு கொள்ள",
+    emp_wa_btn: "WhatsApp இல் தொடர்பு கொள்ள",
+
+    // Testimonials
+    test_subtitle: "உண்மைக் கதைகள்",
+    test_title: "உலகெங்கிலும் உள்ள எங்கள் பணியாளர்கள்",
+    test_desc: "நில்வலா ஏஜென்சீஸ் மூலம் சிறந்த வாழ்க்கையைப் பெற்ற தொழிலாளர்களின் அனுபவங்கள்",
+
+    // Training
+    training_subtitle: "வெற்றிக்கு தயாராகுங்கள்",
+    training_title: "பயிற்சி & தயாரிப்பு",
+    training_desc: "புறப்படுவதற்கு முன் வெளிநாட்டு வாழ்க்கைக்கு விண்ணப்பதாரர்களை நாங்கள் தயார்படுத்துகிறோம்",
+
+    // News
+    news_subtitle: "தகவல்களைப் பெறுங்கள்",
+    news_title: "செய்திகள் & அறிவிப்புகள்",
+    news_desc: "சமீபத்திய வேலை வாய்ப்புகள், விசா தகவல்கள் மற்றும் முக்கியமான அறிவிப்புகள்",
+    news_read_more: "மேலும் வாசிக்க",
+
+    // FAQ
+    faq_subtitle: "பொதுவான கேள்விகள்",
+    faq_title: "அடிக்கடி கேட்கப்படும் கேள்விகள்",
+    faq_desc: "உங்களுக்கு ஏதேனும் கேள்வி உள்ளதா? பொதுவானவற்றுக்கான பதில்களை கீழே வழங்கியுள்ளோம்.",
+    faq_more: "இன்னும் கேள்விகள் உள்ளதா? உதவ நாங்கள் தயாராக உள்ளோம்!",
+    faq_ask_btn: "நேரடியாக கேளுங்கள்",
+
+    // Contact
+    contact_subtitle: "தொடர்பில் இருங்கள்",
+    contact_title: "தொடர்பு கொள்ளுங்கள்",
+    contact_desc: "உங்கள் வெளிநாட்டு பயணத்தை தொடங்க தயாரா? இன்றே எங்கள் குழுவை தொடர்பு கொள்ளுங்கள்.",
+    contact_tagline: "1996 முதல் உங்கள் நம்பிக்கைக்குரிய வெளிநாட்டு வேலைவாய்ப்பு கூட்டாளர்",
+    lbl_address_label: "முகவரி",
+    lbl_address_val: "குருநாகல், இலங்கை",
+    lbl_phone_label: "தொலைபேசி",
+    lbl_wa_label: "WhatsApp",
+    lbl_email_label: "மின்னஞ்சல்",
+    hours_title: "வேலை நேரம்",
+    hours_mon_fri: "திங்கள் – வெள்ளி",
+    hours_mon_fri_val: "காலை 8:00 – மாலை 6:00",
+    hours_sat: "சனிக்கிழமை",
+    hours_sat_val: "காலை 8:00 – பிற்பகல் 2:00",
+    hours_sun: "ஞாயிறு",
+    hours_sun_val: "விடுமுறை",
+    send_msg_title: "செய்தி அனுப்புங்கள்",
+    send_msg_desc: "படிவத்தை நிரப்பவும், 24 மணி நேரத்திற்குள் உங்களைத் தொடர்பு கொள்வோம்",
+    form_your_name: "உங்கள் பெயர்",
+    form_phone: "தொலைபேசி எண்",
+    form_email: "மின்னஞ்சல் முகவரி",
+    form_subject: "பொருள்",
+    subject_job: "வேலை விசாரணை",
+    subject_doc: "ஆவண ஆதரவு",
+    subject_visa: "விசா தகவல்",
+    subject_employer: "முதலாளி கூட்டாண்மை",
+    subject_general: "பொதுவான விசாரணை",
+    form_message: "செய்தி",
+    form_message_ph: "நாங்கள் உங்களுக்கு எவ்வாறு உதவ முடியும்?",
+    btn_send_msg: "செய்தி அனுப்புக",
+    map_location: "குருநாகல், இலங்கை",
+    map_btn: "Google Maps இல் பார்க்க",
+
+    // Footer
+    footer_desc: "1996 முதல் திறமையான தொழிலாளர்களை உலகளாவிய வேலை வாய்ப்புகளுடன் இணைக்கும் இலங்கையின் நம்பகமான வெளிநாட்டு வேலைவாய்ப்பு நிறுவனம். SLBFE உரிமம் பெற்றது.",
+    newsletter_ph: "வேலை அறிவிப்புகளை மின்னஞ்சல் மூலம் பெறுங்கள்",
+    footer_quick_links: "விரைவு இணைப்புகள்",
+    footer_categories: "வேலை பிரிவுகள்",
+    footer_contact: "தொடர்பு தகவல்",
+    footer_follow: "எங்களை பின்தொடருங்கள்",
+    footer_copyright: "© 2026 நில்வலா ஏஜென்சீஸ் குருநாகல். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை. | உரிம எண்கள்: 1268 | 1964 | 2618",
+    footer_privacy: "தனியுரிமைக் கொள்கை",
+    footer_terms: "சேவை விதிமுறைகள்",
+    footer_admin: "நிர்வாக குழு",
+
+    // Modals
+    modal_apply_title: "பணிக்கு விண்ணப்பிக்கவும்",
+    modal_apply_desc: "உங்கள் விவரங்களை இடுங்கள், விரைவில் உங்களைத் தொடர்பு கொள்வோம்.",
+    quick_name_ph: "உங்கள் முழு பெயர்",
+    quick_phone_ph: "+94 77 XXX XXXX",
+    quick_nic_ph: "அடையாள அட்டை எண் (விருப்பப்பட்டால்)",
+    quick_apply_submit: "விண்ணப்பத்தை சமர்ப்பிக்கவும்",
+    quick_apply_alt: "அல்லது விரிவான விண்ணப்பத்திற்கு முழு படிவத்தை நிரப்பவும்",
+    job_detail_salary_lbl: "மாதச் சம்பளம் (LKR)",
+    job_detail_contract_lbl: "ஒப்பந்தம்",
+    job_detail_exp_lbl: "அனுபவம்",
+    job_detail_apply: "இந்த பதவிக்கு விண்ணப்பிக்கவும்",
+
+    // Alerts / Toasts
+    toast_app_submitted: "விண்ணப்பம் சமர்ப்பிக்கப்பட்டது! விரைவில் தொடர்பு கொள்வோம். 📞",
+    toast_quick_fill: "தயவுசெய்து பெயர் மற்றும் தொலைபேசி எண்ணை உள்ளிடவும்.",
+    toast_subscribed: "✓ வேலை அறிவிப்புகளுக்கு பதிவு செய்யப்பட்டது!",
+    msg_sent: "செய்தி அனுப்பப்பட்டது!"
+  }
+};
+
+// Dynamic Data Localizations
+const DYNAMIC_TRANSLATIONS = {
+  // Category cards
+  categories: {
+    Construction: {
+      si: { name: 'ඉදිකිරීම්', sub: 'යකඩ වැඩ, මේසන්, වඩු කාර්මික' },
+      ta: { name: 'கட்டுமானம்', sub: 'எஃகு, மேசன், தச்சர்' }
+    },
+    Healthcare: {
+      si: { name: 'සෞඛ්‍ය හා සාත්තු', sub: 'සාත්තු සේවක සහ හෙද හෙදියන්' },
+      ta: { name: 'சுகாதாரம்', sub: 'பராமரிப்பாளர்கள் & செவிலியர்கள்' }
+    },
+    Domestic: {
+      si: { name: 'ගෘහ සේවය', sub: 'ගෘහ සේවිකාවන් සහ සහායකයින්' },
+      ta: { name: 'வீட்டுப் பணி', sub: 'வீட்டுப் பணியாளர்கள்' }
+    },
+    'Skilled Tech': {
+      si: { name: 'කාර්මික ශිල්පීන්', sub: 'විදුලි කාර්මික, වෙල්ඩර්' },
+      ta: { name: 'தொழில்நுட்பம்', sub: 'எலக்ட்ரீஷியன், வெல்டர்' }
+    },
+    Driving: {
+      si: { name: 'රියදුරු රැකියා', sub: 'බර වාහන හා බස් රියදුරන්' },
+      ta: { name: 'ஓட்டுநர்', sub: 'கனரக வாகன ஓட்டுநர்கள்' }
+    },
+    Mechanics: {
+      si: { name: 'කාර්මික ශිල්පීන්', sub: 'මෝටර් රථ හා කර්මාන්තශාලා' },
+      ta: { name: 'மெக்கானிக்ஸ்', sub: 'வாகனம் & தொழில்' }
+    },
+    Cleaning: {
+      si: { name: 'පවිත්‍රතා සේවා', sub: 'හෝටල් හා කාර්යාල පවිත්‍රතා' },
+      ta: { name: 'சுத்தம் செய்தல்', sub: 'வசதி & அலுவலகம்' }
+    },
+    'House Nurses': {
+      si: { name: 'ගෘහස්ථ හෙද සේවා', sub: 'නිවෙස් තුළ රෝගී සාත්තු' },
+      ta: { name: 'வீட்டு செவிலியர்', sub: 'வீட்டு பராமரிப்பு சிறப்பு' }
+    }
+  },
+
+  // Countries
+  countries: {
+    Israel: { si: 'ඊශ්‍රායලය', ta: 'இஸ்ரேல்' },
+    'Saudi Arabia': { si: 'සෞදි අරාබිය', ta: 'சவுதி அரேபியா' },
+    'UAE (Dubai / Abu Dhabi)': { si: 'එක්සත් අරාබි එමීර් (ඩුබායි / අබුඩාබි)', ta: 'ஐக்கிய அரபு அமீரகம் (துபாய் / அபுதாபி)' },
+    Qatar: { si: 'කටාර්', ta: 'கத்தார்' },
+    Kuwait: { si: 'කුවේට්', ta: 'குவைத்' },
+    Oman: { si: 'ඕමාන්', ta: 'ஓமான்' },
+    Bahrain: { si: 'බහරේන්', ta: 'பஹ்ரைன்' }
+  },
+
+  // Process timeline
+  timeline: {
+    en: [
+      { title: 'Submit Your Application', desc: 'Complete the online form or visit our office. Provide your personal details and job preferences.' },
+      { title: 'Interview & Skill Assessment', desc: 'Attend the interview (where required). Our team will assess your skills and match you with suitable employers.' },
+      { title: 'Employer Selection', desc: 'Top candidates are presented to verified international employers for selection and final approval.' },
+      { title: 'Visa Processing', desc: 'We handle all visa application coordination with the embassy and employer. You will be guided step by step.' },
+      { title: 'Medical Examination', desc: 'Complete the required medical examination at an approved medical centre. Results are submitted to the embassy.' },
+      { title: 'Documentation & Bureau Registration', desc: 'Prepare all required documents: Police Clearance, SLBFE registration, and embassy verification.' },
+      { title: 'Departure & Overseas Support', desc: 'Receive pre-departure orientation. Our team provides continued support even after you arrive in your destination country.' }
+    ],
+    si: [
+      { title: 'අයදුම්පත ඉදිරිපත් කිරීම', desc: 'අන්තර්ජාලය ඔස්සේ හෝ අපගේ කුරුණෑගල කාර්යාලයට පැමිණ ඔබගේ අයදුම්පත භාරදෙන්න.' },
+      { title: 'සම්මුඛ පරීක්ෂණය හා කුසලතා ඇගයීම', desc: 'අවශ්‍ය අවස්ථාවලදී සම්මුඛ පරීක්ෂණයට පෙනීසිටින්න. අප කණ්ඩායම ඔබගේ දක්ෂතා ඇගයීමට ලක්කරයි.' },
+      { title: 'සේවායෝජක තේරීම', desc: 'සුදුසුකම්ලත් අයදුම්කරුවන් ජාත්‍යන්තර ආයතන වෙත ඉදිරිපත් කර අවසන් තහවුරු කිරීම ලබාගැනීම.' },
+      { title: 'වීසා සැකසීම', desc: 'තානාපති කාර්යාලය සහ සේවායෝජකයා සමඟ සම්බන්ධ වී සියලු වීසා කටයුතු නීත්‍යානුකූලව සිදුකිරීම.' },
+      { title: 'වෛද්‍ය පරීක්ෂණය', desc: 'අනුමත වෛද්‍ය මධ්‍යස්ථානයකින් සම්පූර්ණ වෛද්‍ය පරීක්ෂණය සිදුකර වාර්තා තානාපති කාර්යාලයට යොමුකිරීම.' },
+      { title: 'ලේඛන සහ කාර්යාංශ ලියාපදිංචිය', desc: 'පොලිස් වාර්තා, විදේශ සේවා නියුක්ති කාර්යාංශ (SLBFE) ලියාපදිංචිය සහ රක්ෂණ ආවරණ ලබාගැනීම.' },
+      { title: 'විදේශගතවීම සහ නිරන්තර සේවා රැකවරණය', desc: 'විදේශගතවීමේ පෙර පුහුණුව ලබාදීම සහ විදේශ රටට ළඟාවූ පසුවත් අප කණ්ඩායම ඔබගේ රැකවරණය තහවුරු කරයි.' }
+    ],
+    ta: [
+      { title: 'விண்ணப்பத்தை சமர்ப்பித்தல்', desc: 'ஆன்லைன் படிவத்தை நிரப்பவும் அல்லது எங்கள் அலுவலகத்திற்கு வருகை தரவும். விவரங்களை வழங்கவும்.' },
+      { title: 'நேர்காணல் & திறன் மதிப்பீடு', desc: 'தேவைப்படும் போது நேர்காணலில் கலந்து கொள்ளுங்கள். எங்கள் குழு உங்கள் திறன்களை மதிப்பிடும்.' },
+      { title: 'முதலாளி தேர்வு', desc: 'தகுதியான விண்ணப்பதாரர்கள் சர்வதேச முதலாளிகளுக்கு இறுதி ஒப்புதலுக்காக சமர்ப்பிக்கப்படுவார்கள்.' },
+      { title: 'விசா செயலாக்கம்', desc: 'தூதரகம் மற்றும் முதலாளியுடன் அனைத்து விசா ஒருங்கிணைப்பையும் நாங்கள் கையாளுகிறோம்.' },
+      { title: 'மருத்துவ பரிசோதனை', desc: 'அங்கீகரிக்கப்பட்ட மையத்தில் மருத்துவ பரிசோதனையை முடித்து அறிக்கைகளை தூதரகத்திற்கு அனுப்புதல்.' },
+      { title: 'ஆவணங்கள் & பணியக பதிவு', desc: 'காவல்துறை சான்றிதழ் மற்றும் வெளிநாட்டு வேலைவாய்ப்பு பணியக (SLBFE) பதிவை முடித்தல்.' },
+      { title: 'புறப்பாடு & தொடர் ஆதரவு', desc: 'புறப்பாட்டிற்கு முந்தைய பயிற்சி மற்றும் நீங்கள் சென்றடைந்த பிறகும் எங்கள் குழு தொடர் ஆதரவை வழங்குகிறது.' }
+    ]
+  },
+
+  // Training items
+  training: {
+    en: [
+      { icon: '🗣️', title: 'Language Training', desc: 'Basic communication skills in Arabic, Hebrew, or English for your destination country.' },
+      { icon: '💼', title: 'Interview Preparation', desc: 'Mock interviews and professional coaching to confidently face employer interviews.' },
+      { icon: '🌍', title: 'Cultural Awareness', desc: 'Understanding customs, laws, and culture of your destination country.' },
+      { icon: '⚙️', title: 'Job Readiness', desc: 'Technical skill assessment and hands-on training relevant to your job role.' },
+      { icon: '✈️', title: 'Pre-Departure Orientation', desc: 'Complete briefing on travel, accommodation, rights, and emergency contacts.' }
+    ],
+    si: [
+      { icon: '🗣️', title: 'භාෂා පුහුණුව', desc: 'අදාළ රටෙහි භාවිතාවන අරාබි, හීබෲ හෝ ඉංග්‍රීසි මූලික භාෂා සන්නිවේදන පුහුණුව.' },
+      { icon: '💼', title: 'සම්මුඛ පරීක්ෂණ සූදානම', desc: 'විදේශ සේවායෝජක සම්මුඛ පරීක්ෂණවලට සාර්ථකව මුහුණදීමට අවශ්‍ය වෘත්තීය පුහුණුව.' },
+      { icon: '🌍', title: 'සංස්කෘතික දැනුවත්භාවය', desc: 'ඔබ සේවයට යන රටෙහි නීතිරීති, චාරිත්‍ර සහ සංස්කෘතිය පිළිබඳ පූර්ණ දැනුවත් කිරීම.' },
+      { icon: '⚙️', title: 'වෘත්තීය ප්‍රායෝගික පුහුණුව', desc: 'ඔබේ රැකියා ක්ෂේත්‍රයට අදාළ තාක්ෂණික දැනුම සහ ප්‍රායෝගික පුහුණුව.' },
+      { icon: '✈️', title: 'විදේශගතවීමේ පෙර දැනුවත්කම', desc: 'ගුවන් ගමන, නවාතැන්, සේවක අයිතිවාසිකම් සහ හදිසි සහන සම්බන්ධතා පිළිබඳ උපදෙස්.' }
+    ],
+    ta: [
+      { icon: '🗣️', title: 'மொழிப் பயிற்சி', desc: 'அரபு, ஹீப்ரு அல்லது ஆங்கிலத்தில் அடிப்படை தகவல் தொடர்பு திறன் பயிற்சி.' },
+      { icon: '💼', title: 'நேர்காணல் தயாரிப்பு', desc: 'முதலாளி நேர்காணல்களை நம்பிக்கையுடன் எதிர்கொள்ள தொழில்முறை வழிகாட்டல்.' },
+      { icon: '🌍', title: 'கலாச்சார விழிப்புணர்வு', desc: 'நீங்கள் செல்லும் நாட்டின் சட்டங்கள், பழக்கவழக்கங்கள் மற்றும் கலாச்சாரம் பற்றிய வழிகாட்டல்.' },
+      { icon: '⚙️', title: 'பணித் தயார்நிலை', desc: 'உங்கள் பணிப் பாத்திரத்திற்குத் தொடர்புடைய தொழில்நுட்பத் திறன் பயிற்சி.' },
+      { icon: '✈️', title: 'புறப்பாட்டிற்கு முந்தைய வழிகாட்டல்', desc: 'பயணம், தங்குமிடம், உரிமைகள் மற்றும் அவசர தொடர்புகள் பற்றிய முழுமையான விளக்கம்.' }
+    ]
+  },
+
+  // FAQ
+  faq: {
+    en: [
+      { q: 'How can I apply for overseas jobs through Nilwala Agencies?', a: 'You can apply by visiting our office in Kurunegala, calling us directly, or using the online application form on this website. Our team will guide you through the entire process.' },
+      { q: 'What documents are required to apply?', a: 'Basic documents include: Valid Passport, National ID Card (NIC), Birth Certificate, Educational Certificates, Experience Letters, Police Clearance Report, and Medical Certificate.' },
+      { q: 'How long does the visa process take?', a: 'The visa processing time varies by country. Generally, it takes 2 to 6 months from application submission to departure. Our team will keep you updated throughout.' },
+      { q: 'Do you provide job opportunities for skilled workers?', a: 'Yes! We provide opportunities for a wide range of skilled workers including electricians, welders, plumbers, mechanics, construction workers, caregivers, and nurses.' },
+      { q: 'Which countries are currently available?', a: 'We currently have vacancies in Israel, Saudi Arabia, UAE (Dubai/Abu Dhabi), Qatar, Kuwait, Oman, and Bahrain. Contact us for latest updates.' },
+      { q: 'What are the currency and salaries?', a: 'All salaries are clearly listed in Sri Lankan Rupees (LKR) with the foreign currency equivalent. Salaries range from LKR 85,000 to over LKR 750,000 per month depending on role and destination.' },
+      { q: 'Is Nilwala Agencies a licensed agency?', a: 'Yes, we are fully licensed by the Sri Lanka Bureau of Foreign Employment (SLBFE) under licenses: L.L. No: 1268, 1964, and 2618.' },
+      { q: 'Do you provide pre-departure training?', a: 'Yes, we offer comprehensive pre-departure training including language training, cultural awareness, and job readiness orientation.' }
+    ],
+    si: [
+      { q: 'නිල්වලා ඒජන්සීස් හරහා විදේශ රැකියා සඳහා අයදුම් කරන්නේ කෙසේද?', a: 'ඔබට අපගේ කුරුණෑගල කාර්යාලයට පැමිණීමෙන්, දුරකථන ඇමතුමක් ලබාදීමෙන් හෝ මෙම වෙබ් අඩවියේ ඇති අයදුම්පත පිරවීමෙන් ලියාපදිංචි විය හැක. අප කණ්ඩායම සම්පූර්ණ මඟපෙන්වීම ලබාදෙයි.' },
+      { q: 'අයදුම් කිරීම සඳහා අවශ්‍ය ලියකියවිලි මොනවාද?', a: 'වලංගු විදේශ ගමන් බලපත්‍රය (Passport), ජාතික හැඳුනුම්පත (NIC), උප්පැන්න සහතිකය, අධ්‍යාපන සහතික, සේවා පළපුරුදු ලිපි, පොලිස් වාර්තාව සහ වෛද්‍ය වාර්තාව මූලිකව අවශ්‍ය වේ.' },
+      { q: 'වීසා ක්‍රියාවලිය සඳහා කොපමණ කාලයක් ගතවේද?', a: 'රට අනුව කාලය වෙනස් වේ. සාමාන්‍යයෙන් අයදුම්පත භාරදුන් දින සිට මාස 2ත් 6ත් අතර කාලයකදී විදේශගත විය හැක. අපගේ කණ්ඩායම නිරන්තරයෙන් ඔබව දැනුවත් කරනු ඇත.' },
+      { q: 'පුහුණු සහ කාර්මික ශ්‍රමිකයින් සඳහා රැකියා අවස්ථා තිබේද?', a: 'ඔව්! විදුලි කාර්මික, වෙල්ඩර්, නල කාර්මික, මෝටර් රථ කාර්මික, ඉදිකිරීම් ශිල්පීන්, සාත්තු සේවක සහ හෙද හෙදියන් ඇතුළු ක්ෂේත්‍ර රැසක් සඳහා ඉහළ ඉල්ලුමක් පවතී.' },
+      { q: 'දැනට රැකියා පවතින රටවල් මොනවාද?', a: 'ඊශ්‍රායලය, සෞදි අරාබිය, එක්සත් අරාබි එමීර් (ඩුබායි/අබුඩාබි), කටාර්, කුවේට්, ඕමාන් සහ බහරේන් යන රටවල් සඳහා කාර්යාංශයේ අනුමත පුරප්පාඩු පවතී.' },
+      { q: 'වැටුප් සහ මුදල් ඒකකය (Currency) කුමක්ද?', a: 'සියලුම රැකියා සඳහා මාසික වැටුප ශ්‍රී ලංකා රුපියල් (LKR) වලින් පැහැදිලිව දක්වා ඇත. රැකියාව සහ රට අනුව මසකට රු. 85,000 සිට රු. 750,000 දක්වා ඉහළ වැටුප් උපයාගත හැක.' },
+      { q: 'නිල්වලා ඒජන්සීස් රජයේ අනුමත ආයතනයක්ද?', a: 'ඔව්, අප ශ්‍රී ලංකා විදේශ සේවා නියුක්ති කාර්යාංශයේ (SLBFE) පූර්ණ ලියාපදිංචි බලපත්‍රලත් ආයතනයකි. අපගේ බලපත්‍ර අංක: 1268, 1964, සහ 2618 වේ.' },
+      { q: 'විදේශගත වීමට පෙර පුහුණුවක් ලබාදෙනවාද?', a: 'ඔව්, භාෂා පුහුණුව, සංස්කෘතික දැනුවත්භාවය, සේවා ස්ථාන චර්යාවන් සහ නීති රීති පිළිබඳ සම්පූර්ණ පූර්ව පුහුණුවක් අප විසින් නොමිලේ සපයනු ලැබේ.' }
+    ],
+    ta: [
+      { q: 'நில்வலா ஏஜென்சீஸ் மூலம் வெளிநாட்டு வேலைக்கு எவ்வாறு விண்ணப்பிப்பது?', a: 'எங்கள் குருநாகல் அலுவலகத்திற்கு நேரில் வருகை தந்தோ, தொலைபேசி மூலமாகவோ அல்லது இந்த இணையதள விண்ணப்ப படிவத்தை நிரப்பியோ பதிவு செய்யலாம். எங்கள் குழு உங்களுக்கு முழு வழிகாட்டலை வழங்கும்.' },
+      { q: 'விண்ணப்பிக்க என்ன ஆவணங்கள் தேவை?', a: 'செல்லுபடியாகும் கடவுச்சீட்டு (Passport), தேசிய அடையாள அட்டை (NIC), பிறப்புச் சான்றிதழ், கல்விச் சான்றிதழ்கள், பணி அனுபவக் கடிதங்கள், காவல்துறை அறிக்கை மற்றும் மருத்துவ அறிக்கை.' },
+      { q: 'விசா செயல்முறைக்கு எவ்வளவு காலம் எடுக்கும்?', a: 'நாட்டைப் பொறுத்து நேரம் மாறுபடும். பொதுவாக விண்ணப்பம் சமர்ப்பித்ததில் இருந்து 2 முதல் 6 மாதங்கள் வரை எடுக்கும். எங்கள் குழு எப்போதும் உங்களுக்கு தகவல்களை வழங்கும்.' },
+      { q: 'திறமையான தொழிலாளர்களுக்கு வேலை வாய்ப்புகள் உள்ளதா?', a: 'ஆம்! எலக்ட்ரீஷியன், வெல்டர், பிளம்பர், மெக்கானிக், கட்டுமானப் பணியாளர்கள், பராமரிப்பாளர்கள் மற்றும் செவிலியர்கள் போன்ற பல துறைகளில் அதிக வாய்ப்புகள் உள்ளன.' },
+      { q: 'தற்போது எந்த நாடுகளில் காலியிடங்கள் உள்ளன?', a: 'இஸ்ரேல், சவுதி அரேபியா, ஐக்கிய அரபு அமீரகம் (துபாய்/அபுதாபி), கத்தார், குவைத், ஓமான் மற்றும் பஹ்ரைன் ஆகிய நாடுகளில் காலியிடங்கள் உள்ளன.' },
+      { q: 'சம்பளம் மற்றும் நாணயம் (Currency) என்ன?', a: 'அனைத்து வேலைகளுக்குமான சம்பளம் இலங்கை ரூபாயில் (LKR) தெளிவாகக் குறிப்பிடப்பட்டுள்ளது. பணிக்கு ஏற்ப மாதத்திற்கு ரூ. 85,000 முதல் ரூ. 750,000 வரை சம்பாதிக்கலாம்.' },
+      { q: 'நில்வலா ஏஜென்சீஸ் உரிமம் பெற்ற நிறுவனமா?', a: 'ஆம், இலங்கை வெளிநாட்டு வேலைவாய்ப்பு பணியகத்தால் (SLBFE) முழுமையாக அங்கீகரிக்கப்பட்ட உரிம எண்கள்: 1268, 1964, மற்றும் 2618.' },
+      { q: 'புறப்படுவதற்கு முன் பயிற்சி அளிக்கப்படுகிறதா?', a: 'ஆம், மொழிப் பயிற்சி, கலாச்சார விழிப்புணர்வு மற்றும் பணித் தயார்நிலை ஆகியவை அடங்கிய விரிவான பயிற்சி வழங்கப்படுகிறது.' }
+    ]
+  },
+
+  // Typewriter phrases
+  typewriter: {
+    en: [
+      'Licensed Foreign Employment Agency Since 1996',
+      'High Salary Vacancies in LKR Currency',
+      'Approved Opportunities in Israel, UAE, Saudi Arabia, Qatar & Kuwait',
+      'Your Trusted Gateway to Global Careers – L.L. No: 1268'
+    ],
+    si: [
+      '1996 සිට රජයේ ලියාපදිංචි අංක 1268 දරණ විශ්වාසනීය ඒජන්සිය',
+      'ශ්‍රී ලංකා රුපියල් (LKR) වලින් ඉහළ මාසික වැටුප් සහිත රැකියා',
+      'ඊශ්‍රායලය, එමීර්, සෞදි, කටාර් සහ කුවේට් සඳහා අනුමත පුරප්පාඩු',
+      'ඔබගේ විදේශ රැකියා සිහිනය සැබෑකරන සුපිරි සේවාව'
+    ],
+    ta: [
+      '1996 முதல் அரசாங்க அங்கீகாரம் பெற்ற வெளிநாட்டு வேலைவாய்ப்பு நிறுவனம்',
+      'இலங்கை ரூபாய் (LKR) மதிப்பிலான சிறந்த மாதச் சம்பளம்',
+      'இஸ்ரேல், அரபு அமீரகம், சவுதி, கத்தார் நாடுகளுக்கான சிறந்த வேலைகள்',
+      'உங்கள் வெளிநாட்டு வேலை கனவை நனவாக்கும் நம்பகமான பங்குதாரர்'
+    ]
+  }
+};

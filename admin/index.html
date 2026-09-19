@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login – Nilwala Agencies</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+<div class="login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="../assets/logo.png" alt="Nilwala Agencies" onerror="this.style.display='none'" />
+      <div class="brand">Nilwala Agencies</div>
+      <div class="sub">Admin Panel · Since 1996</div>
+    </div>
+
+    <h2 class="login-title">Welcome Back</h2>
+    <p class="login-sub">Sign in to manage your agency website</p>
+
+    <div class="login-error" id="login-error">
+      <i class="fas fa-exclamation-circle"></i>
+      Incorrect password. Please try again.
+    </div>
+
+    <div class="form-field">
+      <label>Username</label>
+      <div class="input-wrap">
+        <i class="fas fa-user"></i>
+        <input type="text" id="username" value="admin" readonly style="background:#F8F9FF;" />
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label>Password</label>
+      <div class="input-wrap">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" placeholder="Enter admin password" autocomplete="current-password" />
+        <button onclick="togglePasswordVisibility()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;color:var(--muted);font-size:0.9rem;" id="eye-btn">
+          <i class="fas fa-eye" id="eye-icon"></i>
+        </button>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--muted);cursor:pointer;">
+        <input type="checkbox" id="remember" style="accent-color:var(--primary-light);" /> Remember me
+      </label>
+      <span style="font-size:0.82rem;color:var(--muted);">Default: nilwala2024</span>
+    </div>
+
+    <button class="login-btn" onclick="attemptLogin()">
+      <i class="fas fa-sign-in-alt"></i> Sign In to Dashboard
+    </button>
+
+    <p style="text-align:center;margin-top:20px;font-size:0.85rem;color:var(--muted);">
+      <a href="../index.html" style="color:var(--primary-light);">← Back to Main Website</a>
+    </p>
+  </div>
+</div>
+
+<script src="../js/data.js"></script>
+<script>
+  // Auto-focus password
+  window.addEventListener('load', () => {
+    document.getElementById('password')?.focus();
+    // Check if already logged in
+    if (sessionStorage.getItem('na_admin_session')) {
+      window.location.href = 'dashboard.html';
+    }
+  });
+
+  document.getElementById('password')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') attemptLogin();
+  });
+
+  function attemptLogin() {
+    const password = document.getElementById('password')?.value;
+    const s = DB.getSettings();
+    const correctPass = s.adminPassword || 'nilwala2024';
+
+    if (password === correctPass) {
+      sessionStorage.setItem('na_admin_session', 'true');
+      const btn = document.querySelector('.login-btn');
+      btn.innerHTML = '<i class="fas fa-check-circle"></i> Logging in...';
+      btn.style.background = '#2ECC71';
+      setTimeout(() => { window.location.href = 'dashboard.html'; }, 600);
+    } else {
+      const err = document.getElementById('login-error');
+      err.classList.add('show');
+      document.getElementById('password').value = '';
+      document.getElementById('password').focus();
+      setTimeout(() => err.classList.remove('show'), 4000);
+    }
+  }
+
+  function togglePasswordVisibility() {
+    const input = document.getElementById('password');
+    const icon = document.getElementById('eye-icon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.className = 'fas fa-eye-slash';
+    } else {
+      input.type = 'password';
+      icon.className = 'fas fa-eye';
+    }
+  }
+</script>
+</body>
+</html>
