@@ -152,15 +152,26 @@ function loadJobs() {
   `).join('') : `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-briefcase"></i><h4>No jobs yet</h4><button class="btn btn-primary" onclick="openJobModal()"><i class="fas fa-plus"></i> Add First Job</button></div></td></tr>`;
 }
 
+function clearAllJobs() {
+  if (!confirm('Are you sure you want to delete ALL job vacancies? This will remove all demo/current jobs so you can add only your own.')) return;
+  DB.save(DB.KEYS.JOBS, []);
+  loadJobs();
+  loadDashboard();
+  showAdminAlert('All job vacancies deleted. You can now add your own jobs.', 'success');
+}
+
+function clearAllCountries() {
+  if (!confirm('Are you sure you want to delete ALL destination countries? This will remove all demo/current countries so you can add only your own.')) return;
+  DB.save(DB.KEYS.COUNTRIES, []);
+  loadCountries();
+  loadDashboard();
+  showAdminAlert('All destination countries deleted. You can now add your own countries.', 'success');
+}
+
 // ── Country Flag Helpers ──
 const COUNTRY_FLAG_MAP = {
   'israel': '🇮🇱',
-  'saudi': '🇸🇦',
-  'saudi arabia': '🇸🇦',
-  'uae': '🇦🇪',
-  'dubai': '🇦🇪',
-  'united arab emirates': '🇦🇪',
-  'emirates': '🇦🇪',
+  'uae': '🇦🇪', 'dubai': '🇦🇪', 'united arab emirates': '🇦🇪', 'emirates': '🇦🇪',
   'qatar': '🇶🇦',
   'kuwait': '🇰🇼',
   'oman': '🇴🇲',
@@ -168,23 +179,96 @@ const COUNTRY_FLAG_MAP = {
   'japan': '🇯🇵',
   'romania': '🇷🇴',
   'cyprus': '🇨🇾',
-  'south korea': '🇰🇷',
-  'korea': '🇰🇷',
+  'south korea': '🇰🇷', 'korea': '🇰🇷',
   'singapore': '🇸🇬',
   'malaysia': '🇲🇾',
   'italy': '🇮🇹',
-  'sri lanka': '🇱🇰',
+  'poland': '🇵🇱',
   'maldives': '🇲🇻',
   'seychelles': '🇸🇨',
-  'poland': '🇵🇱'
+  'uk': '🇬🇧', 'united kingdom': '🇬🇧', 'england': '🇬🇧',
+  'canada': '🇨🇦',
+  'australia': '🇦🇺',
+  'germany': '🇩🇪',
+  'france': '🇫🇷',
+  'new zealand': '🇳🇿',
+  'malta': '🇲🇹',
+  'greece': '🇬🇷',
+  'sri lanka': '🇱🇰'
 };
+
+const COUNTRY_CODES = {
+  'israel': 'il',
+  'uae': 'ae', 'dubai': 'ae', 'emirates': 'ae', 'united arab emirates': 'ae',
+  'qatar': 'qa',
+  'kuwait': 'kw',
+  'oman': 'om',
+  'bahrain': 'bh',
+  'saudi': 'sa', 'saudi arabia': 'sa',
+  'japan': 'jp',
+  'romania': 'ro',
+  'cyprus': 'cy',
+  'south korea': 'kr', 'korea': 'kr',
+  'singapore': 'sg',
+  'malaysia': 'my',
+  'italy': 'it',
+  'poland': 'pl',
+  'maldives': 'mv',
+  'seychelles': 'sc',
+  'uk': 'gb', 'united kingdom': 'gb', 'england': 'gb', 'great britain': 'gb',
+  'canada': 'ca',
+  'australia': 'au',
+  'germany': 'de',
+  'france': 'fr',
+  'new zealand': 'nz',
+  'malta': 'mt',
+  'greece': 'gr',
+  'portugal': 'pt',
+  'spain': 'es',
+  'netherlands': 'nl',
+  'switzerland': 'ch',
+  'sweden': 'se',
+  'norway': 'no',
+  'finland': 'fi',
+  'austria': 'at',
+  'hungary': 'hu',
+  'czech republic': 'cz', 'czechia': 'cz',
+  'croatia': 'hr',
+  'lithuania': 'lt',
+  'latvia': 'lv',
+  'estonia': 'ee',
+  'russia': 'ru',
+  'turkey': 'tr', 'turkiye': 'tr',
+  'jordan': 'jo',
+  'lebanon': 'lb',
+  'egypt': 'eg',
+  'sri lanka': 'lk'
+};
+
+function getCountryCode(name) {
+  if (!name) return 'lk';
+  const c = String(name).toLowerCase().trim();
+  for (const [k, code] of Object.entries(COUNTRY_CODES)) {
+    if (c === k || c.includes(k) || k.includes(c)) return code;
+  }
+  if (c.length === 2) return c;
+  return 'lk';
+}
+
+function codeToFlagEmoji(code) {
+  if (!code || code.length !== 2) return '🌐';
+  const base = 127397;
+  return String.fromCodePoint(...code.toUpperCase().split('').map(c => base + c.charCodeAt(0)));
+}
 
 function getFlagForCountry(name) {
   if (!name) return '';
   const clean = String(name).toLowerCase().replace(/[^a-z\s]/g, '').trim();
   for (const [k, emoji] of Object.entries(COUNTRY_FLAG_MAP)) {
-    if (clean === k || clean.includes(k)) return emoji;
+    if (clean === k || clean.includes(k) || k.includes(clean)) return emoji;
   }
+  const code = getCountryCode(name);
+  if (code && code !== 'lk') return codeToFlagEmoji(code);
   return '';
 }
 
@@ -262,9 +346,11 @@ function saveJob() {
   const jobId = modal.dataset.jobId;
   const countryVal = getFormValue('job-country');
   const flagVal = getFormValue('job-flag') || getFlagForCountry(countryVal);
+  const codeVal = getCountryCode(countryVal);
   const data = {
     title: getFormValue('job-title'),
     country: countryVal,
+    countryCode: codeVal,
     countryFlag: flagVal,
     category: getFormValue('job-category'),
     salary: getFormValue('job-salary'),
@@ -286,8 +372,26 @@ function saveJob() {
     DB.addJob(data);
     showAdminAlert('Job added successfully!', 'success');
   }
+
+  // Auto-sync country to DB countries if not already existing
+  if (countryVal) {
+    const existingCountries = DB.getCountries();
+    const exists = existingCountries.some(c => c.name.toLowerCase().trim() === countryVal.toLowerCase().trim());
+    if (!exists) {
+      DB.addItem(DB.KEYS.COUNTRIES, {
+        name: countryVal.trim(),
+        flag: flagVal || codeToFlagEmoji(codeVal),
+        code: codeVal,
+        region: 'Overseas',
+        jobs: 1,
+        active: true
+      });
+    }
+  }
+
   closeModal('job-modal');
   loadJobs();
+  loadDashboard();
 }
 
 function editJob(id) { openJobModal(id); }
@@ -296,9 +400,11 @@ function deleteJob(id) {
   if (!confirm('Delete this job vacancy?')) return;
   DB.deleteJob(id);
   loadJobs();
+  loadDashboard();
+  showAdminAlert('Job vacancy deleted!', 'success');
 }
 
-function toggleJobActive(id) { DB.toggleJob(id); loadJobs(); }
+function toggleJobActive(id) { DB.toggleJob(id); loadJobs(); loadDashboard(); }
 
 // ── Applications ──
 function loadApplications() {
@@ -906,20 +1012,22 @@ function updateCountryJobs(id, val) {
 }
 
 function addCountry() {
-  const name = getFormValue('new-country-name');
-  let flag = getFormValue('new-country-flag') || getFlagForCountry(name);
-  if (!name || !flag) { showAdminAlert('Name and flag required.', 'danger'); return; }
-  DB.addItem(DB.KEYS.COUNTRIES, { name, flag, region: 'Middle East', jobs: 0 });
+  const name = getFormValue('new-country-name').trim();
+  if (!name) { showAdminAlert('Country name is required.', 'danger'); return; }
+  const code = getCountryCode(name);
+  let flag = getFormValue('new-country-flag').trim() || getFlagForCountry(name) || codeToFlagEmoji(code);
+  DB.addItem(DB.KEYS.COUNTRIES, { name, flag, code, region: 'Overseas', jobs: 0, active: true });
   setFormValue('new-country-name', '');
   setFormValue('new-country-flag', '');
   loadCountries();
-  showAdminAlert('Country added!', 'success');
+  showAdminAlert('Country added successfully!', 'success');
 }
 
 function deleteCountry(id) {
-  if (!confirm('Remove this country?')) return;
+  if (!confirm('Remove this destination country?')) return;
   DB.deleteItem(DB.KEYS.COUNTRIES, id);
   loadCountries();
+  showAdminAlert('Country removed!', 'success');
 }
 
 // ── Contact Settings ──
@@ -1053,3 +1161,6 @@ function formatDate(str) {
   if (!str) return '—';
   return new Date(str).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
 }
+
+window.clearAllJobs = clearAllJobs;
+window.clearAllCountries = clearAllCountries;

@@ -62,7 +62,13 @@ const DB = {
   // ── Jobs ──
   getJobs(filters = {}) {
     let jobs = this.getAll(this.KEYS.JOBS).filter(j => j.active);
-    if (filters.country) jobs = jobs.filter(j => j.country === filters.country);
+    if (filters.country) {
+      const fLow = String(filters.country).trim().toLowerCase();
+      jobs = jobs.filter(j => {
+        const jLow = String(j.country || '').trim().toLowerCase();
+        return jLow === fLow || jLow.includes(fLow) || fLow.includes(jLow);
+      });
+    }
     if (filters.category) jobs = jobs.filter(j => j.category === filters.category);
     if (filters.experience) jobs = jobs.filter(j => j.experience === filters.experience);
     if (filters.salary) {
@@ -150,20 +156,38 @@ const DB = {
 
   // ── Seed default data ──
   seed() {
-    // Re-seed if empty or if jobs still use foreign currencies
-    const existingJobs = this.getAll(this.KEYS.JOBS);
-    if (existingJobs.length === 0 || !existingJobs.some(j => j.salaryCurrency === 'LKR')) {
-      this.save(this.KEYS.JOBS, []);
-      this._seedJobs();
+    const INIT_KEY = 'na_initialized_v3';
+    const isInitialized = localStorage.getItem(INIT_KEY);
+
+    if (!isInitialized) {
+      if (this.getAll(this.KEYS.JOBS).length === 0) this._seedJobs();
+      if (this.getAll(this.KEYS.TESTIMONIALS).length === 0) this._seedTestimonials();
+      if (this.getAll(this.KEYS.NEWS).length === 0) this._seedNews();
+      if (this.getAll(this.KEYS.FAQ).length === 0) this._seedFAQ();
+      if (this.getAll(this.KEYS.COUNTRIES).length === 0) this._seedCountries();
+      localStorage.setItem(INIT_KEY, 'true');
     }
-    if (this.getAll(this.KEYS.TESTIMONIALS).length === 0) this._seedTestimonials();
-    if (this.getAll(this.KEYS.NEWS).length === 0) this._seedNews();
-    if (this.getAll(this.KEYS.FAQ).length === 0) this._seedFAQ();
-    const existingCountries = this.getAll(this.KEYS.COUNTRIES);
-    if (existingCountries.length === 0 || !existingCountries.some(c => c.code)) {
-      this.save(this.KEYS.COUNTRIES, []);
-      this._seedCountries();
-    }
+
+    // Auto-clean any Saudi Arabia references from existing client/admin storage
+    try {
+      const storedJobs = this.getAll(this.KEYS.JOBS);
+      if (storedJobs && storedJobs.some(j => (j.country || '').toLowerCase().includes('saudi'))) {
+        this.save(this.KEYS.JOBS, storedJobs.filter(j => !(j.country || '').toLowerCase().includes('saudi')));
+      }
+      const storedCountries = this.getAll(this.KEYS.COUNTRIES);
+      if (storedCountries && storedCountries.some(c => (c.name || '').toLowerCase().includes('saudi'))) {
+        this.save(this.KEYS.COUNTRIES, storedCountries.filter(c => !(c.name || '').toLowerCase().includes('saudi')));
+      }
+      const storedTestimonials = this.getAll(this.KEYS.TESTIMONIALS);
+      if (storedTestimonials && storedTestimonials.some(t => (t.country || '').toLowerCase().includes('saudi'))) {
+        this.save(this.KEYS.TESTIMONIALS, storedTestimonials.map(t => {
+          if ((t.country || '').toLowerCase().includes('saudi')) {
+            return { ...t, role: 'Domestic Worker – UAE', country: 'UAE 🇦🇪' };
+          }
+          return t;
+        }));
+      }
+    } catch (e) {}
   },
 
   _seedJobs() {
@@ -209,27 +233,6 @@ const DB = {
         ],
         benefits: ['Medical Insurance', 'Accommodation', 'Return Air Ticket'],
         description: 'Professional caregiver position in Israel. Care for elderly patients with full support and attractive salary in LKR.',
-        active: true,
-      },
-      {
-        title: 'Domestic Worker',
-        country: 'Saudi Arabia',
-        countryFlag: '🇸🇦',
-        category: 'Domestic',
-        salary: 'LKR 85,000',
-        salaryNum: 85000,
-        salaryCurrency: 'LKR',
-        salaryNote: '~800 SAR / month',
-        contract: '02 Years',
-        experience: 'Any',
-        requirements: [
-          'Female candidates preferred',
-          'Age: 22 – 45 years old',
-          'No prior experience required',
-          'Good health'
-        ],
-        benefits: ['Free Accommodation', 'Free Meals', 'Annual Leave'],
-        description: 'Domestic worker positions available in Saudi Arabia with reputable families. Full safety and welfare guaranteed.',
         active: true,
       },
       {
@@ -330,8 +333,8 @@ const DB = {
       },
       {
         name: 'Priyanka Jayawardena',
-        role: 'Domestic Worker – Saudi Arabia',
-        country: 'Saudi Arabia 🇸🇦',
+        role: 'Domestic Worker – UAE',
+        country: 'UAE 🇦🇪',
         text: 'Excellent service! Nilwala Agencies made the whole process stress-free. The pre-departure training was very helpful for me as a first-time overseas worker.',
         rating: 5,
         initials: 'PJ',
@@ -360,8 +363,8 @@ const DB = {
         active: true,
       },
       {
-        title: 'Important: New Document Requirements for Saudi Arabia',
-        excerpt: 'The Saudi Arabia government has updated documentation requirements for domestic workers. Please visit our office for latest information.',
+        title: 'Important: Document Guidelines for Overseas Employment',
+        excerpt: 'The Ministry has updated documentation guidelines for overseas workers. Please visit our office for latest information.',
         category: 'Visa Update',
         emoji: '📋',
         date: new Date(Date.now() - 86400000 * 5).toISOString(),
@@ -395,7 +398,7 @@ const DB = {
       },
       {
         question: 'Which countries are currently available?',
-        answer: 'We currently have vacancies in Israel, Saudi Arabia, UAE (Dubai/Abu Dhabi), Qatar, Kuwait, Oman, and Bahrain. Contact us for the latest available positions.',
+        answer: 'We currently have vacancies in Israel, UAE (Dubai/Abu Dhabi), Qatar, Kuwait, Oman, and Bahrain. Contact us for the latest available positions.',
         active: true,
       },
       {
@@ -420,7 +423,6 @@ const DB = {
   _seedCountries() {
     const countries = [
       { name: 'Israel', code: 'il', flag: '🇮🇱', jobs: 12, region: 'Middle East', active: true },
-      { name: 'Saudi Arabia', code: 'sa', flag: '🇸🇦', jobs: 8, region: 'Middle East', active: true },
       { name: 'UAE (Dubai / Abu Dhabi)', code: 'ae', flag: '🇦🇪', jobs: 10, region: 'Middle East', active: true },
       { name: 'Qatar', code: 'qa', flag: '🇶🇦', jobs: 6, region: 'Middle East', active: true },
       { name: 'Kuwait', code: 'kw', flag: '🇰🇼', jobs: 4, region: 'Middle East', active: true },

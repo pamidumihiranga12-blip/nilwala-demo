@@ -173,7 +173,7 @@ function initTypewriter() {
       : [
           'Foreign Employment Agency Since 1996',
           'High Salary Vacancies in LKR Currency',
-          'Approved Opportunities in Israel, UAE, Saudi Arabia, Qatar & Kuwait',
+          'Approved Opportunities in Israel, UAE, Qatar & Kuwait',
           'Your Trusted Gateway to Global Careers – L.L. No: 1268',
         ];
 
@@ -309,19 +309,70 @@ function renderJobCategories() {
 }
 
 /* ============================================================
-   FLAG UTILITIES (SVG Flags for 100% Cross-Platform Support)
+   FLAG UTILITIES (Worldwide Flag & ISO Support)
    ============================================================ */
+const COUNTRY_CODES = {
+  'israel': 'il',
+  'uae': 'ae', 'dubai': 'ae', 'emirates': 'ae', 'united arab emirates': 'ae',
+  'qatar': 'qa',
+  'kuwait': 'kw',
+  'oman': 'om',
+  'bahrain': 'bh',
+  'saudi': 'sa', 'saudi arabia': 'sa',
+  'japan': 'jp',
+  'romania': 'ro',
+  'cyprus': 'cy',
+  'south korea': 'kr', 'korea': 'kr',
+  'singapore': 'sg',
+  'malaysia': 'my',
+  'italy': 'it',
+  'poland': 'pl',
+  'maldives': 'mv',
+  'seychelles': 'sc',
+  'uk': 'gb', 'united kingdom': 'gb', 'england': 'gb', 'great britain': 'gb',
+  'canada': 'ca',
+  'australia': 'au',
+  'germany': 'de',
+  'france': 'fr',
+  'new zealand': 'nz',
+  'malta': 'mt',
+  'greece': 'gr',
+  'portugal': 'pt',
+  'spain': 'es',
+  'netherlands': 'nl',
+  'switzerland': 'ch',
+  'sweden': 'se',
+  'norway': 'no',
+  'finland': 'fi',
+  'austria': 'at',
+  'hungary': 'hu',
+  'czech republic': 'cz', 'czechia': 'cz',
+  'croatia': 'hr',
+  'lithuania': 'lt',
+  'latvia': 'lv',
+  'estonia': 'ee',
+  'russia': 'ru',
+  'turkey': 'tr', 'turkiye': 'tr',
+  'jordan': 'jo',
+  'lebanon': 'lb',
+  'egypt': 'eg',
+  'sri lanka': 'lk'
+};
+
 function getCountryCode(name) {
   if (!name) return 'lk';
-  const c = String(name).toLowerCase();
-  if (c.includes('israel')) return 'il';
-  if (c.includes('saudi')) return 'sa';
-  if (c.includes('uae') || c.includes('emirates') || c.includes('dubai')) return 'ae';
-  if (c.includes('qatar')) return 'qa';
-  if (c.includes('kuwait')) return 'kw';
-  if (c.includes('oman')) return 'om';
-  if (c.includes('bahrain')) return 'bh';
+  const c = String(name).toLowerCase().trim();
+  for (const [k, code] of Object.entries(COUNTRY_CODES)) {
+    if (c === k || c.includes(k) || k.includes(c)) return code;
+  }
+  if (c.length === 2) return c;
   return 'lk';
+}
+
+function codeToFlagEmoji(code) {
+  if (!code || code.length !== 2) return '🌐';
+  const base = 127397;
+  return String.fromCodePoint(...code.toUpperCase().split('').map(c => base + c.charCodeAt(0)));
 }
 
 function getFlagHtml(countryName, countryCode, extraClass = '') {
@@ -338,6 +389,107 @@ function filterJobsByCountry(countryName) {
   scrollToSection('vacancies');
 }
 
+function filterJobsByCategory(categoryName) {
+  const select = document.getElementById('filter-category');
+  if (select) {
+    select.value = categoryName;
+    renderJobs({ category: categoryName });
+  }
+  scrollToSection('vacancies');
+}
+
+/**
+ * Returns ONLY countries managed in Admin Panel (DB.getCountries() + active jobs).
+ * No hardcoded or dummy countries!
+ */
+function getActiveCountries() {
+  const dbCountries = (typeof DB !== 'undefined' && DB.getCountries) ? DB.getCountries() : [];
+  const dbJobs = (typeof DB !== 'undefined' && DB.getJobs) ? DB.getJobs() : [];
+
+  const map = new Map();
+
+  dbCountries.forEach(c => {
+    if (!c || !c.name) return;
+    const name = c.name.trim();
+    const lower = name.toLowerCase();
+    if (!map.has(lower)) {
+      const code = c.code || getCountryCode(name);
+      map.set(lower, {
+        name: name,
+        code: code,
+        flag: c.flag || codeToFlagEmoji(code),
+        jobs: c.jobs || 0,
+        active: c.active !== false
+      });
+    }
+  });
+
+  dbJobs.forEach(j => {
+    if (!j || !j.country || !j.active) return;
+    const name = j.country.trim();
+    const lower = name.toLowerCase();
+    if (!map.has(lower)) {
+      const code = j.countryCode || getCountryCode(name);
+      map.set(lower, {
+        name: name,
+        code: code,
+        flag: j.countryFlag || codeToFlagEmoji(code),
+        jobs: 0,
+        active: true
+      });
+    }
+  });
+
+  return Array.from(map.values()).filter(c => c.active);
+}
+
+/**
+ * Dynamically updates #filter-country and candidate registration #pref-country dropdowns.
+ * Displays ONLY countries present in the database.
+ */
+function updateCountryDropdowns(lang = getCurrentLanguage()) {
+  const countries = getActiveCountries();
+  const t = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[lang]) ? TRANSLATIONS[lang] : {};
+
+  // 1. Job search filter dropdown
+  const filterSelect = document.getElementById('filter-country');
+  if (filterSelect) {
+    const currentVal = filterSelect.value;
+    filterSelect.innerHTML = `<option value="">${t.filter_all_countries || 'All Countries'}</option>`;
+    countries.forEach(c => {
+      const locName = (typeof DYNAMIC_TRANSLATIONS !== 'undefined' && DYNAMIC_TRANSLATIONS.countries && DYNAMIC_TRANSLATIONS.countries[c.name] && DYNAMIC_TRANSLATIONS.countries[c.name][lang])
+        ? DYNAMIC_TRANSLATIONS.countries[c.name][lang]
+        : c.name;
+      const opt = document.createElement('option');
+      opt.value = c.name;
+      opt.textContent = `${locName} ${c.flag || ''}`.trim();
+      filterSelect.appendChild(opt);
+    });
+    if (currentVal && countries.some(c => c.name === currentVal)) {
+      filterSelect.value = currentVal;
+    }
+  }
+
+  // 2. Candidate registration preferred country dropdown
+  const prefSelect = document.getElementById('pref-country');
+  if (prefSelect) {
+    const currentVal = prefSelect.value;
+    prefSelect.innerHTML = `<option value="">${t.filter_all_countries ? ('Any Country (' + t.filter_all_countries + ')') : 'Any Country'}</option>`;
+    countries.forEach(c => {
+      const locName = (typeof DYNAMIC_TRANSLATIONS !== 'undefined' && DYNAMIC_TRANSLATIONS.countries && DYNAMIC_TRANSLATIONS.countries[c.name] && DYNAMIC_TRANSLATIONS.countries[c.name][lang])
+        ? DYNAMIC_TRANSLATIONS.countries[c.name][lang]
+        : c.name;
+      const opt = document.createElement('option');
+      opt.value = c.name;
+      opt.textContent = `${locName} ${c.flag || ''}`.trim();
+      prefSelect.appendChild(opt);
+    });
+    if (currentVal && countries.some(c => c.name === currentVal)) {
+      prefSelect.value = currentVal;
+    }
+  }
+}
+
 /* ============================================================
    RENDER COUNTRIES (Multilingual & SVG Flags)
    ============================================================ */
@@ -345,24 +497,47 @@ function renderCountries() {
   const grid = document.getElementById('countries-grid');
   if (!grid) return;
   const lang = getCurrentLanguage();
-  const countries = DB.getCountries();
+  const countries = getActiveCountries();
   const tVacancies = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[lang] && TRANSLATIONS[lang].vacancies_avail)
     ? TRANSLATIONS[lang].vacancies_avail
     : 'Vacancies Available';
 
+  if (countries.length === 0) {
+    grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--muted);">
+      <i class="fas fa-globe-asia" style="font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5;"></i>
+      <h4>No destination countries added yet.</h4>
+      <p>Countries and vacancies will appear here once added in the Admin Panel.</p>
+    </div>`;
+    updateCountryDropdowns(lang);
+    return;
+  }
+
+  const allJobs = (typeof DB !== 'undefined' && DB.getJobs) ? DB.getJobs() : [];
+
   grid.innerHTML = countries.map((c, i) => {
-    const locName = (typeof DYNAMIC_TRANSLATIONS !== 'undefined' && DYNAMIC_TRANSLATIONS.countries[c.name] && DYNAMIC_TRANSLATIONS.countries[c.name][lang])
+    const locName = (typeof DYNAMIC_TRANSLATIONS !== 'undefined' && DYNAMIC_TRANSLATIONS.countries && DYNAMIC_TRANSLATIONS.countries[c.name] && DYNAMIC_TRANSLATIONS.countries[c.name][lang])
       ? DYNAMIC_TRANSLATIONS.countries[c.name][lang]
       : c.name;
     const flagHtml = getFlagHtml(c.name, c.code);
+
+    // Calculate real vacancy count from DB jobs
+    const realJobsCount = allJobs.filter(j => {
+      const jc = (j.country || '').trim().toLowerCase();
+      const cc = (c.name || '').trim().toLowerCase();
+      return jc === cc || jc.includes(cc) || cc.includes(jc);
+    }).length;
+    const displayCount = realJobsCount > 0 ? realJobsCount : (c.jobs || 0);
+
     return `
-    <div class="country-card aos zoom-in" data-delay="${i * 60}" onclick="filterJobsByCountry('${c.name}')" title="View jobs in ${c.name}">
+    <div class="country-card aos zoom-in" data-delay="${i * 60}" onclick="filterJobsByCountry('${c.name.replace(/'/g, "\\'")}')" title="View jobs in ${c.name}">
       <div class="country-flag">${flagHtml}</div>
       <div class="country-name">${locName}</div>
-      <div class="country-jobs">${c.jobs || 0} ${tVacancies}</div>
+      <div class="country-jobs">${displayCount} ${tVacancies}</div>
     </div>
   `; }).join('');
+
   initAnimateOnScroll();
+  updateCountryDropdowns(lang);
 }
 
 /* ============================================================
@@ -1187,22 +1362,8 @@ function updateFilterOptions(lang) {
   if (typeof TRANSLATIONS === 'undefined' || !TRANSLATIONS[lang]) return;
   const t = TRANSLATIONS[lang];
 
-  // Country filter options
-  const countrySelect = document.getElementById('filter-country');
-  if (countrySelect && countrySelect.options.length > 0) {
-    countrySelect.options[0].text = t.filter_all_countries || 'All Countries';
-    if (typeof DYNAMIC_TRANSLATIONS !== 'undefined' && DYNAMIC_TRANSLATIONS.countries) {
-      for (let i = 1; i < countrySelect.options.length; i++) {
-        const val = countrySelect.options[i].value;
-        const parts = countrySelect.options[i].text.trim().split(' ');
-        const flag = parts.length > 1 ? parts[parts.length - 1] : '';
-        const name = (DYNAMIC_TRANSLATIONS.countries[val] && DYNAMIC_TRANSLATIONS.countries[val][lang])
-          ? DYNAMIC_TRANSLATIONS.countries[val][lang]
-          : val;
-        countrySelect.options[i].text = flag ? `${name} ${flag}` : name;
-      }
-    }
-  }
+  // Dynamic Country filter & Registration dropdowns
+  updateCountryDropdowns(lang);
 
   // Category filter options
   const catSelect = document.getElementById('filter-category');
@@ -1342,3 +1503,6 @@ window.openJobDetail = openJobDetail;
 window.closeJobDetail = closeJobDetail;
 window.getCurrentLanguage = getCurrentLanguage;
 window.setLanguage = setLanguage;
+window.updateCountryDropdowns = updateCountryDropdowns;
+window.filterJobsByCategory = filterJobsByCategory;
+window.getActiveCountries = getActiveCountries;
