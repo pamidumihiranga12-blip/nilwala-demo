@@ -61,12 +61,27 @@
 
 <script src="../js/data.js"></script>
 <script>
+  function getDashboardPath() {
+    if (window.location.protocol === 'file:') {
+      return 'dashboard.html';
+    }
+    const path = window.location.pathname.replace(/\/index\.html$/, '');
+    if (path.endsWith('/admin')) {
+      return path + '/dashboard.html';
+    }
+    return 'dashboard.html';
+  }
+
+  function goToDashboard() {
+    window.location.href = getDashboardPath();
+  }
+
   // Auto-focus password
   window.addEventListener('load', () => {
     document.getElementById('password')?.focus();
     // Check if already logged in
     if (sessionStorage.getItem('na_admin_session')) {
-      window.location.href = 'dashboard.html';
+      goToDashboard();
     }
   });
 
@@ -84,7 +99,7 @@
       const btn = document.querySelector('.login-btn');
       btn.innerHTML = '<i class="fas fa-check-circle"></i> Logging in...';
       btn.style.background = '#2ECC71';
-      setTimeout(() => { window.location.href = 'dashboard.html'; }, 600);
+      setTimeout(() => { goToDashboard(); }, 600);
     } else {
       const err = document.getElementById('login-error');
       err.classList.add('show');

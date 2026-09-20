@@ -6,15 +6,24 @@
 // ── Auth ──
 const ADMIN_SESSION_KEY = 'na_admin_session';
 
+function getLoginPath() {
+  if (window.location.protocol === 'file:') return 'index.html';
+  const path = window.location.pathname;
+  if (path.includes('/admin')) {
+    return path.substring(0, path.indexOf('/admin') + 6) + '/index.html';
+  }
+  return '/admin/';
+}
+
 function checkAuth() {
   if (!sessionStorage.getItem(ADMIN_SESSION_KEY)) {
-    window.location.href = 'index.html';
+    window.location.href = getLoginPath();
   }
 }
 
 function logout() {
   sessionStorage.removeItem(ADMIN_SESSION_KEY);
-  window.location.href = 'index.html';
+  window.location.href = getLoginPath();
 }
 
 // ── Navigation ──
