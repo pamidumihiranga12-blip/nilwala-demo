@@ -733,53 +733,123 @@ input, select, textarea { font-family: var(--font-body); }
 }
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 22px;
 }
 .category-card {
-  background: var(--white);
   border-radius: var(--radius-lg);
-  padding: 32px 20px;
+  height: 260px;
   text-align: center;
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
   cursor: pointer;
-  border: 2px solid transparent;
   position: relative;
   overflow: hidden;
-}
-.category-card::before {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary-light), var(--accent));
-  transform: scaleX(0);
-  transition: transform 0.3s;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 24px 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s;
+  border: 2px solid rgba(255,255,255,0.08);
 }
 .category-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-md);
-  border-color: rgba(21,101,192,0.2);
+  transform: translateY(-10px) scale(1.025);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
 }
-.category-card:hover::before { transform: scaleX(1); }
-.cat-icon {
-  width: 70px; height: 70px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, rgba(10,36,114,0.08), rgba(21,101,192,0.12));
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 16px;
-  transition: var(--transition);
-  font-size: 1.8rem;
+/* Dark gradient overlay */
+.cat-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(5,15,50,0.12) 0%,
+    rgba(5,15,50,0.55) 55%,
+    rgba(5,15,50,0.85) 100%
+  );
+  transition: background 0.35s;
 }
-.category-card:hover .cat-icon {
-  background: linear-gradient(135deg, var(--primary-light), var(--primary));
-  transform: scale(1.1);
+.category-card:hover .cat-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(21,101,192,0.15) 0%,
+    rgba(5,15,50,0.6) 50%,
+    rgba(5,15,50,0.92) 100%
+  );
 }
-.category-card:hover .cat-icon i { color: var(--white) !important; }
-.cat-icon i { color: var(--primary-light); font-size: 2rem; transition: var(--transition); }
-.cat-name { font-family: var(--font-main); font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
-.cat-count { font-size: 0.82rem; color: var(--text-muted); }
+/* Small icon badge top-right */
+.cat-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background 0.3s;
+}
+.category-card:hover .cat-badge {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.cat-badge i {
+  color: #fff;
+  font-size: 1rem;
+}
+.cat-name {
+  font-family: var(--font-main);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  letter-spacing: 0.3px;
+}
+.cat-count {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.75);
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  margin-bottom: 6px;
+}
+/* Arrow hint */
+.cat-arrow {
+  position: relative;
+  z-index: 2;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  transition: all 0.3s;
+  opacity: 0;
+  transform: translateY(6px);
+}
+.category-card:hover .cat-arrow {
+  opacity: 1;
+  transform: translateY(0);
+  background: var(--primary-light);
+  border-color: var(--primary-light);
+}
+.cat-arrow i {
+  color: #fff;
+  font-size: 0.75rem;
+}
 
 /* ============================================================
    ABOUT US
@@ -2126,11 +2196,11 @@ html, body {
   /* Categories Grid */
   .categories-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
+    gap: 12px !important;
   }
-  .category-card { padding: 20px 10px; }
-  .cat-icon { width: 50px; height: 50px; font-size: 1.3rem; margin-bottom: 10px; }
-  .cat-icon i { font-size: 1.4rem; }
+  .category-card { height: 190px; padding: 16px 12px; }
+  .cat-badge { width: 34px; height: 34px; top: 10px; right: 10px; }
+  .cat-badge i { font-size: 0.8rem; }
   .cat-name { font-size: 0.88rem; }
   .cat-count { font-size: 0.72rem; }
 

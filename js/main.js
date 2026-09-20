@@ -282,14 +282,14 @@ function renderJobCategories() {
   if (!grid) return;
   const lang = getCurrentLanguage();
   const categories = [
-    { icon: 'fa-hard-hat', name: 'Construction', sub: 'Steel, Mason, Carpenter', jobs: 3 },
-    { icon: 'fa-heartbeat', name: 'Healthcare', sub: 'Caregivers & Nurses', jobs: 4 },
-    { icon: 'fa-broom', name: 'Domestic', sub: 'Domestic Workers', jobs: 3 },
-    { icon: 'fa-bolt', name: 'Skilled Tech', sub: 'Electricians, Welders', jobs: 5 },
-    { icon: 'fa-truck', name: 'Driving', sub: 'Heavy Vehicle Drivers', jobs: 2 },
-    { icon: 'fa-tools', name: 'Mechanics', sub: 'Auto & Industry', jobs: 3 },
-    { icon: 'fa-spray-can', name: 'Cleaning', sub: 'Facility & Office', jobs: 2 },
-    { icon: 'fa-user-nurse', name: 'House Nurses', sub: 'Home Care Specialists', jobs: 4 },
+    { icon: 'fa-hard-hat',    name: 'Construction',  sub: 'Steel, Mason, Carpenter',    img: 'images/cat-construction.jpg' },
+    { icon: 'fa-heartbeat',   name: 'Healthcare',    sub: 'Caregivers & Nurses',         img: 'images/cat-healthcare.jpg'   },
+    { icon: 'fa-broom',       name: 'Domestic',      sub: 'Domestic Workers',            img: 'images/cat-domestic.jpg'     },
+    { icon: 'fa-bolt',        name: 'Skilled Tech',  sub: 'Electricians, Welders',       img: 'images/cat-skilledtech.jpg'  },
+    { icon: 'fa-truck',       name: 'Driving',       sub: 'Heavy Vehicle Drivers',       img: 'images/cat-driving.jpg'      },
+    { icon: 'fa-tools',       name: 'Mechanics',     sub: 'Auto & Industry',             img: 'images/cat-mechanics.jpg'    },
+    { icon: 'fa-spray-can',   name: 'Cleaning',      sub: 'Facility & Office',           img: 'images/cat-domestic.jpg'     },
+    { icon: 'fa-user-nurse',  name: 'House Nurses',  sub: 'Home Care Specialists',       img: 'images/cat-healthcare.jpg'   },
   ];
   grid.innerHTML = categories.map((c, i) => {
     let name = c.name;
@@ -299,10 +299,13 @@ function renderJobCategories() {
       sub = DYNAMIC_TRANSLATIONS.categories[c.name][lang].sub;
     }
     return `
-    <div class="category-card aos fade-up" data-delay="${i * 60}" onclick="scrollToSection('vacancies')">
-      <div class="cat-icon"><i class="fas ${c.icon}"></i></div>
+    <div class="category-card aos fade-up" data-delay="${i * 60}" onclick="filterJobsByCategory('${c.name}')"
+         style="background-image:url('${c.img}');">
+      <div class="cat-overlay"></div>
+      <div class="cat-badge"><i class="fas ${c.icon}"></i></div>
       <div class="cat-name">${name}</div>
       <div class="cat-count">${sub}</div>
+      <div class="cat-arrow"><i class="fas fa-arrow-right"></i></div>
     </div>
   `; }).join('');
   initAnimateOnScroll();
