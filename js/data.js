@@ -119,6 +119,8 @@ const DB = {
       hotline1: '037 223 2000',
       hotline2: '037 205 6000',
       hotline3: '072 780 0800',
+      managerName: 'JANAKA WIMALARATNE',
+      managerPhone: '0744139954',
       mdName: 'W.A.N.S. Wijesinghe',
       mdPhone: '0777-209 189',
       whatsapp: '+94 77 720 9189',

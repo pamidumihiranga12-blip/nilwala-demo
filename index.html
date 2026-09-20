@@ -1270,6 +1270,23 @@
             </div>
           </div>
 
+          <!-- Manager Contact Card -->
+          <div class="contact-item" style="background:rgba(255,255,255,0.08);border:1px solid rgba(59,130,246,0.45);border-radius:14px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,0.25);">
+            <div class="contact-item-icon" style="background:linear-gradient(135deg, #3B82F6, #1D4ED8);color:#FFFFFF;"><i class="fas fa-user-shield" style="color:#FFFFFF;"></i></div>
+            <div class="contact-item-text" style="width:100%;">
+              <div class="label" style="color:#60A5FA;font-weight:700;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.8px;" data-i18n="lbl_manager_label">Manager Contact</div>
+              <div class="value" id="contact-manager-name" style="font-weight:800;color:#FFFFFF;font-size:1.12rem;margin:4px 0 10px;text-shadow:0 2px 4px rgba(0,0,0,0.4);">JANAKA WIMALARATNE</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                <a href="tel:0744139954" id="contact-manager-phone" class="btn btn-sm" style="padding:6px 14px;font-size:0.85rem;background:#1565C0;border:1px solid #3B82F6;color:#FFFFFF;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:700;box-shadow:0 2px 10px rgba(21,101,192,0.4);">
+                  <i class="fas fa-phone"></i> 074 413 9954
+                </a>
+                <a href="https://wa.me/94744139954?text=Hello%20Mr.%20Janaka%20Wimalaratne,%20I%20am%20contacting%20regarding%20Nilwala%20Agencies" target="_blank" id="contact-manager-wa" class="btn btn-sm" style="padding:6px 14px;font-size:0.85rem;background:#25D366;border:1px solid #25D366;color:#FFFFFF;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:700;box-shadow:0 2px 10px rgba(37,211,102,0.3);">
+                  <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
+
           <!-- Managing Director Contact Card -->
           <div class="contact-item" style="background:rgba(255,255,255,0.08);border:1px solid rgba(245,166,35,0.45);border-radius:14px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,0.25);">
             <div class="contact-item-icon" style="background:linear-gradient(135deg, var(--accent), #D48806);color:#0D2558;"><i class="fas fa-user-tie" style="color:#0D2558;"></i></div>
@@ -1583,6 +1600,18 @@
     const phone = document.getElementById('contact-phone');
     const wa = document.getElementById('contact-whatsapp');
     const em = document.getElementById('contact-email');
+    const mgrName = document.getElementById('contact-manager-name');
+    const mgrPhone = document.getElementById('contact-manager-phone');
+    const mgrWa = document.getElementById('contact-manager-wa');
+    if (mgrName && s.managerName) mgrName.textContent = s.managerName;
+    if (mgrPhone && s.managerPhone) {
+      mgrPhone.href = `tel:${s.managerPhone.replace(/[^0-9]/g,'')}`;
+      mgrPhone.innerHTML = `<i class="fas fa-phone"></i> ${s.managerPhone}`;
+    }
+    if (mgrWa && s.managerPhone) {
+      const cleanWa = s.managerPhone.replace(/^0/, '94').replace(/[^0-9]/g, '');
+      mgrWa.href = `https://wa.me/${cleanWa}?text=Hello%20Mr.%20Janaka%20Wimalaratne,%20I%20am%20contacting%20regarding%20Nilwala%20Agencies`;
+    }
     if (phone && s.phone) phone.textContent = s.phone;
     if (wa && s.whatsapp) wa.textContent = s.whatsapp;
     if (em && s.email) em.textContent = s.email;

@@ -928,6 +928,8 @@ function loadContact() {
   setFormValue('s-hotline1', s.hotline1 || '037 223 2000');
   setFormValue('s-hotline2', s.hotline2 || '037 205 6000');
   setFormValue('s-hotline3', s.hotline3 || '072 780 0800');
+  setFormValue('s-manager-name', s.managerName || 'JANAKA WIMALARATNE');
+  setFormValue('s-manager-phone', s.managerPhone || '0744139954');
   setFormValue('s-md-name', s.mdName || 'W.A.N.S. Wijesinghe');
   setFormValue('s-md-phone', s.mdPhone || '0777-209 189');
   setFormValue('s-whatsapp', s.whatsapp || '+94 77 720 9189');
@@ -948,6 +950,8 @@ function saveContact() {
     hotline2: getFormValue('s-hotline2') || '037 205 6000',
     hotline3: getFormValue('s-hotline3') || '072 780 0800',
     hotlines: `${getFormValue('s-hotline1') || '037 223 2000'}, ${getFormValue('s-hotline2') || '037 205 6000'}, ${getFormValue('s-hotline3') || '072 780 0800'}`,
+    managerName: getFormValue('s-manager-name') || 'JANAKA WIMALARATNE',
+    managerPhone: getFormValue('s-manager-phone') || '0744139954',
     mdName: getFormValue('s-md-name') || 'W.A.N.S. Wijesinghe',
     mdPhone: getFormValue('s-md-phone') || '0777-209 189',
     whatsapp: getFormValue('s-whatsapp') || '+94 77 720 9189',
