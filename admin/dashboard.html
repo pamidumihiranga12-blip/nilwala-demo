@@ -307,11 +307,11 @@
           <div class="admin-form">
             <div class="field-group" style="margin-bottom:14px;">
               <label>Country Name *</label>
-              <input type="text" id="new-country-name" placeholder="e.g. Bahrain" />
+              <input type="text" id="new-country-name" placeholder="e.g. Bahrain" oninput="handleNewCountryInput()" />
             </div>
             <div class="field-group" style="margin-bottom:14px;">
               <label>Flag Emoji *</label>
-              <input type="text" id="new-country-flag" placeholder="e.g. 🇧🇭" />
+              <input type="text" id="new-country-flag" placeholder="Auto-filled or e.g. 🇧🇭" />
             </div>
             <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="addCountry()">
               <i class="fas fa-plus"></i> Add Country
@@ -484,11 +484,42 @@
           </div>
           <div class="field-group">
             <label>Country *</label>
-            <input type="text" id="job-country" placeholder="e.g. Israel" />
+            <input type="text" id="job-country" list="country-datalist" placeholder="e.g. Israel" autocomplete="off" oninput="handleCountryInput()" />
+            <datalist id="country-datalist">
+              <option value="Israel">🇮🇱 Israel</option>
+              <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
+              <option value="United Arab Emirates">🇦🇪 UAE / Dubai</option>
+              <option value="Qatar">🇶🇦 Qatar</option>
+              <option value="Kuwait">🇰🇼 Kuwait</option>
+              <option value="Oman">🇴🇲 Oman</option>
+              <option value="Bahrain">🇧🇭 Bahrain</option>
+              <option value="Japan">🇯🇵 Japan</option>
+              <option value="Romania">🇷🇴 Romania</option>
+              <option value="Cyprus">🇨🇾 Cyprus</option>
+              <option value="South Korea">🇰🇷 South Korea</option>
+              <option value="Singapore">🇸🇬 Singapore</option>
+              <option value="Malaysia">🇲🇾 Malaysia</option>
+              <option value="Italy">🇮🇹 Italy</option>
+            </datalist>
           </div>
           <div class="field-group">
-            <label>Country Flag Emoji</label>
-            <input type="text" id="job-flag" placeholder="e.g. 🇮🇱" />
+            <label>Country Flag Emoji <span id="flag-preview" style="font-size:1.15rem;margin-left:6px;vertical-align:middle;"></span></label>
+            <input type="text" id="job-flag" placeholder="Auto-filled or press Win + ." oninput="updateFlagPreview()" />
+          </div>
+          <div style="grid-column: 1 / -1; margin-top: -6px; margin-bottom: 6px;">
+            <small style="color: var(--muted); display: block; margin-bottom: 6px; font-size: 0.78rem; font-weight: 600;">Quick Select Country & Flag:</small>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              <button type="button" class="btn btn-sm" style="padding:3px 8px;font-size:0.75rem;background:#f1f5f9;border:1px solid #cbd5e1;cursor:pointer;border-radius:6px;" onclick="selectQuickCountry('Israel', '🇮🇱')">🇮🇱 Israel</button>
+              <button type="button" class="btn btn-sm" style="padding:3px 8px;font-size:0.75rem;background:#f1f5f9;border:1px solid #cbd5e1;cursor:pointer;border-radius:6px;" onclick="selectQuickCountry('Saudi Arabia', '🇸🇦')">🇸🇦 Saudi Arabia</button>
+              <button type="button" class="btn btn-sm" style="padding:3px 8px;font-size:0.75rem;background:#f1f5f9;border:1px solid #cbd5e1;cursor:pointer;border-radius:6px;" onclick="selectQuickCountry('United Arab Emirates', '🇦🇪')">🇦🇪 UAE</button>
+              <button type="button" class="btn btn-sm" style="padding:3px 8px;font-size:0.75rem;background:#f1f5f9;border:1px solid #cbd5e1;cursor:pointer;border-radius:6px;" onclick="selectQuickCountry('Qatar', '🇶🇦')">🇶🇦 Qatar</button>
+              <button type="button" class="btn btn-sm" style="padding:3px 8px;font-size:0.75rem;background:#f1f5f9;border:1px solid #cbd5e1;cursor:pointer;border-radius:6px;" onclick="selectQuickCountry('Kuwait', '🇰🇼')">🇰🇼 Kuwait</button>
+              <button type="button" class="btn btn-sm" style="padding:3px 8px;font-size:0.75rem;background:#f1f5f9;border:1px solid #cbd5e1;cursor:pointer;border-radius:6px;" onclick="selectQuickCountry('Oman', '🇴🇲')">🇴🇲 Oman</button>
+              <button type="button" class="btn btn-sm" style="padding:3px 8px;font-size:0.75rem;background:#f1f5f9;border:1px solid #cbd5e1;cursor:pointer;border-radius:6px;" onclick="selectQuickCountry('Bahrain', '🇧🇭')">🇧🇭 Bahrain</button>
+              <button type="button" class="btn btn-sm" style="padding:3px 8px;font-size:0.75rem;background:#f1f5f9;border:1px solid #cbd5e1;cursor:pointer;border-radius:6px;" onclick="selectQuickCountry('Japan', '🇯🇵')">🇯🇵 Japan</button>
+              <button type="button" class="btn btn-sm" style="padding:3px 8px;font-size:0.75rem;background:#f1f5f9;border:1px solid #cbd5e1;cursor:pointer;border-radius:6px;" onclick="selectQuickCountry('Romania', '🇷🇴')">🇷🇴 Romania</button>
+              <button type="button" class="btn btn-sm" style="padding:3px 8px;font-size:0.75rem;background:#f1f5f9;border:1px solid #cbd5e1;cursor:pointer;border-radius:6px;" onclick="selectQuickCountry('Cyprus', '🇨🇾')">🇨🇾 Cyprus</button>
+            </div>
           </div>
           <div class="field-group">
             <label>Salary (display)</label>

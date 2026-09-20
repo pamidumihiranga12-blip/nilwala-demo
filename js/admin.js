@@ -152,6 +152,80 @@ function loadJobs() {
   `).join('') : `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-briefcase"></i><h4>No jobs yet</h4><button class="btn btn-primary" onclick="openJobModal()"><i class="fas fa-plus"></i> Add First Job</button></div></td></tr>`;
 }
 
+// ── Country Flag Helpers ──
+const COUNTRY_FLAG_MAP = {
+  'israel': '🇮🇱',
+  'saudi': '🇸🇦',
+  'saudi arabia': '🇸🇦',
+  'uae': '🇦🇪',
+  'dubai': '🇦🇪',
+  'united arab emirates': '🇦🇪',
+  'emirates': '🇦🇪',
+  'qatar': '🇶🇦',
+  'kuwait': '🇰🇼',
+  'oman': '🇴🇲',
+  'bahrain': '🇧🇭',
+  'japan': '🇯🇵',
+  'romania': '🇷🇴',
+  'cyprus': '🇨🇾',
+  'south korea': '🇰🇷',
+  'korea': '🇰🇷',
+  'singapore': '🇸🇬',
+  'malaysia': '🇲🇾',
+  'italy': '🇮🇹',
+  'sri lanka': '🇱🇰',
+  'maldives': '🇲🇻',
+  'seychelles': '🇸🇨',
+  'poland': '🇵🇱'
+};
+
+function getFlagForCountry(name) {
+  if (!name) return '';
+  const clean = String(name).toLowerCase().replace(/[^a-z\s]/g, '').trim();
+  for (const [k, emoji] of Object.entries(COUNTRY_FLAG_MAP)) {
+    if (clean === k || clean.includes(k)) return emoji;
+  }
+  return '';
+}
+
+function handleCountryInput() {
+  const countryInput = document.getElementById('job-country');
+  const flagInput = document.getElementById('job-flag');
+  if (!countryInput || !flagInput) return;
+  const detected = getFlagForCountry(countryInput.value);
+  if (detected) {
+    flagInput.value = detected;
+  }
+  updateFlagPreview();
+}
+
+function handleNewCountryInput() {
+  const nameInput = document.getElementById('new-country-name');
+  const flagInput = document.getElementById('new-country-flag');
+  if (!nameInput || !flagInput) return;
+  const detected = getFlagForCountry(nameInput.value);
+  if (detected) {
+    flagInput.value = detected;
+  }
+}
+
+function updateFlagPreview() {
+  const flagInput = document.getElementById('job-flag');
+  const countryInput = document.getElementById('job-country');
+  const preview = document.getElementById('flag-preview');
+  if (!preview) return;
+  const emoji = flagInput?.value?.trim() || getFlagForCountry(countryInput?.value) || '';
+  preview.textContent = emoji;
+}
+
+function selectQuickCountry(countryName, flagEmoji) {
+  const countryInput = document.getElementById('job-country');
+  const flagInput = document.getElementById('job-flag');
+  if (countryInput) countryInput.value = countryName;
+  if (flagInput) flagInput.value = flagEmoji;
+  updateFlagPreview();
+}
+
 function openJobModal(jobId = null) {
   const modal = document.getElementById('job-modal');
   const form = document.getElementById('job-form');
@@ -164,7 +238,7 @@ function openJobModal(jobId = null) {
     if (job) {
       setFormValue('job-title', job.title);
       setFormValue('job-country', job.country);
-      setFormValue('job-flag', job.countryFlag);
+      setFormValue('job-flag', job.countryFlag || getFlagForCountry(job.country));
       setFormValue('job-category', job.category);
       setFormValue('job-salary', job.salary);
       setFormValue('job-salary-num', job.salaryNum);
@@ -179,16 +253,19 @@ function openJobModal(jobId = null) {
   } else {
     form.reset();
   }
+  updateFlagPreview();
   openModal('job-modal');
 }
 
 function saveJob() {
   const modal = document.getElementById('job-modal');
   const jobId = modal.dataset.jobId;
+  const countryVal = getFormValue('job-country');
+  const flagVal = getFormValue('job-flag') || getFlagForCountry(countryVal);
   const data = {
     title: getFormValue('job-title'),
-    country: getFormValue('job-country'),
-    countryFlag: getFormValue('job-flag'),
+    country: countryVal,
+    countryFlag: flagVal,
     category: getFormValue('job-category'),
     salary: getFormValue('job-salary'),
     salaryNum: parseFloat(getFormValue('job-salary-num')) || 0,
@@ -830,7 +907,7 @@ function updateCountryJobs(id, val) {
 
 function addCountry() {
   const name = getFormValue('new-country-name');
-  const flag = getFormValue('new-country-flag');
+  let flag = getFormValue('new-country-flag') || getFlagForCountry(name);
   if (!name || !flag) { showAdminAlert('Name and flag required.', 'danger'); return; }
   DB.addItem(DB.KEYS.COUNTRIES, { name, flag, region: 'Middle East', jobs: 0 });
   setFormValue('new-country-name', '');
