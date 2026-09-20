@@ -1624,6 +1624,37 @@ input, select, textarea { font-family: var(--font-body); }
 .contact-item-icon i { color: var(--accent); font-size: 1.2rem; }
 .contact-item-text .label { font-size: 0.8rem; color: var(--white-60); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
 .contact-item-text .value { font-family: var(--font-main); font-size: 1rem; font-weight: 600; color: var(--white); }
+.contact-item-text .value a { color: var(--white); text-decoration: none; }
+.hotline-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #FFFFFF !important;
+  text-decoration: none;
+  transition: var(--transition);
+  backdrop-filter: blur(4px);
+}
+.hotline-badge i {
+  color: var(--accent);
+  font-size: 0.85rem;
+  transition: var(--transition);
+}
+.hotline-badge:hover {
+  background: var(--accent);
+  color: #0D2558 !important;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+}
+.hotline-badge:hover i {
+  color: #0D2558;
+}
 
 .working-hours {
   background: rgba(255,255,255,0.07);
