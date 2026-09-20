@@ -126,12 +126,13 @@ input, select, textarea { font-family: var(--font-body); }
 .section-mid { background: var(--primary); color: var(--white); }
 
 .section-header { text-align: center; margin-bottom: 60px; }
+.subtitle,
 .section-header .subtitle {
   display: inline-block;
   font-family: var(--font-main);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 3px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 12px;
@@ -908,6 +909,38 @@ input, select, textarea { font-family: var(--font-body); }
 .about-badge-lbl { font-size: 0.78rem; color: var(--text-muted); }
 
 .about-content { }
+.about-tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 36, 114, 0.06);
+  border: 1px solid rgba(21, 101, 192, 0.2);
+  color: var(--primary-light);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.about-tag-badge i {
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+.about-title {
+  font-family: var(--font-main);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 0 0 14px;
+  line-height: 1.25;
+}
+.about-desc {
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 24px;
+  font-size: 1rem;
+}
 .about-tabs {
   display: flex;
   gap: 4px;

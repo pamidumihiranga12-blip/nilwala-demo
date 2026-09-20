@@ -55,7 +55,10 @@ const TRANSLATIONS = {
     cat_desc: "Browse hundreds of verified overseas job opportunities across multiple industries",
 
     // About Section
+    about_tag: "About Nilwala Agencies",
     about_subtitle: "Who We Are",
+    about_header_desc: "Sri Lanka's trusted foreign employment recruitment partner connecting ambitious candidates with verified overseas careers since 1996.",
+    about_badge_official: "Licensed & Verified Recruitment Partner",
     about_title: "Nilwala Agencies Kurunegala",
     about_desc: "A professional foreign employment recruitment agency dedicated to helping Sri Lankan candidates find safe, reliable, and rewarding overseas career opportunities. We connect qualified candidates with international employers while providing complete support throughout the entire recruitment process.",
     about_badge_years: "Years of Excellence",
@@ -368,7 +371,10 @@ const TRANSLATIONS = {
     cat_desc: "විවිධ ක්ෂේත්‍රයන් යටතේ පවතින නීත්‍යානුකූල විදේශ රැකියා අවස්ථා සිය ගණනක් පරීක්ෂා කරන්න",
 
     // About Section
+    about_tag: "නිල්වලා ඒජන්සිය පිළිබඳව",
     about_subtitle: "අප කවුද",
+    about_header_desc: "1996 සිට විශ්වාසවන්ත, ආරක්ෂිත සහ ප්‍රතිලාභදායක විදේශ රැකියා අවස්ථා සඳහා ශ්‍රී ලාංකික තරුණ ප්‍රජාවට මඟ පෙන්වන ප්‍රමුඛතම බඳවා ගැනීමේ ආයතනය.",
+    about_badge_official: "SLBFE බලපත්‍රලාභී සහ තහවුරු කළ ආයතනයකි",
     about_title: "නිල්වලා ඒජන්සීස් කුරුණෑගල",
     about_desc: "ශ්‍රී ලාංකික රැකියා අපේක්ෂකයින්ට ආරක්ෂිත, විශ්වාසනීය සහ ඉහළ වැටුප් සහිත විදේශ රැකියා අවස්ථා ලබාදීම සඳහා කැපවූ වෘත්තීයමය විදේශ සේවා ආයතනයකි. බඳවා ගැනීමේ සිට විදේශගත වන තෙක් සම්පූර්ණ මඟපෙන්වීම සහ සහාය අප සපයන්නෙමු.",
     about_badge_years: "වසරක විශිෂ්ට සේවය",
@@ -681,7 +687,10 @@ const TRANSLATIONS = {
     cat_desc: "பல்வேறு துறைகளில் உள்ள நூற்றுக்கணக்கான அங்கீகரிக்கப்பட்ட வெளிநாட்டு வேலைகளை பார்வையிடுங்கள்",
 
     // About Section
+    about_tag: "நில்வலா ஏஜென்சி பற்றி",
     about_subtitle: "நாங்கள் யார்",
+    about_header_desc: "1996 முதல் இலங்கைத் திறமையாளர்களுக்கு பாதுகாப்பான மற்றும் நம்பகமான சர்வதேச வேலைவாய்ப்புகளை வழங்கும் முன்னணி ஆட்சேர்ப்பு நிறுவனம்.",
+    about_badge_official: "அங்கீகரிக்கப்பட்ட மற்றும் சரிபார்க்கப்பட்ட ஆட்சேர்ப்பு பங்குதாரர்",
     about_title: "நில்வலா ஏஜென்சீஸ் குருநாகல்",
     about_desc: "இலங்கை தொழிலாளர்களுக்கு பாதுகாப்பான, நம்பகமான மற்றும் அதிக வருமானம் ஈட்டும் வெளிநாட்டு வேலைவாய்ப்புகளை வழங்குவதில் அர்ப்பணிப்புடன் செயல்படும் முன்னணி தொழில்முறை நிறுவனம். ஆரம்பம் முதல் புறப்பாடு வரை முழுமையான ஆதரவை வழங்குகிறோம்.",
     about_badge_years: "ஆண்டுகள் சிறந்த சேவை",
