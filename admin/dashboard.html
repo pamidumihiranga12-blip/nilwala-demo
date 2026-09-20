@@ -127,6 +127,13 @@
             <div class="stat-label">News Posts</div>
           </div>
         </div>
+        <div class="stat-card" style="background:#FFFDF5;border:1.5px solid #FDE68A;">
+          <div class="stat-icon" style="background:rgba(245,158,11,0.15);color:#D97706;"><i class="fas fa-database"></i></div>
+          <div>
+            <div class="stat-num" id="dash-storage" style="color:#B45309;">0.00 MB</div>
+            <div class="stat-label">PDF Storage (<span id="dash-file-count">0</span> files)</div>
+          </div>
+        </div>
       </div>
 
       <!-- Quick Actions -->
@@ -207,7 +214,7 @@
               <option value="approved">Approved</option>
               <option value="rejected">Rejected</option>
             </select>
-            <button class="btn btn-danger btn-sm" onclick="if(confirm('Delete ALL applications?')){DB.save(DB.KEYS.APPLICATIONS,[]);loadApplications();}">
+            <button class="btn btn-danger btn-sm" onclick="clearAllApplications()">
               <i class="fas fa-trash"></i> Clear All
             </button>
           </div>
@@ -215,7 +222,7 @@
         <div class="admin-table-wrap">
           <table>
             <thead>
-              <tr><th>Name</th><th>Phone</th><th>NIC</th><th>Job Type</th><th>Country</th><th>CV</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+              <tr><th>Name</th><th>Phone</th><th>NIC</th><th>Job Type</th><th>Country</th><th>Documents (PDF)</th><th>Status</th><th>Date</th><th>Actions</th></tr>
             </thead>
             <tbody id="apps-tbody"></tbody>
           </table>
@@ -651,18 +658,43 @@
 
 <!-- View Application Modal -->
 <div class="admin-modal-overlay" id="view-app-modal">
-  <div class="admin-modal" style="max-width:700px">
+  <div class="admin-modal" style="max-width:860px;width:95%;">
     <div class="admin-modal-header">
-      <h3>Application Details</h3>
+      <h3 style="display:flex;align-items:center;gap:8px;"><i class="fas fa-user-circle" style="color:var(--primary);"></i> Application Details</h3>
       <button class="modal-x" onclick="closeModal('view-app-modal')"><i class="fas fa-times"></i></button>
     </div>
     <div class="admin-modal-body" id="view-app-content"></div>
-    <div class="admin-modal-footer">
+    <div class="admin-modal-footer" id="view-app-footer" style="display:flex;justify-content:space-between;align-items:center;">
+      <button class="btn btn-danger" id="view-app-delete-btn" style="display:inline-flex;align-items:center;gap:6px;">
+        <i class="fas fa-trash-alt"></i> Delete Application & Files
+      </button>
       <button class="btn" style="background:var(--bg);" onclick="closeModal('view-app-modal')">Close</button>
     </div>
   </div>
 </div>
 
+<!-- PDF Viewer Modal -->
+<div class="admin-modal-overlay" id="pdf-viewer-modal">
+  <div class="admin-modal" style="max-width:960px;width:95%;height:90vh;display:flex;flex-direction:column;">
+    <div class="admin-modal-header" style="flex-shrink:0;">
+      <h3 id="pdf-viewer-title" style="display:flex;align-items:center;gap:8px;">
+        <i class="fas fa-file-pdf" style="color:#E74C3C;"></i> Document Viewer
+      </h3>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <a id="pdf-open-tab-btn" href="#" target="_blank" class="btn btn-sm btn-outline-primary" style="display:inline-flex;align-items:center;gap:4px;">
+          <i class="fas fa-external-link-alt"></i> Open in New Tab
+        </a>
+        <button class="modal-x" onclick="closeModal('pdf-viewer-modal')"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <div class="admin-modal-body" style="flex:1;padding:0;overflow:hidden;background:#525659;display:flex;">
+      <iframe id="pdf-viewer-frame" style="width:100%;height:100%;border:none;"></iframe>
+    </div>
+  </div>
+</div>
+
+<script src="../js/jszip.min.js"></script>
+<script>if (typeof JSZip === 'undefined') { document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"><\/script>'); }</script>
 <script src="../js/data.js"></script>
 <script src="../js/admin.js"></script>
 <script>

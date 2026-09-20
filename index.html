@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="Nilwala Agencies – Trusted Foreign Employment Agency Since 1996" />
   <meta name="twitter:description" content="Licensed foreign employment agency in Kurunegala. Connecting Sri Lankan talent with global opportunities." />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="css/style.css?v=2.2" />
+  <link rel="stylesheet" href="css/style.css?v=2.3" />
 </head>
 <body class="lang-en">
 
@@ -770,51 +770,274 @@
         <!-- Step 3: Documents -->
         <div class="form-step" id="step-3">
           <div class="form-step-title" data-i18n="step3_title">Upload Documents</div>
-          <div class="form-step-sub" data-i18n="step3_sub">Upload your CV and supporting documents (PDF only for CV – Max 4MB)</div>
+          <div class="form-step-sub" data-i18n="step3_sub">Upload your official application documents (Strictly PDF only – Maximum 4MB per document)</div>
 
-          <div style="display:flex;flex-direction:column;gap:18px;">
-            <!-- CV Upload (PDF Only) -->
-            <div style="background:var(--section-bg);border:2px dashed #C5D0F0;border-radius:var(--radius-md);padding:20px;transition:var(--transition);" id="cv-upload-container">
-              <label style="font-family:var(--font-main);font-size:0.92rem;font-weight:700;color:var(--text-dark);display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-                <i class="fas fa-file-pdf" style="color:#E74C3C;font-size:1.25rem"></i>
-                <span data-i18n="lbl_cv">CV / Resume (PDF Only) *</span>
-              </label>
-              <div class="upload-zone" id="cv-upload-zone" style="background:var(--white);border:2px dashed #B0C4DE;padding:26px 16px;border-radius:var(--radius-sm);cursor:pointer;text-align:center;">
-                <input type="file" id="cv-file-input" accept=".pdf,application/pdf" style="display:none;" />
-                <i class="fas fa-file-pdf" style="font-size:2.6rem;color:#E74C3C;margin-bottom:8px;display:block;"></i>
-                <p style="margin:0 0 4px;font-weight:600;color:var(--text-dark);font-size:0.95rem;" data-i18n="cv_drop_text">Click or drag & drop your CV here</p>
-                <span style="font-size:0.8rem;color:var(--text-muted);display:block;" data-i18n="cv_pdf_only_hint">Only PDF files are accepted (.pdf, Max 4MB)</span>
-                <div class="upload-previews" id="cv-preview-area" style="margin-top:10px;"></div>
-              </div>
-              <div id="cv-error-msg" style="color:var(--danger);font-size:0.85rem;margin-top:8px;font-weight:600;display:none;"></div>
+          <!-- Official Agency Notice Box -->
+          <div class="doc-notice-card">
+            <div class="doc-notice-header">
+              <i class="fas fa-bullhorn"></i>
+              <span data-i18n="doc_notice_title">Important Instructions for Document Submission</span>
             </div>
-
-            <!-- Passport Copy -->
-            <div>
-              <label style="font-family:var(--font-main);font-size:0.85rem;font-weight:600;color:var(--text-dark);display:block;margin-bottom:8px;" data-i18n="lbl_passport_copy">Passport Copy (Optional)</label>
-              <div class="upload-zone" id="passport-upload-zone">
-                <input type="file" id="passport-file-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" />
-                <i class="fas fa-passport"></i>
-                <p><span data-i18n="upload_drag">Drag & drop or browse files</span></p>
-                <div class="upload-previews" id="passport-preview-area"></div>
+            <div class="doc-notice-list">
+              <div class="doc-notice-item">
+                <span data-i18n="doc_notice_police">🚨 Police Clearance Certificate is Mandatory: All candidates must apply for Police Clearance immediately. Send a clear photo of the Application Receipt via WhatsApp. After obtaining the certificate, attestation by the Ministry of Foreign Affairs (MFA) is strictly required to prevent visa processing delays.</span>
+              </div>
+              <div class="doc-notice-item">
+                <span data-i18n="doc_notice_passport">🛂 Passport Validity Requirement: Your passport must have more than 3 years of validity remaining from the expiry date. If remaining validity is less than 3 years, you must renew your passport before visa processing.</span>
+              </div>
+              <div class="doc-notice-item">
+                <span data-i18n="doc_notice_format">📄 All uploads must strictly be in PDF format (.pdf) with a maximum file size of 4MB per document.</span>
               </div>
             </div>
+          </div>
 
-            <!-- Qualification Certificates -->
-            <div>
-              <label style="font-family:var(--font-main);font-size:0.85rem;font-weight:600;color:var(--text-dark);display:block;margin-bottom:8px;" data-i18n="lbl_certs">Qualification Certificates & Experience Letters (Optional)</label>
-              <div class="upload-zone" id="certs-upload-zone">
-                <input type="file" id="certs-file-input" accept=".pdf,.jpg,.jpeg,.png" multiple style="display:none;" />
-                <i class="fas fa-folder-open"></i>
-                <p><span data-i18n="upload_multi">Drag & drop or browse files (Multiple files allowed)</span></p>
-                <div class="upload-previews" id="certs-preview-area"></div>
+          <!-- Group 1: Mandatory Primary Documents -->
+          <div class="doc-group-card">
+            <div class="doc-group-header">
+              <i class="fas fa-star" style="color:var(--accent);"></i>
+              <span data-i18n="doc_grp_essential">1. Mandatory Primary Documents</span>
+            </div>
+            <div class="doc-upload-grid">
+              <!-- Signed CV -->
+              <div class="doc-upload-item" id="item-doc-cv">
+                <div class="doc-item-title">
+                  <i class="fas fa-file-pdf"></i>
+                  <span data-i18n="doc_cv_title">Updated Signed CV (PDF Only) *</span>
+                </div>
+                <input type="file" id="input-doc-cv" data-key="cv" data-required="true" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-cv').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-cv"></div>
+                <div class="doc-error-msg" id="error-doc-cv"></div>
+              </div>
+
+              <!-- Passport Bio Page -->
+              <div class="doc-upload-item" id="item-doc-passport-bio">
+                <div class="doc-item-title">
+                  <i class="fas fa-passport"></i>
+                  <span data-i18n="doc_passport_bio_title">Passport Bio Page (Clear Color Copy) *</span>
+                </div>
+                <input type="file" id="input-doc-passport-bio" data-key="passport_bio" data-required="true" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-passport-bio').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-passport-bio"></div>
+                <div class="doc-error-msg" id="error-doc-passport-bio"></div>
+              </div>
+
+              <!-- Police Clearance / Receipt -->
+              <div class="doc-upload-item" id="item-doc-police">
+                <div class="doc-item-title">
+                  <i class="fas fa-shield-alt"></i>
+                  <span data-i18n="doc_police_title">Police Clearance Certificate / Receipt *</span>
+                </div>
+                <input type="file" id="input-doc-police" data-key="police_clearance" data-required="true" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-police').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-police"></div>
+                <div class="doc-error-msg" id="error-doc-police"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group 2: Identity & Civil Documents -->
+          <div class="doc-group-card">
+            <div class="doc-group-header">
+              <i class="fas fa-id-card" style="color:var(--primary);"></i>
+              <span data-i18n="doc_grp_identity">2. Identity & Civil Documents</span>
+            </div>
+            <div class="doc-upload-grid">
+              <!-- NIC Certified Copy -->
+              <div class="doc-upload-item" id="item-doc-nic">
+                <div class="doc-item-title">
+                  <i class="fas fa-address-card"></i>
+                  <span data-i18n="doc_nic_title">National Identity Card (NIC) - Certified Copy</span>
+                </div>
+                <input type="file" id="input-doc-nic" data-key="nic_copy" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-nic').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-nic"></div>
+                <div class="doc-error-msg" id="error-doc-nic"></div>
+              </div>
+
+              <!-- NIC Translation -->
+              <div class="doc-upload-item" id="item-doc-nic-trans">
+                <div class="doc-item-title">
+                  <i class="fas fa-language"></i>
+                  <span data-i18n="doc_nic_trans_title">NIC English Translation Copy</span>
+                </div>
+                <input type="file" id="input-doc-nic-trans" data-key="nic_translation" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-nic-trans').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-nic-trans"></div>
+                <div class="doc-error-msg" id="error-doc-nic-trans"></div>
+              </div>
+
+              <!-- Birth Certificate -->
+              <div class="doc-upload-item" id="item-doc-birth">
+                <div class="doc-item-title">
+                  <i class="fas fa-file-invoice"></i>
+                  <span data-i18n="doc_birth_title">Birth Certificate (Original / Certified Copy)</span>
+                </div>
+                <input type="file" id="input-doc-birth" data-key="birth_cert" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-birth').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-birth"></div>
+                <div class="doc-error-msg" id="error-doc-birth"></div>
+              </div>
+
+              <!-- Birth Certificate Translation -->
+              <div class="doc-upload-item" id="item-doc-birth-trans">
+                <div class="doc-item-title">
+                  <i class="fas fa-language"></i>
+                  <span data-i18n="doc_birth_trans_title">Birth Certificate English Translation Copy</span>
+                </div>
+                <input type="file" id="input-doc-birth-trans" data-key="birth_translation" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-birth-trans').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-birth-trans"></div>
+                <div class="doc-error-msg" id="error-doc-birth-trans"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group 3: Qualifications & Work Experience -->
+          <div class="doc-group-card">
+            <div class="doc-group-header">
+              <i class="fas fa-graduation-cap" style="color:var(--primary);"></i>
+              <span data-i18n="doc_grp_qualification">3. Qualifications & Work Experience</span>
+            </div>
+            <div class="doc-upload-grid">
+              <!-- NVQ Certificates -->
+              <div class="doc-upload-item" id="item-doc-nvq">
+                <div class="doc-item-title">
+                  <i class="fas fa-award"></i>
+                  <span data-i18n="doc_nvq_title">NVQ / Trade / Professional Certificates</span>
+                </div>
+                <input type="file" id="input-doc-nvq" data-key="nvq_trade" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-nvq').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-nvq"></div>
+                <div class="doc-error-msg" id="error-doc-nvq"></div>
+              </div>
+
+              <!-- 5-Year Experience -->
+              <div class="doc-upload-item" id="item-doc-exp">
+                <div class="doc-item-title">
+                  <i class="fas fa-briefcase"></i>
+                  <span data-i18n="doc_exp_title">Work Experience / Service Certificates (5 Years)</span>
+                </div>
+                <input type="file" id="input-doc-exp" data-key="experience_letters" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-exp').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-exp"></div>
+                <div class="doc-error-msg" id="error-doc-exp"></div>
+              </div>
+
+              <!-- Foreign Experience -->
+              <div class="doc-upload-item" id="item-doc-foreign-exp">
+                <div class="doc-item-title">
+                  <i class="fas fa-plane-departure"></i>
+                  <span data-i18n="doc_foreign_exp_title">Overseas Work Experience Documents (If available)</span>
+                </div>
+                <input type="file" id="input-doc-foreign-exp" data-key="foreign_experience" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-foreign-exp').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-foreign-exp"></div>
+                <div class="doc-error-msg" id="error-doc-foreign-exp"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group 4: Attestations, Medical & Supporting Documents -->
+          <div class="doc-group-card">
+            <div class="doc-group-header">
+              <i class="fas fa-file-medical" style="color:var(--primary);"></i>
+              <span data-i18n="doc_grp_attestation">4. Attestations, Medical & Supporting Documents</span>
+            </div>
+            <div class="doc-upload-grid">
+              <!-- MFA Attested Police Clearance -->
+              <div class="doc-upload-item" id="item-doc-mfa-police">
+                <div class="doc-item-title">
+                  <i class="fas fa-stamp"></i>
+                  <span data-i18n="doc_mfa_police_title">MFA Attested Police Clearance Certificate</span>
+                </div>
+                <input type="file" id="input-doc-mfa-police" data-key="mfa_police" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-mfa-police').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-mfa-police"></div>
+                <div class="doc-error-msg" id="error-doc-mfa-police"></div>
+              </div>
+
+              <!-- Medical Report -->
+              <div class="doc-upload-item" id="item-doc-medical">
+                <div class="doc-item-title">
+                  <i class="fas fa-heartbeat"></i>
+                  <span data-i18n="doc_medical_title">Medical Report / Medical Certificate</span>
+                </div>
+                <input type="file" id="input-doc-medical" data-key="medical_report" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-medical').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-medical"></div>
+                <div class="doc-error-msg" id="error-doc-medical"></div>
+              </div>
+
+              <!-- Other Supporting -->
+              <div class="doc-upload-item" id="item-doc-other">
+                <div class="doc-item-title">
+                  <i class="fas fa-folder-open"></i>
+                  <span data-i18n="doc_other_title">Other Supporting Documents</span>
+                </div>
+                <input type="file" id="input-doc-other" data-key="other_docs" accept=".pdf,application/pdf" style="display:none;" />
+                <div class="doc-upload-box" onclick="document.getElementById('input-doc-other').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span class="doc-box-text" data-i18n="doc_btn_select">Select PDF</span>
+                  <span class="doc-box-hint" data-i18n="doc_pdf_only">PDF only (Max 4MB)</span>
+                </div>
+                <div class="doc-preview" id="preview-doc-other"></div>
+                <div class="doc-error-msg" id="error-doc-other"></div>
               </div>
             </div>
           </div>
 
           <div class="form-nav">
             <button class="btn btn-outline-primary form-prev"><i class="fas fa-arrow-left"></i> <span data-i18n="btn_back">Back</span></button>
-            <button class="btn btn-primary form-next"><span data-i18n="btn_review_submit">Review & Submit</span> <i class="fas fa-arrow-right"></i></button>
+            <button class="btn btn-primary form-next" id="btn-step3-next"><span data-i18n="btn_review_submit">Review & Submit</span> <i class="fas fa-arrow-right"></i></button>
           </div>
         </div>
 
@@ -1347,9 +1570,9 @@
 </div>
 
 <!-- Scripts -->
-<script src="js/data.js?v=2.2"></script>
-<script src="js/translations.js?v=2.2"></script>
-<script src="js/main.js?v=2.2"></script>
+<script src="js/data.js?v=2.3"></script>
+<script src="js/translations.js?v=2.3"></script>
+<script src="js/main.js?v=2.3"></script>
 <script>
   // Load contact info from settings
   document.addEventListener('DOMContentLoaded', () => {

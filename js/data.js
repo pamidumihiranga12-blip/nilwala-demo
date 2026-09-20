@@ -83,7 +83,12 @@ const DB = {
   getApplications() { return this.getAll(this.KEYS.APPLICATIONS); },
   addApplication(app) { return this.addItem(this.KEYS.APPLICATIONS, { ...app, status: 'new' }); },
   updateApplicationStatus(id, status) { return this.updateItem(this.KEYS.APPLICATIONS, id, { status }); },
-  deleteApplication(id) { return this.deleteItem(this.KEYS.APPLICATIONS, id); },
+  deleteApplication(id) {
+    if (typeof DocDB !== 'undefined' && DocDB.deleteAppDocs) {
+      DocDB.deleteAppDocs(id).catch(err => console.error('Error deleting documents from IndexedDB:', err));
+    }
+    return this.deleteItem(this.KEYS.APPLICATIONS, id);
+  },
 
   // ── Testimonials ──
   getTestimonials() { return this.getAll(this.KEYS.TESTIMONIALS).filter(t => t.active); },
@@ -423,6 +428,158 @@ const DB = {
     countries.forEach(c => this.addItem(this.KEYS.COUNTRIES, c));
   },
 };
+
+/**
+ * NILWALA AGENCY – INDEXEDDB DOCUMENT STORAGE ENGINE
+ * Safely stores client PDF documents (up to 4MB each) as binary Blobs.
+ * Prevents localStorage quota exceeded crashes and ensures complete cleanup on deletion.
+ */
+const DocDB = {
+  DB_NAME: 'NilwalaDocStorage',
+  DB_VERSION: 1,
+  STORE_NAME: 'documents',
+  _db: null,
+
+  async getDB() {
+    if (this._db) return this._db;
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(this.DB_NAME, this.DB_VERSION);
+      request.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(this.STORE_NAME)) {
+          const store = db.createObjectStore(this.STORE_NAME, { keyPath: 'id' });
+          store.createIndex('appId', 'appId', { unique: false });
+        }
+      };
+      request.onsuccess = (e) => {
+        this._db = e.target.result;
+        resolve(this._db);
+      };
+      request.onerror = (e) => {
+        console.error('IndexedDB open error:', e);
+        reject(e);
+      };
+    });
+  },
+
+  async saveDoc(appId, docKey, blob, metadata = {}) {
+    const db = await this.getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(this.STORE_NAME, 'readwrite');
+      const store = tx.objectStore(this.STORE_NAME);
+      const id = `${appId}_${docKey}`;
+      const record = {
+        id,
+        appId,
+        docKey,
+        blob, // Binary Blob
+        name: metadata.name || `${docKey}.pdf`,
+        size: metadata.size || (blob ? blob.size : 0) || 0,
+        type: metadata.type || 'application/pdf',
+        title: metadata.title || docKey,
+        uploadedAt: new Date().toISOString()
+      };
+      const req = store.put(record);
+      req.onsuccess = () => resolve(record);
+      req.onerror = (e) => reject(e);
+    });
+  },
+
+  async getDoc(appId, docKey) {
+    const db = await this.getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(this.STORE_NAME, 'readonly');
+      const store = tx.objectStore(this.STORE_NAME);
+      const id = `${appId}_${docKey}`;
+      const req = store.get(id);
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = (e) => reject(e);
+    });
+  },
+
+  async getAllDocsForApp(appId) {
+    const db = await this.getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(this.STORE_NAME, 'readonly');
+      const store = tx.objectStore(this.STORE_NAME);
+      const index = store.index('appId');
+      const req = index.getAll(appId);
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = (e) => reject(e);
+    });
+  },
+
+  async deleteDoc(appId, docKey) {
+    const db = await this.getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(this.STORE_NAME, 'readwrite');
+      const store = tx.objectStore(this.STORE_NAME);
+      const id = `${appId}_${docKey}`;
+      const req = store.delete(id);
+      req.onsuccess = () => resolve(true);
+      req.onerror = (e) => reject(e);
+    });
+  },
+
+  async deleteAppDocs(appId) {
+    const db = await this.getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(this.STORE_NAME, 'readwrite');
+      const store = tx.objectStore(this.STORE_NAME);
+      const index = store.index('appId');
+      const req = index.getAllKeys(appId);
+      req.onsuccess = () => {
+        const keys = req.result || [];
+        keys.forEach(k => store.delete(k));
+        resolve(keys.length);
+      };
+      req.onerror = (e) => reject(e);
+    });
+  },
+
+  async getStorageStats() {
+    try {
+      const db = await this.getDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(this.STORE_NAME, 'readonly');
+        const store = tx.objectStore(this.STORE_NAME);
+        const req = store.getAll();
+        req.onsuccess = () => {
+          const items = req.result || [];
+          let totalBytes = 0;
+          items.forEach(item => {
+            totalBytes += item.size || (item.blob ? item.blob.size : 0) || 0;
+          });
+          resolve({
+            fileCount: items.length,
+            totalBytes,
+            totalMB: (totalBytes / (1024 * 1024)).toFixed(2)
+          });
+        };
+        req.onerror = (e) => reject(e);
+      });
+    } catch (e) {
+      return { fileCount: 0, totalBytes: 0, totalMB: '0.00' };
+    }
+  },
+
+  async clearAll() {
+    try {
+      const db = await this.getDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(this.STORE_NAME, 'readwrite');
+        const store = tx.objectStore(this.STORE_NAME);
+        const req = store.clear();
+        req.onsuccess = () => resolve(true);
+        req.onerror = (e) => reject(e);
+      });
+    } catch (e) {
+      return false;
+    }
+  }
+};
+
+window.DocDB = DocDB;
 
 // Initialize data on page load
 document.addEventListener('DOMContentLoaded', () => DB.seed());

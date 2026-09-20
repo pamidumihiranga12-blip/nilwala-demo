@@ -717,16 +717,17 @@ function initMultiStepForm() {
         const ph = document.getElementById('phone')?.value || '—';
         const jt = document.getElementById('job-type')?.value || 'General';
         const pc = document.getElementById('pref-country')?.value || 'Any';
-        const cvInfo = uploadedCv 
-          ? `<span style="color:var(--success);font-weight:700;"><i class="fas fa-check-circle"></i> ${uploadedCv.name} (${(uploadedCv.size / 1024).toFixed(0)} KB)</span>`
-          : `<span style="color:var(--text-muted);font-style:italic;">No CV attached</span>`;
+        const docCount = Object.keys(selectedDocs).length;
+        const docsSummary = docCount > 0
+          ? `<span style="color:var(--success);font-weight:700;"><i class="fas fa-check-circle"></i> ${docCount} PDF Document(s) Ready</span>`
+          : `<span style="color:var(--danger);font-weight:600;"><i class="fas fa-exclamation-circle"></i> No documents attached</span>`;
         
         previewDiv.innerHTML = `
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 18px;background:white;padding:14px 16px;border-radius:8px;border:1px solid #E8EEFF;font-size:0.86rem;">
             <div><span style="color:var(--text-muted);display:block;font-size:0.75rem;font-weight:600;">APPLICANT</span> <strong>${fn}</strong></div>
             <div><span style="color:var(--text-muted);display:block;font-size:0.75rem;font-weight:600;">CONTACT</span> <strong>${ph}</strong></div>
             <div><span style="color:var(--text-muted);display:block;font-size:0.75rem;font-weight:600;">JOB / COUNTRY</span> <strong>${jt} (${pc})</strong></div>
-            <div><span style="color:var(--text-muted);display:block;font-size:0.75rem;font-weight:600;">CV (PDF)</span> ${cvInfo}</div>
+            <div><span style="color:var(--text-muted);display:block;font-size:0.75rem;font-weight:600;">DOCUMENTS</span> ${docsSummary}</div>
           </div>
         `;
       }
@@ -736,43 +737,62 @@ function initMultiStepForm() {
   }
 
   form.querySelectorAll('.form-next').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      // Step 3 validation check
+      if (step === 3) {
+        const lang = getCurrentLanguage();
+        const t = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[lang]) ? TRANSLATIONS[lang] : TRANSLATIONS.en;
+        if (!selectedDocs['cv'] || !selectedDocs['passport_bio'] || !selectedDocs['police_clearance']) {
+          alert(t.doc_req_missing || 'Please upload all mandatory documents (Signed CV, Passport Bio Page, Police Clearance) before proceeding.');
+          return;
+        }
+      }
       if (step < totalSteps) showStep(step + 1);
     });
   });
+
   form.querySelectorAll('.form-prev').forEach(btn => {
     btn.addEventListener('click', () => {
       if (step > 1) showStep(step - 1);
     });
   });
 
-  // CV Upload (Strict PDF Only)
-  let uploadedCv = null;
-  const cvZone = document.getElementById('cv-upload-zone');
-  const cvInput = document.getElementById('cv-file-input');
-  const cvPreview = document.getElementById('cv-preview-area');
-  const cvError = document.getElementById('cv-error-msg');
+  // Selected documents cache: { [docKey]: { blob, name, size, type, title } }
+  const selectedDocs = {};
 
-  if (cvZone && cvInput) {
-    cvZone.addEventListener('click', () => cvInput.click());
-    cvZone.addEventListener('dragover', e => { e.preventDefault(); cvZone.style.borderColor = 'var(--primary-light)'; });
-    cvZone.addEventListener('dragleave', () => cvZone.style.borderColor = '#B0C4DE');
-    cvZone.addEventListener('drop', e => {
+  // Setup all document upload items in step 3
+  const docInputs = form.querySelectorAll('input[type="file"][data-key]');
+  docInputs.forEach(input => {
+    const docKey = input.dataset.key;
+    const itemEl = input.closest('.doc-upload-item');
+    const previewEl = document.getElementById(`preview-doc-${docKey.replace(/_/g, '-')}`) || itemEl?.querySelector('.doc-preview');
+    const errorEl = document.getElementById(`error-doc-${docKey.replace(/_/g, '-')}`) || itemEl?.querySelector('.doc-error-msg');
+
+    input.addEventListener('change', () => {
+      if (input.files && input.files[0]) {
+        handleDocFile(input.files[0], docKey, itemEl, previewEl, errorEl, input);
+      }
+    });
+
+    // Drag and drop for itemEl
+    itemEl?.addEventListener('dragover', e => {
       e.preventDefault();
-      cvZone.style.borderColor = '#B0C4DE';
+      itemEl.style.borderColor = 'var(--primary)';
+    });
+    itemEl?.addEventListener('dragleave', () => {
+      itemEl.style.borderColor = '';
+    });
+    itemEl?.addEventListener('drop', e => {
+      e.preventDefault();
+      itemEl.style.borderColor = '';
       if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-        handleCvFile(e.dataTransfer.files[0]);
+        handleDocFile(e.dataTransfer.files[0], docKey, itemEl, previewEl, errorEl, input);
       }
     });
-    cvInput.addEventListener('change', () => {
-      if (cvInput.files && cvInput.files[0]) {
-        handleCvFile(cvInput.files[0]);
-      }
-    });
-  }
+  });
 
-  function handleCvFile(file) {
-    if (cvError) { cvError.style.display = 'none'; cvError.textContent = ''; }
+  function handleDocFile(file, docKey, itemEl, previewEl, errorEl, input) {
+    if (errorEl) { errorEl.style.display = 'none'; errorEl.textContent = ''; }
     if (!file) return;
 
     const lang = getCurrentLanguage();
@@ -781,96 +801,71 @@ function initMultiStepForm() {
     // Strict PDF Only Check
     const isPdf = file.name.toLowerCase().endsWith('.pdf') || file.type === 'application/pdf';
     if (!isPdf) {
-      if (cvError) {
-        cvError.textContent = t.err_pdf_only || 'Only PDF files (.pdf) are allowed for CV upload. Please choose a valid PDF file.';
-        cvError.style.display = 'block';
+      if (errorEl) {
+        errorEl.textContent = t.err_pdf_only || 'Only PDF files (.pdf) are allowed. Please choose a valid PDF file.';
+        errorEl.style.display = 'block';
       }
-      cvInput.value = '';
-      uploadedCv = null;
-      if (cvPreview) cvPreview.innerHTML = '';
+      if (input) input.value = '';
       return;
     }
 
     // Size limit: Max 4MB
     if (file.size > 4 * 1024 * 1024) {
-      if (cvError) {
-        cvError.textContent = t.err_file_size || 'File is too large. Maximum allowed size is 4MB.';
-        cvError.style.display = 'block';
+      if (errorEl) {
+        errorEl.textContent = t.err_file_size || 'File is too large. Maximum allowed size is 4MB.';
+        errorEl.style.display = 'block';
       }
-      cvInput.value = '';
-      uploadedCv = null;
-      if (cvPreview) cvPreview.innerHTML = '';
+      if (input) input.value = '';
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      uploadedCv = {
-        data: e.target.result,
-        name: file.name,
-        size: file.size,
-      };
-      if (cvPreview) {
-        cvPreview.innerHTML = `
-          <div class="upload-file-tag pdf-tag" style="background:#EBF9F1;border:1px solid #2ECC71;padding:10px 16px;border-radius:8px;display:inline-flex;align-items:center;gap:12px;box-shadow:0 2px 6px rgba(0,0,0,0.06);margin-top:8px;">
-            <i class="fas fa-file-pdf" style="color:#E74C3C;font-size:1.6rem"></i>
-            <div style="text-align:left;">
-              <div style="font-weight:700;color:var(--text-dark);font-size:0.9rem">${file.name}</div>
-              <small style="color:var(--success);font-weight:600;"><i class="fas fa-check-circle"></i> Ready to submit (${(file.size / 1024).toFixed(0)} KB)</small>
-            </div>
-            <button type="button" id="btn-remove-cv" style="background:none;border:none;color:#E74C3C;cursor:pointer;font-size:1.1rem;padding:4px 8px;margin-left:8px;" title="Remove file">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        `;
-        document.getElementById('btn-remove-cv')?.addEventListener('click', (ev) => {
-          ev.stopPropagation();
-          uploadedCv = null;
-          cvPreview.innerHTML = '';
-          cvInput.value = '';
-        });
-      }
+    // Store in selectedDocs cache
+    selectedDocs[docKey] = {
+      blob: file, // File is a binary Blob
+      name: file.name,
+      size: file.size,
+      type: file.type || 'application/pdf',
+      title: itemEl?.querySelector('.doc-item-title span')?.textContent || docKey,
+      docKey
     };
-    reader.readAsDataURL(file);
-  }
 
-  // Other documents upload previews (Passport & Certs)
-  form.querySelectorAll('.upload-zone:not(#cv-upload-zone)').forEach(zone => {
-    const input = zone.querySelector('input[type="file"]');
-    const preview = zone.querySelector('.upload-previews');
-    if (!input) return;
-    zone.addEventListener('click', () => input.click());
-    zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor = 'var(--primary-light)'; });
-    zone.addEventListener('dragleave', () => zone.style.borderColor = '');
-    zone.addEventListener('drop', e => {
-      e.preventDefault();
-      zone.style.borderColor = '';
-      handleFiles(e.dataTransfer.files, preview);
-    });
-    input.addEventListener('change', () => handleFiles(input.files, preview));
-  });
+    if (itemEl) itemEl.classList.add('has-file');
 
-  function handleFiles(files, preview) {
-    if (!preview) return;
-    preview.innerHTML = '';
-    Array.from(files).forEach(f => {
-      const tag = document.createElement('div');
-      tag.className = 'upload-file-tag';
-      tag.innerHTML = `<i class="fas fa-file"></i> <span>${f.name}</span> <small>(${(f.size / 1024).toFixed(0)} KB)</small>`;
-      preview.appendChild(tag);
-    });
+    if (previewEl) {
+      previewEl.innerHTML = `
+        <div class="doc-preview-tag">
+          <div class="doc-preview-info">
+            <i class="fas fa-file-pdf" style="color:#E74C3C;font-size:1.5rem;"></i>
+            <div>
+              <div class="doc-preview-name" title="${file.name}">${file.name}</div>
+              <span class="doc-preview-meta"><i class="fas fa-check-circle"></i> ${(file.size / 1024).toFixed(0)} KB · ${t.doc_status_ready || 'PDF Ready'}</span>
+            </div>
+          </div>
+          <button type="button" class="doc-btn-remove" title="${t.doc_remove || 'Remove'}">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      `;
+      previewEl.querySelector('.doc-btn-remove')?.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        delete selectedDocs[docKey];
+        previewEl.innerHTML = '';
+        if (itemEl) itemEl.classList.remove('has-file');
+        if (input) input.value = '';
+      });
+    }
   }
 
   // Submit
   document.getElementById('form-submit')?.addEventListener('click', () => {
-    const fullName = document.getElementById('full-name')?.value;
-    const phone = document.getElementById('phone')?.value;
+    const fullName = document.getElementById('full-name')?.value?.trim();
+    const phone = document.getElementById('phone')?.value?.trim();
     const agree = document.getElementById('agree-terms')?.checked;
     const lang = getCurrentLanguage();
     const t = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[lang]) ? TRANSLATIONS[lang] : TRANSLATIONS.en;
 
     if (!fullName || !phone) {
-      alert(t.toast_quick_fill);
+      alert(t.toast_quick_fill || 'Please fill in all required fields.');
       showStep(1);
       return;
     }
@@ -878,6 +873,14 @@ function initMultiStepForm() {
       alert('Please agree to terms and conditions.');
       return;
     }
+
+    // Build document manifest
+    const manifest = Object.keys(selectedDocs).map(k => ({
+      key: k,
+      name: selectedDocs[k].name,
+      size: selectedDocs[k].size,
+      title: selectedDocs[k].title
+    }));
 
     const appData = {
       fullName,
@@ -894,13 +897,30 @@ function initMultiStepForm() {
       skills: document.getElementById('skills')?.value,
       jobType: document.getElementById('job-type')?.value,
       prefCountry: document.getElementById('pref-country')?.value,
-      cvData: uploadedCv ? uploadedCv.data : null,
-      cvFileName: uploadedCv ? uploadedCv.name : null,
-      cvFileSize: uploadedCv ? uploadedCv.size : null,
+      docsCount: manifest.length,
+      docKeys: Object.keys(selectedDocs),
+      docsManifest: manifest,
+      cvFileName: selectedDocs['cv']?.name || null,
+      cvFileSize: selectedDocs['cv']?.size || null,
       type: 'full',
     };
 
-    DB.addApplication(appData);
+    const newApp = DB.addApplication(appData);
+
+    // Save all PDF binary blobs in DocDB (IndexedDB)
+    if (typeof DocDB !== 'undefined' && newApp && newApp.id) {
+      const savePromises = Object.keys(selectedDocs).map(k => {
+        const item = selectedDocs[k];
+        return DocDB.saveDoc(newApp.id, k, item.blob, {
+          name: item.name,
+          size: item.size,
+          type: item.type,
+          title: item.title
+        });
+      });
+      Promise.all(savePromises).catch(err => console.error('Error saving documents to IndexedDB:', err));
+    }
+
     form.style.display = 'none';
     const successBox = document.getElementById('form-success');
     if (successBox) successBox.classList.add('visible');

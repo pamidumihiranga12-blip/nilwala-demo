@@ -77,36 +77,47 @@ function loadDashboard() {
   setEl('dash-testi', testi.length);
   setEl('dash-news', news.length);
 
+  // Update storage stats
+  if (typeof DocDB !== 'undefined' && DocDB.getStorageStats) {
+    DocDB.getStorageStats().then(stats => {
+      setEl('dash-storage', `${stats.totalMB} MB`);
+      setEl('dash-file-count', stats.fileCount);
+    }).catch(() => {});
+  }
+
   // Recent applications
   const tbody = document.getElementById('recent-apps-body');
   if (tbody) {
     const recent = apps.slice(0, 8);
-    tbody.innerHTML = recent.length ? recent.map(a => `
-      <tr>
-        <td><strong>${a.fullName || '—'}</strong></td>
-        <td>${a.phone || '—'}</td>
-        <td>${a.jobType || 'General'}</td>
-        <td>${a.pref_country || a.country || 'Any'}</td>
-        <td>
-          ${a.cvData ? `
-            <div style="display:inline-flex;align-items:center;gap:4px;">
-              <button class="btn btn-sm btn-outline-primary" onclick="previewPdf('${a.id}')" style="padding:4px 8px;font-size:0.75rem;display:inline-flex;align-items:center;gap:4px;" title="View CV (PDF)">
-                <i class="fas fa-file-pdf" style="color:#E74C3C"></i> View
-              </button>
-              <button class="btn btn-sm btn-outline-primary" onclick="downloadPdf('${a.id}')" style="padding:4px 6px;font-size:0.75rem;" title="Download CV (PDF)">
-                <i class="fas fa-download"></i>
-              </button>
-            </div>
-          ` : `<span style="color:var(--muted);font-size:0.8rem">—</span>`}
-        </td>
-        <td><span class="status-badge status-${a.status || 'new'}">${a.status || 'New'}</span></td>
-        <td>${formatDate(a.createdAt)}</td>
-        <td>
-          <button class="btn btn-sm btn-success" onclick="updateAppStatus('${a.id}','reviewed')">Review</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteApp('${a.id}')">Delete</button>
-        </td>
-      </tr>
-    `).join('') : `<tr><td colspan="8"><div class="empty-state"><i class="fas fa-inbox"></i><h4>No applications yet</h4></div></td></tr>`;
+    tbody.innerHTML = recent.length ? recent.map(a => {
+      const docCount = a.docsCount || (a.docKeys && a.docKeys.length) || (a.cvData ? 1 : 0);
+      return `
+        <tr>
+          <td><strong>${a.fullName || '—'}</strong></td>
+          <td>${a.phone || '—'}</td>
+          <td>${a.jobType || 'General'}</td>
+          <td>${a.pref_country || a.country || 'Any'}</td>
+          <td>
+            ${docCount > 0 ? `
+              <div style="display:inline-flex;align-items:center;gap:4px;">
+                <button class="btn btn-sm btn-outline-primary" onclick="viewApp('${a.id}')" style="padding:4px 8px;font-size:0.75rem;display:inline-flex;align-items:center;gap:4px;" title="View Documents">
+                  <i class="fas fa-file-pdf" style="color:#E74C3C"></i> ${docCount} Doc${docCount > 1 ? 's' : ''}
+                </button>
+                <button class="btn btn-sm btn-accent" onclick="downloadAllDocsZip('${a.id}')" style="padding:4px 6px;font-size:0.75rem;" title="Download All as ZIP">
+                  <i class="fas fa-file-archive"></i>
+                </button>
+              </div>
+            ` : `<span style="color:var(--muted);font-size:0.8rem">No Docs</span>`}
+          </td>
+          <td><span class="status-badge status-${a.status || 'new'}">${a.status || 'New'}</span></td>
+          <td>${formatDate(a.createdAt)}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" onclick="viewApp('${a.id}')" title="View Full Application"><i class="fas fa-eye"></i></button>
+            <button class="btn btn-sm btn-danger" onclick="deleteApp('${a.id}')" title="Delete Application & Files"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+      `;
+    }).join('') : `<tr><td colspan="8"><div class="empty-state"><i class="fas fa-inbox"></i><h4>No applications yet</h4></div></td></tr>`;
   }
 
   // Badge counts
@@ -220,40 +231,43 @@ function loadApplications() {
   const tbody = document.getElementById('apps-tbody');
   if (!tbody) return;
 
-  tbody.innerHTML = filtered.length ? filtered.map(a => `
-    <tr>
-      <td><strong>${a.fullName || '—'}</strong><br><small style="color:var(--muted)">${a.email || ''}</small></td>
-      <td>${a.phone || '—'}</td>
-      <td>${a.nic || '—'}</td>
-      <td>${a.jobType || 'General'}</td>
-      <td>${a.country || a.pref_country || 'Any'}</td>
-      <td>
-        ${a.cvData ? `
-          <div style="display:inline-flex;align-items:center;gap:4px;">
-            <button class="btn btn-sm btn-outline-primary" onclick="previewPdf('${a.id}')" style="padding:3px 7px;font-size:0.75rem;" title="View PDF CV">
-              <i class="fas fa-file-pdf" style="color:#E74C3C"></i> View
-            </button>
-            <button class="btn btn-sm btn-outline-primary" onclick="downloadPdf('${a.id}')" style="padding:3px 7px;font-size:0.75rem;" title="Download PDF">
-              <i class="fas fa-download"></i>
-            </button>
-          </div>
-        ` : `<span style="color:var(--muted);font-size:0.8rem">No CV</span>`}
-      </td>
-      <td>
-        <select onchange="updateAppStatus('${a.id}', this.value)" style="border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:0.8rem;outline:none;">
-          <option value="new" ${a.status==='new'?'selected':''}>New</option>
-          <option value="reviewed" ${a.status==='reviewed'?'selected':''}>Reviewed</option>
-          <option value="approved" ${a.status==='approved'?'selected':''}>Approved</option>
-          <option value="rejected" ${a.status==='rejected'?'selected':''}>Rejected</option>
-        </select>
-      </td>
-      <td>${formatDate(a.createdAt)}</td>
-      <td>
-        <button class="btn btn-sm btn-primary" onclick="viewApp('${a.id}')"><i class="fas fa-eye"></i></button>
-        <button class="btn btn-sm btn-danger" onclick="deleteApp('${a.id}')"><i class="fas fa-trash"></i></button>
-      </td>
-    </tr>
-  `).join('') : `<tr><td colspan="9"><div class="empty-state"><i class="fas fa-inbox"></i><h4>No applications found</h4></div></td></tr>`;
+  tbody.innerHTML = filtered.length ? filtered.map(a => {
+    const docCount = a.docsCount || (a.docKeys && a.docKeys.length) || (a.cvData ? 1 : 0);
+    return `
+      <tr>
+        <td><strong>${a.fullName || '—'}</strong><br><small style="color:var(--muted)">${a.email || ''}</small></td>
+        <td>${a.phone || '—'}</td>
+        <td>${a.nic || '—'}</td>
+        <td>${a.jobType || 'General'}</td>
+        <td>${a.country || a.pref_country || 'Any'}</td>
+        <td>
+          ${docCount > 0 ? `
+            <div style="display:inline-flex;align-items:center;gap:4px;">
+              <button class="btn btn-sm btn-outline-primary" onclick="viewApp('${a.id}')" style="padding:3px 7px;font-size:0.75rem;" title="View Documents">
+                <i class="fas fa-file-pdf" style="color:#E74C3C"></i> ${docCount} PDF${docCount > 1 ? 's' : ''}
+              </button>
+              <button class="btn btn-sm btn-accent" onclick="downloadAllDocsZip('${a.id}')" style="padding:3px 6px;font-size:0.75rem;" title="Download All as ZIP">
+                <i class="fas fa-file-archive"></i>
+              </button>
+            </div>
+          ` : `<span style="color:var(--muted);font-size:0.8rem">No Docs</span>`}
+        </td>
+        <td>
+          <select onchange="updateAppStatus('${a.id}', this.value)" style="border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:0.8rem;outline:none;">
+            <option value="new" ${a.status==='new'?'selected':''}>New</option>
+            <option value="reviewed" ${a.status==='reviewed'?'selected':''}>Reviewed</option>
+            <option value="approved" ${a.status==='approved'?'selected':''}>Approved</option>
+            <option value="rejected" ${a.status==='rejected'?'selected':''}>Rejected</option>
+          </select>
+        </td>
+        <td>${formatDate(a.createdAt)}</td>
+        <td>
+          <button class="btn btn-sm btn-primary" onclick="viewApp('${a.id}')" title="View Application & Files"><i class="fas fa-eye"></i></button>
+          <button class="btn btn-sm btn-danger" onclick="deleteApp('${a.id}')" title="Delete Application & Files"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>
+    `;
+  }).join('') : `<tr><td colspan="9"><div class="empty-state"><i class="fas fa-inbox"></i><h4>No applications found</h4></div></td></tr>`;
 }
 
 function updateAppStatus(id, status) {
@@ -262,62 +276,331 @@ function updateAppStatus(id, status) {
   loadDashboard();
 }
 
-function deleteApp(id) {
-  if (!confirm('Delete this application?')) return;
+async function deleteApp(id) {
+  if (!confirm('Are you sure you want to delete this application? All uploaded PDF documents will be permanently purged from the database to free storage.')) return;
   DB.deleteApplication(id);
   loadApplications();
   loadDashboard();
+  showAdminAlert('Application and attached documents permanently deleted.', 'success');
 }
 
-function viewApp(id) {
+async function clearAllApplications() {
+  if (!confirm('Are you sure you want to delete ALL applications and permanently purge all stored documents from database to free storage?')) return;
+  DB.save(DB.KEYS.APPLICATIONS, []);
+  if (typeof DocDB !== 'undefined' && DocDB.clearAll) {
+    await DocDB.clearAll();
+  }
+  loadApplications();
+  loadDashboard();
+  showAdminAlert('All applications and documents purged from storage.', 'success');
+}
+
+async function viewApp(id) {
   const app = DB.getById(DB.KEYS.APPLICATIONS, id);
   if (!app) return;
+
+  // Fetch all documents from DocDB
+  let docs = [];
+  try {
+    if (typeof DocDB !== 'undefined') {
+      docs = await DocDB.getAllDocsForApp(id);
+    }
+  } catch (err) {
+    console.warn('Could not load documents from DocDB:', err);
+  }
+
+  // Set delete button handler in modal footer
+  const delBtn = document.getElementById('view-app-delete-btn');
+  if (delBtn) {
+    delBtn.onclick = () => {
+      closeModal('view-app-modal');
+      deleteApp(id);
+    };
+  }
+
+  // Format document rows
+  let docsHtml = '';
+  const totalDocs = docs.length;
+
+  if (totalDocs > 0) {
+    docsHtml = `
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        ${docs.map(doc => {
+          const docTitle = doc.title || doc.name || doc.docKey;
+          const sizeKb = doc.size ? (doc.size / 1024).toFixed(0) + ' KB' : 'PDF Document';
+          return `
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;background:white;padding:12px 16px;border-radius:8px;border:1px solid #E2E8F0;box-shadow:0 1px 4px rgba(0,0,0,0.03);">
+              <div style="display:flex;align-items:center;gap:12px;min-width:220px;">
+                <i class="fas fa-file-pdf" style="color:#E74C3C;font-size:1.8rem;flex-shrink:0;"></i>
+                <div>
+                  <div style="font-weight:700;font-size:0.9rem;color:var(--text-dark);">${docTitle}</div>
+                  <small style="color:var(--text-muted);">${doc.name} · <span style="color:var(--success);font-weight:600;">${sizeKb}</span></small>
+                </div>
+              </div>
+              <div style="display:flex;gap:6px;align-items:center;">
+                <button type="button" class="btn btn-sm btn-outline-primary" onclick="previewPdfDoc('${id}', '${doc.docKey}')" style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:0.78rem;">
+                  <i class="fas fa-eye"></i> View PDF
+                </button>
+                <button type="button" class="btn btn-sm btn-primary" onclick="downloadPdfDoc('${id}', '${doc.docKey}', '${(doc.name || 'document.pdf').replace(/'/g, "\\'")}')" style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:0.78rem;">
+                  <i class="fas fa-download"></i> Download
+                </button>
+                <button type="button" class="btn btn-sm btn-danger" onclick="deleteSingleDoc('${id}', '${doc.docKey}')" style="padding:4px 8px;font-size:0.78rem;" title="Delete this file to free space">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  } else if (app.cvData) {
+    // Legacy single CV
+    docsHtml = `
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;background:white;padding:12px 16px;border-radius:8px;border:1px solid #E2E8F0;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <i class="fas fa-file-pdf" style="color:#E74C3C;font-size:1.8rem"></i>
+          <div>
+            <div style="font-weight:700;font-size:0.9rem;color:var(--text-dark);">${app.cvFileName || 'Candidate_CV.pdf'}</div>
+            <small style="color:var(--text-muted);">${app.cvFileSize ? (app.cvFileSize / 1024).toFixed(0) + ' KB' : 'PDF Document'}</small>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="previewPdf('${app.id}')" style="padding:4px 10px;font-size:0.78rem;">
+            <i class="fas fa-eye"></i> View CV
+          </button>
+          <button type="button" class="btn btn-sm btn-primary" onclick="downloadPdf('${app.id}')" style="padding:4px 10px;font-size:0.78rem;">
+            <i class="fas fa-download"></i> Download
+          </button>
+        </div>
+      </div>
+    `;
+  } else {
+    docsHtml = `<div style="color:var(--muted);font-size:0.86rem;font-style:italic;background:white;padding:14px;border-radius:8px;text-align:center;">No documents uploaded for this applicant.</div>`;
+  }
+
   document.getElementById('view-app-content').innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">FULL NAME</label><div style="font-weight:600">${app.fullName || '—'}</div></div>
-      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">PHONE</label><div style="font-weight:600">${app.phone || '—'}</div></div>
-      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">NIC</label><div>${app.nic || '—'}</div></div>
-      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">DOB</label><div>${app.dob || '—'}</div></div>
+      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">FULL NAME</label><div style="font-weight:700;font-size:1rem;color:var(--text-dark);">${app.fullName || '—'}</div></div>
+      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">PHONE</label><div style="font-weight:600"><a href="tel:${app.phone}" style="color:var(--primary);text-decoration:none;"><i class="fas fa-phone-alt" style="font-size:0.75rem"></i> ${app.phone || '—'}</a></div></div>
+      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">NIC NUMBER</label><div style="font-weight:600">${app.nic || '—'}</div></div>
+      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">DATE OF BIRTH</label><div>${app.dob || '—'}</div></div>
       <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">GENDER</label><div>${app.gender || '—'}</div></div>
       <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">EMAIL</label><div>${app.email || '—'}</div></div>
       <div style="grid-column:1/-1"><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">ADDRESS</label><div>${app.address || '—'}</div></div>
-      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">JOB TYPE</label><div>${app.jobType || '—'}</div></div>
-      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">PREFERRED COUNTRY</label><div>${app.country || app.pref_country || '—'}</div></div>
+      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">JOB TYPE</label><div><strong>${app.jobType || '—'}</strong></div></div>
+      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">PREFERRED COUNTRY</label><div><strong>${app.country || app.prefCountry || app.pref_country || '—'}</strong></div></div>
       <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">EDUCATION</label><div>${app.education || '—'}</div></div>
       <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">QUALIFICATION</label><div>${app.qualification || '—'}</div></div>
       <div style="grid-column:1/-1"><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">EXPERIENCE</label><div>${app.experience || '—'}</div></div>
-      <div style="grid-column:1/-1"><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">SKILLS</label><div>${app.skills || '—'}</div></div>
+      <div style="grid-column:1/-1"><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">SKILLS & LANGUAGES</label><div>${app.skills || '—'}</div></div>
       <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">APPLIED ON</label><div>${formatDate(app.createdAt)}</div></div>
-      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">STATUS</label><span class="status-badge status-${app.status||'new'}">${app.status||'New'}</span></div>
-      <div style="grid-column:1/-1;background:#F8F9FF;border:1px solid #E0E7FF;border-radius:10px;padding:16px;margin-top:10px;">
-        <label style="font-size:0.75rem;color:var(--primary);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">
-          <i class="fas fa-file-pdf" style="color:#E74C3C;font-size:1.2rem"></i> Candidate CV (PDF)
-        </label>
-        ${app.cvData ? `
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;background:white;padding:12px 16px;border-radius:8px;border:1px solid #E8EEFF;">
-            <div style="display:flex;align-items:center;gap:12px;">
-              <i class="fas fa-file-pdf" style="color:#E74C3C;font-size:2rem"></i>
-              <div>
-                <div style="font-weight:700;font-size:0.95rem;color:var(--text);">${app.cvFileName || 'Candidate_CV.pdf'}</div>
-                <small style="color:var(--muted);">${app.cvFileSize ? (app.cvFileSize / 1024).toFixed(0) + ' KB' : 'PDF Document'}</small>
-              </div>
-            </div>
-            <div style="display:flex;gap:8px;">
-              <button type="button" class="btn btn-sm btn-primary" onclick="previewPdf('${app.id}')" style="display:inline-flex;align-items:center;gap:6px;">
-                <i class="fas fa-eye"></i> View CV
-              </button>
-              <button type="button" class="btn btn-sm btn-accent" onclick="downloadPdf('${app.id}')" style="display:inline-flex;align-items:center;gap:6px;">
-                <i class="fas fa-download"></i> Download PDF
-              </button>
-            </div>
-          </div>
-        ` : `
-          <div style="color:var(--muted);font-size:0.85rem;font-style:italic;background:white;padding:10px 14px;border-radius:8px;">No CV uploaded for this applicant.</div>
-        `}
+      <div><label style="font-size:0.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px;">APPLICATION STATUS</label><span class="status-badge status-${app.status||'new'}">${app.status||'New'}</span></div>
+
+      <!-- Uploaded Documents Section -->
+      <div style="grid-column:1/-1;background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:10px;padding:18px;margin-top:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #E2E8F0;">
+          <label style="font-size:0.85rem;color:var(--primary);font-weight:800;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:0.5px;margin:0;">
+            <i class="fas fa-folder-open" style="color:#E74C3C;font-size:1.15rem;"></i> Client Uploaded Documents (${totalDocs > 0 ? totalDocs : (app.cvData ? 1 : 0)})
+          </label>
+          ${(totalDocs > 0 || app.cvData) ? `
+            <button type="button" class="btn btn-sm btn-accent" id="btn-zip-${app.id}" onclick="downloadAllDocsZip('${app.id}')" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;font-weight:700;">
+              <i class="fas fa-file-archive"></i> Download All as ZIP
+            </button>
+          ` : ''}
+        </div>
+        ${docsHtml}
       </div>
     </div>
   `;
   openModal('view-app-modal');
+}
+
+async function previewPdfDoc(appId, docKey) {
+  try {
+    let blobUrl = null;
+    let fileName = 'Document.pdf';
+
+    if (typeof DocDB !== 'undefined') {
+      const doc = await DocDB.getDoc(appId, docKey);
+      if (doc && doc.blob) {
+        blobUrl = URL.createObjectURL(doc.blob);
+        fileName = doc.name || `${doc.title || docKey}.pdf`;
+      }
+    }
+
+    if (!blobUrl) {
+      const app = DB.getById(DB.KEYS.APPLICATIONS, appId);
+      if (app && app.cvData) {
+        blobUrl = getPdfBlobUrl(app.cvData);
+        fileName = app.cvFileName || 'Candidate_CV.pdf';
+      }
+    }
+
+    if (!blobUrl) {
+      alert('Document file could not be loaded from storage.');
+      return;
+    }
+
+    const frame = document.getElementById('pdf-viewer-frame');
+    const titleEl = document.getElementById('pdf-viewer-title');
+    const openBtn = document.getElementById('pdf-open-tab-btn');
+
+    if (frame) frame.src = blobUrl;
+    if (titleEl) titleEl.innerHTML = `<i class="fas fa-file-pdf" style="color:#E74C3C;"></i> ${fileName}`;
+    if (openBtn) openBtn.href = blobUrl;
+
+    openModal('pdf-viewer-modal');
+  } catch (err) {
+    console.error('Error previewing document:', err);
+    alert('Could not preview document: ' + err.message);
+  }
+}
+
+async function downloadPdfDoc(appId, docKey, defaultFileName) {
+  try {
+    let blobUrl = null;
+    let name = defaultFileName || `${docKey}.pdf`;
+
+    if (typeof DocDB !== 'undefined') {
+      const doc = await DocDB.getDoc(appId, docKey);
+      if (doc && doc.blob) {
+        blobUrl = URL.createObjectURL(doc.blob);
+        name = doc.name || name;
+      }
+    }
+
+    if (!blobUrl) {
+      const app = DB.getById(DB.KEYS.APPLICATIONS, appId);
+      if (app && app.cvData) {
+        blobUrl = getPdfBlobUrl(app.cvData);
+        name = app.cvFileName || name;
+      }
+    }
+
+    if (!blobUrl) {
+      alert('Document file not found.');
+      return;
+    }
+
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    }, 1000);
+  } catch (err) {
+    console.error('Download error:', err);
+    alert('Failed to download document: ' + err.message);
+  }
+}
+
+async function downloadAllDocsZip(appId) {
+  const app = DB.getById(DB.KEYS.APPLICATIONS, appId);
+  if (!app) return;
+
+  if (typeof JSZip === 'undefined') {
+    alert('ZIP library is loading. Please check your internet connection or try again.');
+    return;
+  }
+
+  const btn = document.getElementById(`btn-zip-${appId}`);
+  const origText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating ZIP...';
+  }
+
+  try {
+    let docs = [];
+    if (typeof DocDB !== 'undefined') {
+      docs = await DocDB.getAllDocsForApp(appId);
+    }
+
+    const zip = new JSZip();
+    const candidateName = (app.fullName || 'Candidate').trim().replace(/[^a-zA-Z0-9_\-]/g, '_');
+    const folderName = `Nilwala_${candidateName}_Documents`;
+    const folder = zip.folder(folderName);
+
+    let addedCount = 0;
+
+    for (const doc of docs) {
+      if (doc.blob) {
+        const safeName = (doc.name || `${doc.docKey}.pdf`).replace(/[^a-zA-Z0-9_\-\.]/g, '_');
+        folder.file(safeName, doc.blob);
+        addedCount++;
+      }
+    }
+
+    if (addedCount === 0 && app.cvData) {
+      const parts = app.cvData.split(',');
+      const base64Str = parts.length > 1 ? parts[1] : parts[0];
+      folder.file(app.cvFileName || 'Candidate_CV.pdf', base64Str, { base64: true });
+      addedCount++;
+    }
+
+    if (addedCount === 0) {
+      alert('No documents found to download for this applicant.');
+      if (btn) { btn.disabled = false; btn.innerHTML = origText; }
+      return;
+    }
+
+    const content = await zip.generateAsync({ type: 'blob' });
+    const zipUrl = URL.createObjectURL(content);
+    const a = document.createElement('a');
+    a.href = zipUrl;
+    a.download = `${folderName}.zip`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(zipUrl);
+    }, 1000);
+
+    showAdminAlert(`Downloaded ${addedCount} document(s) as ZIP successfully!`, 'success');
+  } catch (err) {
+    console.error('ZIP generation error:', err);
+    alert('Failed to generate ZIP archive: ' + err.message);
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = origText;
+    }
+  }
+}
+
+async function deleteSingleDoc(appId, docKey) {
+  if (!confirm('Are you sure you want to delete this document from the database to free storage space?')) return;
+  try {
+    if (typeof DocDB !== 'undefined') {
+      await DocDB.deleteDoc(appId, docKey);
+    }
+    const app = DB.getById(DB.KEYS.APPLICATIONS, appId);
+    if (app) {
+      if (app.docsManifest) {
+        app.docsManifest = app.docsManifest.filter(m => m.key !== docKey);
+        app.docsCount = app.docsManifest.length;
+      }
+      if (app.docKeys) {
+        app.docKeys = app.docKeys.filter(k => k !== docKey);
+      }
+      if (docKey === 'cv') {
+        app.cvFileName = null;
+        app.cvFileSize = null;
+        app.cvData = null;
+      }
+      DB.updateItem(DB.KEYS.APPLICATIONS, appId, app);
+    }
+    showAdminAlert('Document permanently deleted and storage freed!', 'success');
+    viewApp(appId);
+    loadApplications();
+    loadDashboard();
+  } catch (err) {
+    console.error('Error deleting document:', err);
+    alert('Failed to delete document: ' + err.message);
+  }
 }
 
 function getPdfBlobUrl(cvData) {
@@ -340,40 +623,20 @@ function getPdfBlobUrl(cvData) {
 }
 
 function previewPdf(appId) {
-  const app = DB.getById(DB.KEYS.APPLICATIONS, appId);
-  if (!app || !app.cvData) {
-    alert('No CV data found for this applicant.');
-    return;
-  }
-  const blobUrl = getPdfBlobUrl(app.cvData);
-  if (blobUrl) {
-    window.open(blobUrl, '_blank');
-  } else {
-    window.open(app.cvData, '_blank');
-  }
+  previewPdfDoc(appId, 'cv');
 }
 
 function downloadPdf(appId) {
-  const app = DB.getById(DB.KEYS.APPLICATIONS, appId);
-  if (!app || !app.cvData) {
-    alert('No CV data found for this applicant.');
-    return;
-  }
-  const filename = app.cvFileName || ((app.fullName || 'Candidate').replace(/[^a-zA-Z0-9_-]/g, '_') + '_CV.pdf');
-  const blobUrl = getPdfBlobUrl(app.cvData);
-  const a = document.createElement('a');
-  a.href = blobUrl || app.cvData;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  if (blobUrl) {
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
-  }
+  downloadPdfDoc(appId, 'cv', 'Candidate_CV.pdf');
 }
 
 window.previewPdf = previewPdf;
 window.downloadPdf = downloadPdf;
+window.previewPdfDoc = previewPdfDoc;
+window.downloadPdfDoc = downloadPdfDoc;
+window.downloadAllDocsZip = downloadAllDocsZip;
+window.deleteSingleDoc = deleteSingleDoc;
+window.clearAllApplications = clearAllApplications;
 
 // ── Testimonials ──
 function loadTestimonials() {
