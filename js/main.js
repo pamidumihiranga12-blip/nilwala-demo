@@ -819,26 +819,34 @@ function initMultiStepForm() {
       return;
     }
 
-    // Store in selectedDocs cache
+    const docTitle = itemEl?.querySelector('.doc-item-title span')?.textContent || docKey;
+
+    // Default item cached immediately
     selectedDocs[docKey] = {
-      blob: file, // File is a binary Blob
+      blob: file,
       name: file.name,
       size: file.size,
       type: file.type || 'application/pdf',
-      title: itemEl?.querySelector('.doc-item-title span')?.textContent || docKey,
+      title: docTitle,
       docKey
     };
 
     if (itemEl) itemEl.classList.add('has-file');
 
+    const shouldCompress = (typeof PdfCompressor !== 'undefined' && PdfCompressor.isAvailable() && file.size > 400 * 1024);
+
     if (previewEl) {
+      const initialMeta = shouldCompress 
+        ? `<i class="fas fa-spinner fa-spin" style="color:var(--primary);"></i> ${(file.size / 1024).toFixed(0)} KB · ${t.doc_compressing || 'Optimizing PDF size...'}`
+        : `<i class="fas fa-check-circle"></i> ${(file.size / 1024).toFixed(0)} KB · ${t.doc_status_ready || 'PDF Ready'}`;
+
       previewEl.innerHTML = `
         <div class="doc-preview-tag">
           <div class="doc-preview-info">
             <i class="fas fa-file-pdf" style="color:#E74C3C;font-size:1.5rem;"></i>
             <div>
               <div class="doc-preview-name" title="${file.name}">${file.name}</div>
-              <span class="doc-preview-meta"><i class="fas fa-check-circle"></i> ${(file.size / 1024).toFixed(0)} KB · ${t.doc_status_ready || 'PDF Ready'}</span>
+              <span class="doc-preview-meta" id="meta-doc-${docKey}">${initialMeta}</span>
             </div>
           </div>
           <button type="button" class="doc-btn-remove" title="${t.doc_remove || 'Remove'}">
@@ -853,6 +861,36 @@ function initMultiStepForm() {
         if (itemEl) itemEl.classList.remove('has-file');
         if (input) input.value = '';
       });
+
+      // Asynchronously compress if file > 400KB
+      if (shouldCompress) {
+        const metaSpan = previewEl.querySelector(`#meta-doc-${docKey}`);
+        PdfCompressor.compressPdf(file, prog => {
+          if (metaSpan && prog.percent) {
+            metaSpan.innerHTML = `<i class="fas fa-spinner fa-spin" style="color:var(--primary);"></i> ${prog.percent}% · ${t.doc_compressing || 'Optimizing...'}`;
+          }
+        }).then(result => {
+          if (selectedDocs[docKey]) {
+            selectedDocs[docKey].blob = result.blob;
+            selectedDocs[docKey].size = result.newSize;
+            selectedDocs[docKey].compressed = result.compressed;
+            selectedDocs[docKey].savedPercent = result.savedPercent;
+          }
+          if (metaSpan) {
+            if (result.compressed) {
+              const newKb = (result.newSize / 1024).toFixed(0);
+              metaSpan.innerHTML = `<i class="fas fa-compress-alt" style="color:#27ae60;"></i> ${newKb} KB <span style="color:#27ae60;font-weight:700;">(-${result.savedPercent}%)</span> · ${t.doc_optimized_badge || 'Optimized'}`;
+            } else {
+              metaSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${(file.size / 1024).toFixed(0)} KB · ${t.doc_status_ready || 'Ready'}`;
+            }
+          }
+        }).catch(err => {
+          console.warn('PDF compression error, kept original:', err);
+          if (metaSpan) {
+            metaSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${(file.size / 1024).toFixed(0)} KB · ${t.doc_status_ready || 'Ready'}`;
+          }
+        });
+      }
     }
   }
 
@@ -1041,11 +1079,23 @@ function submitQuickApply() {
       }
       return;
     }
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      finishSubmit(e.target.result, file.name, file.size);
+    const processAndSubmit = (blobToSave, saveSize) => {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        finishSubmit(e.target.result, file.name, saveSize);
+      };
+      reader.readAsDataURL(blobToSave);
     };
-    reader.readAsDataURL(file);
+
+    if (typeof PdfCompressor !== 'undefined' && PdfCompressor.isAvailable() && file.size > 400 * 1024) {
+      PdfCompressor.compressPdf(file).then(res => {
+        processAndSubmit(res.blob, res.newSize);
+      }).catch(() => {
+        processAndSubmit(file, file.size);
+      });
+    } else {
+      processAndSubmit(file, file.size);
+    }
   } else {
     finishSubmit(null, null, null);
   }
